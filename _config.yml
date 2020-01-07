@@ -9,17 +9,10 @@ author:
   facebook:         your-id
   youtubeUser:      your-id
   youtubeChannel:   your-id
-  twitter:          your-id
   github:           your-id
-  stackoverflow:    your-id
-  quora:            your-id
   linkedin:         your-id
-  pinterest:        your-id
-  googlePlus:       your-id
   instagram:        your-id
-  reddit:           your-id
   medium:           your-id
-  tumblr:           your-id
   email:            hyerinn6@gmail.com
 
 copyright:
@@ -32,7 +25,7 @@ google-analytics:
 
 # Disqus
 disqus:
-  id:               "kiko-plus"
+  id:               "hyerin"
 
 # URL
 url:                "https://hyerin6.github.io" # the base hostname & protocol for your site
