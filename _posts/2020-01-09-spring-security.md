@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Spring Security"
-description: " "
+description: "authentication, authorization"
 date: 2020-01-09
 tags: [spring]
 comments: true
