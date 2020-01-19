@@ -47,7 +47,7 @@ snake case의 예: department_manager_office_number
 ### 2) application.yml    
 - 한 파일에 profile 설정이 가능     
 - spring.profiles.active로 profile 설정이 가능하다.   
-- --- 로 나누면 다른 파일에서 불러온 것처럼 사용할 수 있다.      
+- '---' 로 나누면 다른 파일에서 불러온 것처럼 사용할 수 있다.      
 - profiles를 설정해주지 않으면 기본 default로 동작한다.    
 
 ```
@@ -80,3 +80,10 @@ spring:
     username: 
     password: 
 ```
+
+-----------------------
+
+지금 프로젝트에서는 젠킨스 자동 배포를 사용하고 있기 때문에 DB 관련 설정 파일을 분리해서 배포하는 경우,        
+default 파일의 active를 push 전에 production으로 다시 설정해줘야 하는 번거로움이 생긴다.          
+그래서 application.yml 파일을 하나로 관리하면서 서버에는 production으로 설정해놓고 git에 있는 코드를 clone(or pull) 해서 개발할 때는 각자
+applicaiton.yml 파일을 만들고 슬랙으로 공유하는 게 좋은 것 같다 ! 
