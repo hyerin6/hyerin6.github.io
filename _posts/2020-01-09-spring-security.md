@@ -82,5 +82,3 @@ public String index(Model model, HttpServletRequest request) {
 </sec:authorize>
 ```
 현재 사용자가 ROLE_ADMINISTRATOR 권한일 경우에 이 태그와 사이 내용을 출력한다.   
-
-
