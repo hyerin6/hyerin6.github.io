@@ -1,15 +1,11 @@
 ---
 layout: post
 title: "Spring IoC & DI"  
-description: " "
+description: "제어의 역전/의존성 주입"
 date: 2020-01-31
 tags: [spring]
 comments: true
 share: true
----
-
-제어의 역전/의존성 주입   
-
 ---
 
 ### 스프링 IoC의 용어 정리    
