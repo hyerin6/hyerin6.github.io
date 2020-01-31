@@ -3,7 +3,7 @@ layout: post
 title: "JPA 식별자 자동 생성"
 description: "Spring Data JPA"
 date: 2020-01-14
-tags: [spring, jpa]
+tags: [spring, jpa, nexters16]
 comments: true
 share: true
 ---
@@ -34,5 +34,5 @@ protected Long id;
 Hibernate 5.0부터 MySQL의 AUTO는 IDENTITY가 아닌 TABLE을 기본 시퀀스 전략으로 선택된다.  
 즉, 1.5에선 Hibernate 5를 쓰더라도 AUTO를 따라가지 않기 때문에 IDENTITY가 선택  
 2.0에선 true이므로 Hibernate 5를 그대로 따라가기 때문에 TABLE이 선택  
-
+(Hibernate 6.0에서 다시 IDENTITY로 돌아간다고 합니다...!)   
 

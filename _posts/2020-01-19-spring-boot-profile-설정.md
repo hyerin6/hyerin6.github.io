@@ -3,7 +3,7 @@ layout: post
 title: "Spring Boot Profile 설정"
 description: " "
 date: 2020-01-19
-tags: [spring]
+tags: [spring, nexters16]
 comments: true
 share: true
 ---
