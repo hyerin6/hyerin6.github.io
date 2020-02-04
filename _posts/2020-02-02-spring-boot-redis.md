@@ -34,7 +34,7 @@ in-memory 기반의 data structure 저장 기술로 데이터베이스 서버, �
 #### 2. Redis 설치 및 spring boot 에서 사용       
 - docker 이용해서 설치 및 접속      
 
-```shell script
+```
 # 최신 이미지 가져오기, 레디스 서버 실행 
 docker pull redis 
 docker run --name redis -d -p 6379:6379 redis
