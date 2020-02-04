@@ -32,7 +32,8 @@ in-memory 기반의 data structure 저장 기술로 데이터베이스 서버, �
 - Redis server는 1개의 싱글 스레드로 수행되기 떄문에 서버 하나에 여러 서버를 띄울 수 있음   
 
 #### 2. Redis 설치 및 spring boot 에서 사용       
-- docker 이용해서 설치 및 접속    
+- docker 이용해서 설치 및 접속      
+
 ```shell script
 # 최신 이미지 가져오기, 레디스 서버 실행 
 docker pull redis 
@@ -46,7 +47,8 @@ redis-cli -p 6379
 docker exec -it redis /bin/bash
 ```
 
-- 의존성 추가   
+- 의존성 추가     
+
 ```xml
 <dependency>
     <groupId>org.springframework.boot</groupId>
@@ -54,7 +56,8 @@ docker exec -it redis /bin/bash
 </dependency>
 ```
 
-- application.yml 설정 정보 추가   
+- application.yml 설정 정보 추가     
+
 ```yaml
 redis:
     host: 
