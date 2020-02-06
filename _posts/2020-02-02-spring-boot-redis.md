@@ -27,7 +27,7 @@ in-memory 기반의 data structure 저장 기술로 데이터베이스 서버, �
 - Hash   
 
 **장점**  
-- 리스트, 배열곽 같은 데이터 처리에 유용   
+- 리스트, 배열과 같은 데이터 처리에 유용   
 - 메모리를 사용하면서 영속적인 데이터 보존이 가능   
 - Redis server는 1개의 싱글 스레드로 수행되기 떄문에 서버 하나에 여러 서버를 띄울 수 있음   
 
@@ -41,8 +41,10 @@ docker run --name redis -d -p 6379:6379 redis
 
 # Docker의 redis-cli로 접속  
 docker run -it --link redis:redis --rm redis redis-cli -h redis -p 6379 
+
 # Redis-cli로 직접 접속하기: 연결된 6379 포트를 사용
 redis-cli -p 6379
+
 # Shell로 Docker 리눅스에 접속 
 docker exec -it redis /bin/bash
 ```
@@ -78,17 +80,25 @@ spring boot 2.0에서 lettuce가 기본 클라이언트가 되서 사용해보�
 
 
 - Jedis   
-여러 스레드에서 Jedis 인스턴스를 공유하려 할 떄 jedis는 스레드에 안전하지 않다. 따라서 멀티 스레드 환경에서 고려할 상황이 생긴다.   
+여러 스레드에서 Jedis 인스턴스를 공유하려 할 때 jedis는 스레드에 안전하지 않다. 따라서 멀티 스레드 환경에서 고려할 상황이 생긴다.   
 안전한 방법은 pooling(Thread-pool)과 같은 jedis-pool을 사용하는 것이지만 물리적인 비용의 증가가 따른다.    
 (connection할 인스턴스를 미리 만들어놓고 대기하는 연결비용의 증가)   
 
-  >Spring Boot에서는 기본 의존성인 lettuce를 제거하고 Jedis를 등록해야 한다.            
+  >Spring Boot에서는 기본 의존성인 lettuce를 제거하고 Jedis를 등록해야 한다.              
 
 - Lettuce  
-Lettuce는 Netty(비동기 이벤트 기반 고성능 네트워크 프레임워크) 기반의 레디스 클라이언트이다. Thread-safe!    
-비동기로 요청을 처리하기 때문에 고성능을 자랑한다.     
-Jedis에 비해 몇배 이상의 성능과 하드웨어 자원 절약이 가능하다.     
+Lettuce는 Netty(비동기 이벤트 기반 고성능 네트워크 프레임워크)   
+기반의 레디스 클라이언트이다. Thread-safe!       
+비동기로 요청을 처리하기 때문에 고성능을 자랑한다.       
+Jedis에 비해 몇배 이상의 성능과 하드웨어 자원 절약이 가능하다.         
 
 connection 인스턴스의 공유라는 점에서 Thread-safe인 lettuce를 사용해야 겠다는 생각이 들지만     
 Single-Thread의 레디스에 데이터에 접근할 때? 혹은 다른 관점에서는 어떨지 더 알아보면 좋을 것 같다.    
+
+-----
+
+일단 지금 진행중인 프로젝트에서      
+<전화번호-인증코드> 이런 방식으로 redis에 저장하고      
+인증이 완료되면 session을 통해 redis에 인증 여부를 저장하려고 하는데    
+session에 대한 개념이 부족해 더 공부해봐야 할 것 같다!    
 

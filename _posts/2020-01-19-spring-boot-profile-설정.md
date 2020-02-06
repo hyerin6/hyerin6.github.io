@@ -47,7 +47,7 @@ snake case의 예: department_manager_office_number
 ### 2) application.yml    
 - 한 파일에 profile 설정이 가능     
 - spring.profiles.active로 profile 설정이 가능하다.   
-- '---' 로 나누면 다른 파일에서 불러온 것처럼 사용할 수 있다.      
+- ```---``` 로 나누면 다른 파일에서 불러온 것처럼 사용할 수 있다.        
 - profiles를 설정해주지 않으면 기본 default로 동작한다.    
 
 ```
