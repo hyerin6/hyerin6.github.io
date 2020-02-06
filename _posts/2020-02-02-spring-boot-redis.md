@@ -84,7 +84,7 @@ spring boot 2.0에서 lettuce가 기본 클라이언트가 되서 사용해보�
 안전한 방법은 pooling(Thread-pool)과 같은 jedis-pool을 사용하는 것이지만 물리적인 비용의 증가가 따른다.    
 (connection할 인스턴스를 미리 만들어놓고 대기하는 연결비용의 증가)   
 
-  >Spring Boot에서는 기본 의존성인 lettuce를 제거하고 Jedis를 등록해야 한다.              
+  >Spring Boot 2.0에서는 기본 의존성인 lettuce를 제거하고 Jedis를 등록해야 한다.              
 
 - Lettuce  
 Lettuce는 Netty(비동기 이벤트 기반 고성능 네트워크 프레임워크)   
