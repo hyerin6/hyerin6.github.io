@@ -1,5 +1,16 @@
+---
+layout: post
+title: "AOP"  
+description: "Aspect-Oriented Programming"
+date: 2020-02-14
+tags: [spring]
+comments: true
+share: true
+---
+ 
+[AOP 예제 코드](https://github.com/hyerin6/Spring/tree/master/ExpertSpring30/src/main/java)
 
-
+---
 
 # AOP 란?     
 AOP는 Aspect-Oriented Programming의 약자이고, 이를 번역하면 관점 지향 프로그래밍이 된다.   
@@ -22,6 +33,8 @@ try{
     DB 자원 반납
 }
 ```   
+
+
 
 어떤 데이터베이스 연산을 하든 공통적으로 나타나는 코드가 있다. 
 이를 바로 횡단 관심사라고 한다. 그리고 ```insert / update / delete / select 실행 ``` 이 부분을 핵심 관심사라고 한다.   
