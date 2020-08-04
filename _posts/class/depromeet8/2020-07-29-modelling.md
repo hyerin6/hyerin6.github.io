@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "디프만 8기 4조 워밍업 프로젝트 : buzz""  
+title: "디프만 8기 4조 워밍업 프로젝트 : buzz"  
 description: "spring"
 date: 2020-07-29
 tags: [spring]
