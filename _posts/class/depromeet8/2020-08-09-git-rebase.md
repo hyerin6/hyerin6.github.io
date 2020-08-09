@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "디프만 8기 4조 워밍업 프로젝트 : 꿀단지"  
+title: "git 브랜치 병합 전략 : rebase"  
 description: "꿀단지"
 date: 2020-08-09
 tags: [depromeet]
