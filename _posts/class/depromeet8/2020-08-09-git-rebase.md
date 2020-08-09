@@ -34,16 +34,19 @@ feature를 master 브랜치로 rebase하는 명령어를 살펴보자.
 
 <br />     
 
-```shell script
-git checkout feature            
-git rebase master            
 
-git merge feature           
+```shell script               
+git checkout feature                      
+git rebase master                   
+       
+git merge feature             
 ```
+
 
 1. feature 브랜치로 checkout           
 2. master 브랜치로 rebase           
 3. feature 브랜치를 master로 fast-forward merge     
 
+<br />       
 
-참고 : <https://velog.io/@godori/Git-Rebase>             
+참고 : <https://velog.io/@godori/Git-Rebase>                
