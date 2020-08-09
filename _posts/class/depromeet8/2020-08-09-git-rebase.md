@@ -35,7 +35,7 @@ feature를 master 브랜치로 rebase하는 명령어를 살펴보자.
 <br />     
 
 
-```shell script               
+```            
 git checkout feature                      
 git rebase master                   
        
