@@ -1,3 +1,25 @@
-# 👩🏻‍💻blog - Hyerin 
+# 👩🏻‍💻 Hyerin 
 
-<img width="1415" alt="스크린샷 2020-03-23 오후 6 57 19" src="https://user-images.githubusercontent.com/33855307/77304764-40bdd400-6d38-11ea-87a0-89198863ff34.png">
+tag로 게시글을 분류합니다. 
+
+- [Java](https://hyerin6.github.io/tags/#java)   
+
+- [Spring](https://hyerin6.github.io/tags/#spring)   
+
+- [Nexters](https://hyerin6.github.io/tags/#nexters16)   
+
+- [LiteBook](https://hyerin6.github.io/tags/#litebook)     
+
+- [JPA](https://hyerin6.github.io/tags/#jpa)     
+
+- [JSP](https://hyerin6.github.io/tags/#jsp)      
+
+- [Jenkins](https://hyerin6.github.io/tags/#jenkins)    
+
+- [Docker](https://hyerin6.github.io/tags/#docker)   
+
+- [Depromeet](https://hyerin6.github.io/tags/#depromeet)      
+
+- [Redis](https://hyerin6.github.io/tags/#redis)   
+
+- [Database](https://hyerin6.github.io/tags/#database)    
