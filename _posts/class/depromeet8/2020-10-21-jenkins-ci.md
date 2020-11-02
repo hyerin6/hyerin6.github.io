@@ -59,41 +59,41 @@ git 계정 Settings > Developer settings > Personal access tokens 에서 토큰�
 
  
 
-스크립트는 다음과 같이 작성했다.      
+## 3. Script         
 
 
 
-``` shell script                
+```                
 #!/bin/bash -li
 
-
-# git pr 정보를 payload 매개변수로 받아 payload.txt 파일로 저장합니다.    
+#git pr 정보를 payload 매개변수로 받아 payload.txt 파일로 저장합니다.    
 echo $payload > payload.txt 
 
-# pr 의 상태를 action 변수에 저장합니다. (ex. opened, closed)
+#pr 의 상태를 action 변수에 저장합니다. (ex. opened, closed)
 action='python -c 'import json, os; d = json.loads(open("payload.txt").read()); print d["action"]'' 
 
-# pr의 상태가 opened이나 reopened이 아니면 테스트를 진행하지 않습니다.   
+#pr의 상태가 opened이나 reopened이 아니면 테스트를 진행하지 않습니다.   
 if [ $action != "opened" ] || [ $action != "reopened" ]; then exit ; fi   
 
-# ci 결과를 다시 git에 보내주기 위해 payload로 받은 정보를 파싱합니다. 
+#ci 결과를 다시 git에 보내주기 위해 payload로 받은 정보를 파싱합니다. 
 pr_branch='python -c 'import json, os; d = json.loads(open("payload.txt").read()); print d["pull_request"]["head"]["ref"]'' 
+
+#payload로 받은 statuses_url을 사용하여 pr 상태를 변경할 수 있다.   
 curl_url='python -c 'import json, os; d = json.loads(open("payload.txt").read()); print d["pull_request"]["statuses_url"]'' 
 
-# pr branch의 코드만 가져옵니다. 
+#pr branch의 코드만 가져옵니다. 
 git clone -b $pr_branch --single-branch https://github.com/depromeet/8th-final-team5-backend.git
 
 cd 8th-final-team5-backend 
 
-# 테스트 진행 
+#테스트 진행 
 ./mvnw test > build.txt
 
-# 테스트 결과를 build.txt 파일에 저장하고 결과가 실패인지 result 변수에 저장합니다. (테스트 실패하면 result에 0이 저장됨)
+#테스트 결과를 build.txt 파일에 저장하고 결과가 실패인지 result 변수에 저장합니다. (테스트 실패하면 result에 0이 저장됨)
 result='cat build.txt | grep -q "BUILD FAILURE" ; echo $?' 
 
-# payload로 받은 statuses_url을 사용하여 pr 상태를 변경할 수 있다.   
-# $BUILD_NUMBER 는 jenkins에서 제공하는 변수다. git에서 detail 링크를 누르면 스크립트 결과를 바로 볼 수 있다.     
-# 테스트 결과 성공하면 state를 success 실패하면 failure로 git에 전달   
+#$BUILD_NUMBER 는 jenkins에서 제공하는 변수다. git에서 detail 링크를 누르면 스크립트 결과를 바로 볼 수 있다.     
+#테스트 결과 성공하면 state를 success 실패하면 failure로 git에 전달   
 if [ $result == "1" ]; then \
 	curl "${curl_url}" \
   		-H "Content-Type: application/json" \
@@ -107,7 +107,7 @@ else \
   		-X POST \
   		-d "{\"state\": \"failure\",\"context\": \"continuous-integration/jenkins\", \"description\": \"Jenkins\", \"target_url\": \"http://20.194.0.141/job/dangdang_ci/$BUILD_NUMBER/console\"}"; \
 fi
-```    
+```       
 
 
    
