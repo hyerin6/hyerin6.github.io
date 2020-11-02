@@ -1,7 +1,7 @@
 ---
 layout: post
-title: "디프만 파이널 프로젝트"  
-description: "1차 코드리뷰"
+title: "Maven Wrapper, 상수화, 데스트"  
+description: "depromeet final 5 1차 코드리뷰"
 date: 2020-10-14
 tags: [depromeet]
 comments: true
