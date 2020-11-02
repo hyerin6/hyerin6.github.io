@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "Maven Wrapper, 상수화, 데스트"  
+title: "Maven Wrapper, 상수화, 테스트"  
 description: "depromeet final 5 1차 코드리뷰"
 date: 2020-10-14
 tags: [depromeet]

@@ -16,28 +16,28 @@ share: true
  
 ## 1. Jenkins & Git 연동                
 
-jenkins의 첫 화면에서 사람 > user 선택 > 설정 > token 생성 
-위와 같은 경로로 들어가 jenkins에서 토큰을 만들어주고   
+jenkins의 첫 화면에서 사람 > user 선택 > 설정 > token 생성       
+위와 같은 경로로 들어가 jenkins에서 토큰을 만들어주고          
 
-git webhook에서 Payload URL을 다음과 같이 작성하면 된다.   
+git webhook에서 Payload URL을 다음과 같이 작성하면 된다.             
 
 ```
 http://<jenkins_user_name>:<jenkins_token>@<jenkins_ip>/job/<jenkins_job>/buildWithParameters?token=<Authentication_Token>
 ```
 
-jenkins_user_name은 젠킨스 유저 ID,   
-jenkins_token은 젠킨스 유저 설정에서 생성한 token,     
-Authentication_Token은 젠킨스 job에서 빌드 유발을 `빌드를 원격으로 유발` 로 선태했을 때    
-내가	`Authentication Token` 에 적은 문자열이다.      
+jenkins_user_name은 젠킨스 유저 ID,       
+jenkins_token은 젠킨스 유저 설정에서 생성한 token,       
+Authentication_Token은 젠킨스 job에서 빌드 유발을 `빌드를 원격으로 유발` 로 선태했을 때        
+내가	`Authentication Token` 에 적은 문자열이다.           
 
-다음 화면에서 원하는 문자열을 입력하면 된다.   
+다음 화면에서 원하는 문자열을 입력하면 된다.      
 
  
 ![스크린샷 2020-11-02 오후 10 22 55](https://user-images.githubusercontent.com/33855307/97872903-24682800-1d5a-11eb-9e3d-b45ec542b776.png)    
 
 
-git webhook에서 Pull request를 선택하고 저장하면       
-pr에 이벤트가 발생할 때 젠킨스에서 스크립트 실행이 가능해진다.      
+git webhook에서 Pull request를 선택하고 저장하면        
+pr에 이벤트가 발생할 때 젠킨스에서 스크립트 실행이 가능해진다.       
 
 <br />    
 
@@ -59,11 +59,11 @@ git 계정 Settings > Developer settings > Personal access tokens 에서 토큰�
 
  
 
-스크립트는 다음과 같이 작성했다.     
+스크립트는 다음과 같이 작성했다.      
 
 
 
-```shell script   
+```    
 #!/bin/bash -li
 
 
@@ -107,16 +107,7 @@ else \
   		-X POST \
   		-d "{\"state\": \"failure\",\"context\": \"continuous-integration/jenkins\", \"description\": \"Jenkins\", \"target_url\": \"http://20.194.0.141/job/dangdang_ci/$BUILD_NUMBER/console\"}"; \
 fi
-```
+```    
 
 
    
-
-       
-
-
-
-
-
-
-
