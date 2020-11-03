@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "jenkins 테스트 자동화"  
+title: "Jenkins 테스트 자동화"    
 description: "디프만 파이널 프로젝트 : jenkins CI"
 date: 2020-10-21
 tags: [depromeet, jenkins]
@@ -8,7 +8,7 @@ comments: true
 share: true
 --- 
 
-로그인 기능 개발을 시작하면서 젠킨스를 이용한 자동 배포와 테스트 자동화를 해보기로 했고 테스트 자동화를 담당하게 되었다.     
+로그인 기능 개발을 시작하면서 젠킨스를 이용한 자동 배포와 테스트 자동화를 해보기로 했고 테스트 자동화(ci)를 담당하게 되었다.     
 
 우선 작업(job)을 새로 만들고 git repogitory와 연동했다.   
 
@@ -27,7 +27,7 @@ http://<jenkins_user_name>:<jenkins_token>@<jenkins_ip>/job/<jenkins_job>/buildW
 
 jenkins_user_name은 젠킨스 유저 ID,       
 jenkins_token은 젠킨스 유저 설정에서 생성한 token,       
-Authentication_Token은 젠킨스 job에서 빌드 유발을 `빌드를 원격으로 유발` 로 선태했을 때        
+Authentication_Token은 젠킨스 job에서 빌드 유발을 `빌드를 원격으로 유발` 로 선택했을 때        
 내가	`Authentication Token` 에 적은 문자열이다.           
 
 다음 화면에서 원하는 문자열을 입력하면 된다.      
@@ -109,5 +109,11 @@ else \
 fi
 ```       
 
+<br />            
+
+### 참고       
+
+- https://git-scm.com/book/ko/v2/GitHub-GitHub-%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8C%85   
+- https://applitools.com/blog/how-to-update-jenkins-build-status-in-github-pull-requests-step-by-step-tutorial/  
 
    
