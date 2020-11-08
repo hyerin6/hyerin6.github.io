@@ -72,8 +72,8 @@ echo $payload > payload.txt
 #pr 의 상태를 action 변수에 저장합니다. (ex. opened, closed)
 action='python -c 'import json, os; d = json.loads(open("payload.txt").read()); print d["action"]'' 
 
-#pr의 상태가 opened이나 reopened이 아니면 테스트를 진행하지 않습니다.   
-if [ $action != "opened" ] || [ $action != "reopened" ]; then exit ; fi   
+#pr의 상태가 opened이나 reopened, edited이 아니면 테스트를 진행하지 않습니다.   
+if [ $action != "opened" ] || [ $action != "reopened" ] || [ $action != "edited" ]; then exit ; fi
 
 #ci 결과를 다시 git에 보내주기 위해 payload로 받은 정보를 파싱합니다. 
 pr_branch='python -c 'import json, os; d = json.loads(open("payload.txt").read()); print d["pull_request"]["head"]["ref"]'' 
@@ -86,11 +86,8 @@ git clone -b $pr_branch --single-branch https://github.com/depromeet/8th-final-t
 
 cd 8th-final-team5-backend 
 
-#테스트 진행 
-./mvnw test > build.txt
-
-#테스트 결과를 build.txt 파일에 저장하고 결과가 실패인지 result 변수에 저장합니다. (테스트 실패하면 result에 0이 저장됨)
-result='cat build.txt | grep -q "BUILD FAILURE" ; echo $?' 
+#테스트 진행, 결과가 실패인지 result 변수에 저장합니다. (테스트 실패하면 result에 0이 저장됨)
+result=`echo \`./mvnw test\` | grep -q "BUILD FAILURE"; echo $?`
 
 #$BUILD_NUMBER 는 jenkins에서 제공하는 변수다. git에서 detail 링크를 누르면 스크립트 결과를 바로 볼 수 있다.     
 #테스트 결과 성공하면 state를 success 실패하면 failure로 git에 전달   
@@ -113,7 +110,7 @@ fi
 
 ### 참고       
 
-- https://git-scm.com/book/ko/v2/GitHub-GitHub-%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8C%85   
-- https://applitools.com/blog/how-to-update-jenkins-build-status-in-github-pull-requests-step-by-step-tutorial/  
+- <https://git-scm.com/book/ko/v2/GitHub-GitHub-%EC%8A%A4%ED%81%AC%EB%A6%BD%ED%8C%85>         
+- <https://applitools.com/blog/how-to-update-jenkins-build-status-in-github-pull-requests-step-by-step-tutorial/>       
 
    
