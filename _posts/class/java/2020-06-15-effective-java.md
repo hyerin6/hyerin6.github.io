@@ -6,7 +6,6 @@ date: 2020-06-15
 tags: [java]
 comments: true
 share: true
-published: false
 ---   
 
 객체를 만들어야 할 때와 만들지 말아야 할 때를 구분하는 법      
