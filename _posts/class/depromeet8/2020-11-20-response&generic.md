@@ -2,7 +2,7 @@
 layout: post
 title: "ResponseEntity & Generic"      
 description: "디프만 파이널 프로젝트"  
-date: 2020-11-17
+date: 2020-11-20
 tags: [depromeet]
 comments: true
 share: true
