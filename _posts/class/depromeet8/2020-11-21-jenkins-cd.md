@@ -8,12 +8,12 @@ comments: true
 share: true
 --- 
 
-어쩌다보니 배포 자동화도 하게 되었는데 ci와 마찬가지로 스크립트를 작성해서 꼼꼼하게 배포 과정을 공부해보기로 했다.      
+어쩌다보니 배포 자동화도 하게 되었는데 ci와 마찬가지로 스크립트를 작성해서 꼼꼼하게 배포 과정을 공부해보기로 했다.
+처음에는 젠킨스가 docker로 띄워진줄 모르고 ssh key를 생성하고 배포용 서버에 넣어줬는데   
+다음과 같은 메시지가 뜨면서 실패해서 당황했지만     
+`Host key verification failed.Host key verification failed.`    
 
-처음에는 젠킨스가 docker로 띄워진줄 모르고 ssh 키를 생성하고 배포용 서버에 넣어줬는데 다음과 같은 메시지가 뜨면서 실패해서 당황했지만   
-`Host key verification failed.Host key verification failed.`  
-
-젠킨스를 docker로 띄웠을 때는 ssh를 jenkins_home에서 생성해야 한다는 것을 알 수 있었다..      
+젠킨스를 docker로 띄웠을 때는 ssh key를 jenkins_home에서 생성해야 한다는 것을 알 수 있었다.           
 
 
 <br />       
@@ -29,7 +29,7 @@ share: true
 #원하는 브랜치에서 clone받아 배포해볼 수 있게 파라미터로 브랜치만 받는다. 
 git clone -b $branch --single-branch https://github.com/depromeet/8th-final-team5-backend.git
 
-// properties를 생성하는 쉘 파일을 만들 계획인데 프로젝트 진행을 위해 일단 다음과 같이 생성했다. 
+#properties를 생성하는 쉘 파일을 만들 계획인데 프로젝트 진행을 위해 일단 다음과 같이 생성했다. 
 cd 8th-final-team5-backend
 ./mvnw clean package
 cd ./target
