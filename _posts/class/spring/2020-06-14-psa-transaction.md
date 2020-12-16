@@ -5,8 +5,7 @@ description: "트랜잭션의 서비스 추상화"
 date: 2020-06-14
 tags: [spring]
 comments: true
-share: true
-published: false
+share: true 
 ---
 
 
