@@ -11,11 +11,15 @@ layout: default
   <span class="post-date">
     <time>{{ page.date | date_to_string }}</time>
   </span>
+
+  <div>
+  <img style="float: left;" src="http://hits.dwyl.com/hyerin6.github.io{{ page.url }}.svg" alt="hit count image"/>
+  </div>
+
   <div class="post-tag">
     <ul>
       {% for tag in page.tags %}
       <li>
-        <img style="width: inherit; float: left;" src="http://hits.dwyl.com/hyerin6.github.io{{ page.url }}.svg" alt="hit count image"/>
         <a href="{{site.url}}/tags#{{ tag }}">
           <span>{{ tag }}</span>
         </a>
