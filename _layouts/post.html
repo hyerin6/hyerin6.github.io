@@ -7,7 +7,15 @@ layout: default
   </div>
 </header>
 <div class="post">
-  <div class="post-title">{{ page.title }}</div>
+  <div class="post-title" style="text-align: center;">{{ page.title }}</div>
+
+  <div style="text-align: center;">
+    <a href="http://hits.dwyl.com/{{ site.url | remove_first: 'https://' | remove_first: 'http://' }}{{ page.url }}"
+       target="_blank">
+      <img src="http://hits.dwyl.com/{{ site.url | remove_first: 'https://' | remove_first: 'http://' }}{{ page.url }}.svg" />
+    </a>
+  </div>
+
   <span class="post-date">
     <time>{{ page.date | date_to_string }}</time>
   </span>
