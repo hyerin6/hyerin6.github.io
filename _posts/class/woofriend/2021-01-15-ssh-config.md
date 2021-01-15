@@ -35,7 +35,8 @@ chmod 600 config
 * IdentityFile : ssh 접속에 이용할 private key (id_rsa : Private Key file)        
 
 
-위 정보를 담아야 하는데 이번 프로젝트를 예시로 다음과 같이 작성하면 된다.         
+위 정보를 config 파일에 담아야 하는데 다음과 같이 작성하면 된다.    
+이번 프로젝트에서는 port도 지정해야해서 Port 설정도 추가했다.            
 ```  
 Host woof
   HostName [ip 혹은 host 주소]
