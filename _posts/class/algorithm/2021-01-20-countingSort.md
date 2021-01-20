@@ -215,7 +215,14 @@ public static void radixSort(int[] a) {
 
 * 2075 N번째 큰 수
   - 문제 <https://www.acmicpc.net/problem/2075>    
-  - 코드1 (PriorityQueue 사용) <https://github.com/hyerin6/Algorithm/blob/master/Baekjoon/src/training/B2075.java>     
-  - 코드2 (Radix Sort 사용) <https://github.com/hyerin6/Algorithm/blob/master/Baekjoon/src/training/B2075_v2.java>        
- 
+  - 코드1 (priorityQueue 사용) <https://github.com/hyerin6/Algorithm/blob/master/Baekjoon/src/training/B2075.java>     
+  - 코드2 (radix sort 사용) <https://github.com/hyerin6/Algorithm/blob/master/Baekjoon/src/training/B2075_v2.java>    
+<br />     
+
+![스크린샷 2021-01-20 오후 10 53 03](https://user-images.githubusercontent.com/33855307/105185553-fbdf1580-5b73-11eb-8cdc-f6030c0f58bb.png)     
+
+* 제출번호 `25490906`: priorityQueue로 구현한 결과        
+* 제출번호 `25477319`: radix sort로 구현한 결과           
+
+
 <br />
