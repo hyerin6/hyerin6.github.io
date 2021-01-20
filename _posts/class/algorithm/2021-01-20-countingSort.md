@@ -1,12 +1,14 @@
 ---
 layout: post
-title: "Counting Sort 계수 정렬"  
-description: "정렬할 값들이 단순할 경우, 이 단순함을 이용해서 O(n) 시간에 정렬하기"
+title: "Counting Sort & Radix Sort"  
+description: "계수 정렬 & 기수 정렬"
 date: 2021-01-20
 tags: [algorithm]
 comments: true
 share: true
 ---
+
+# Counting Sort (계수 정렬)     
 
 보통 빠르다는 정렬 알고리즘으로는 대표적으로      
 퀵 정렬(Quick Sort), 힙 정렬(Heap Sort), 합병 정렬(Merge Sort) 등이 있다.      
@@ -66,6 +68,121 @@ Map 인터페이스를 implements 했기 때문에 사용법은 다음과 같다
 
 <br />     
 
+
+# Radix Sort(기수 정렬)      
+
+낮은 자리 수 부터 비교하여 정렬해 간다는 것을 기본 개념으로 하는 정렬 알고리즘이다.          
+자릿수가 고정되어 있으니, 안전성이 있고(이때 데이터들 간의 상대적 순서는 보존되어야 한다.)        
+기수 정렬은 비교 연산을 하지 않으며, 무엇보다도 전체 시간복잡도 역시 O(dn)이어서, 정수와 같은 자료의 정렬 속도가 매우 빠르다.        
+정렬할 데이터의 radix가 작은 경우에 활용할 수 있다.      
+
+하지만, 데이터 전체 크기에 기수 테이블의 크기만한 메모리가 더 필요하다.         
+기수 정렬은 정렬 방법의 특수성 때문에, 부동소수점 실수처럼 특수한 비교 연산이 필요한 데이터에는 적용할 수 없지만, 사용 가능할 때에는 매우 좋은 알고리즘이다.       
+<br />    
+
+### 용어 정리   
+* digit   
+십진수의 digit는 10개이다. (0,1,2,3,4,5,6,7,8,9)   
+이진수의 digit는 2개이다. (0,1)    
+16진수의 digit는 16개이다. (0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F)    
+<br />           
+  
+* radix      
+digit의 수를 radix라고 한다.  
+십진수의 radix는 10 이다.  
+이진수의 radix는 2 이다.  
+16진수의 radix는 16 이다.  
+<br />
+
+| |(1)|(2)|(3)|(4)|
+|---|---|---|---|---|
+|0123|156**0**|00**0**4|0**0**04|**0**004|
+|2154|215**0**|02**2**2|1**0**61|**0**123|
+|0222|106**1**|01**2**3|0**1**23|**0**222|
+|0004|022**2**|21**5**0|2**1**50|**0**283|
+|0283|012**3**|21**5**4|2**1**54|**1**061|
+|1560|028**3**|15**6**0|0**2**22|**1**560|
+|1061|215**4**|10**6**1|0**2**83|**2**150|
+|2150|000**4**|02**8**3|1**5**60|**2**154|
+
+(1) 일의 자리를 기준으로 정렬한다.  
+(2) 십의 자리를 기준으로 정렬한다.  
+(3) 백의 자리를 기준으로 정렬한다.  
+(4) 천의 자리를 기준으로 정렬한다. 이 단계에서 정렬이 완료된다.     
+<br />   
+
+만약 배열에 음수도 들어있다면,    
+모든 자릿 수를 정렬한 후에, 부호(+,-)를 고려하여 순서를 변경하는 작업을 추가하거나,   
+아니면 미리 양수와 음수를 분리한 후, 양수 부분과 음수 부분을 따로 radix sort해야 한다.   
+배열에서 양수와 음수를 분리할 때는 quick sort의 partition을 응용할 수 있다.      
+<br />   
+
+대부분의 데이터에서 자릿 수는 상수이다.     
+그런데, 각 자리의 정렬을 O(N lo gN) 시간에 한다면, radix sort의 시간도 O(N lo gN) 시간이된다.   
+각 자리의 정렬을 O(N) 시간에 한다면, radix sort의 시간도 O(N) 시간이 된다.    
+각 자리의 값의 수는 digit 수와 같다.    
+digit 수는 작기 때문에, digit 값을 기준으로 정렬하는 작업은 counting sort 알고리즘을 적용하면 된다.        
+
+<br />    
+
+### 구현      
+
+```java
+/*
+src 배열의 값들을 정렬하여, dest 배열에 저장함
+signed : 부호를 고려하여 정렬함.
+radix sort 할 때, 마지막 counting sort는 부호를 고려해야함.
+*/
+public static void countingSort(int[] src, int[] dest, int nth, boolean signed) {
+	int N = src.length;
+	int[] count = new int[256];
+
+	for (int i = 0; i < N; ++i) {
+		int value = src[i];
+		int digit = value >> (nth * 8) & 0xFF;
+		++count[digit];
+	}
+	
+	int[] index = new int[256];
+	if (signed == false) {
+		index[0] = 0;
+		for (int i = 1; i < index.length; ++i) {
+			index[i] = index[i - 1] + count[i - 1];
+		}
+	} else {
+		index[128] = 0;
+		for (int i = 129; i < index.length; ++i) {
+			index[i] = index[i - 1] + count[i - 1];
+		}
+		for (int i = 0; i < 128; ++i) {
+			int prev = i == 0 ? 255 : i - 1;
+			index[i] = index[prev] + count[prev];
+		}
+	}
+	
+	for (int i = 0; i < N; ++i) {
+		int value = src[i];
+		int digit = value >> (nth * 8) & 0xFF;
+		dest[index[digit]++] = value;
+	}
+}
+
+public static void radixSort(int[] a) {
+	int[] b = new int[a.length];
+	for (int i = 0; i < 4; ++i) {
+		if (i % 2 == 0) {
+			countingSort(a, b, i, i == 3);
+		} else {
+			countingSort(b, a, i, i == 3);
+		}
+	}
+}
+```
+
+
+<br />    
+
+
 ### 알고리즘 문제     
 * 1920 수 찾기   
     - 문제 <https://www.acmicpc.net/problem/1920>     
@@ -96,4 +213,9 @@ Map 인터페이스를 implements 했기 때문에 사용법은 다음과 같다
     - 코드 <https://github.com/hyerin6/Algorithm/blob/master/Baekjoon/src/training/B10815.java>      
 
 
+* 2075 N번째 큰 수
+  - 문제 <https://www.acmicpc.net/problem/2075>    
+  - 코드1 (PriorityQueue 사용) <https://github.com/hyerin6/Algorithm/blob/master/Baekjoon/src/training/B2075.java>     
+  - 코드2 (Radix Sort 사용) <https://github.com/hyerin6/Algorithm/blob/master/Baekjoon/src/training/B2075_v2.java>        
+ 
 <br />
