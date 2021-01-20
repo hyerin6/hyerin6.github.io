@@ -8,8 +8,9 @@ comments: true
 share: true
 ---
 
-보통 빠르다는 정렬 알고리즘으로는 대표적으로 퀵 정렬(Quick Sort), 힙 정렬(Heap Sort), 합병 정렬(Merge Sort) 등이 있다.    
-정렬은 보통 데이터끼리 비교하는 경우가 많아 𝚶(nlogn)보다 작아질 수 없는 것이 한계다.    
+보통 빠르다는 정렬 알고리즘으로는 대표적으로      
+퀵 정렬(Quick Sort), 힙 정렬(Heap Sort), 합병 정렬(Merge Sort) 등이 있다.      
+정렬은 보통 데이터끼리 비교하는 경우가 많아 𝚶(nlogn)보다 작아질 수 없는 것이 한계다.       
 <br />       
 
 ### 정렬 방법   
@@ -27,6 +28,7 @@ share: true
 즉 Counting Sort가 효율적인 상황에서 쓰려면 수열의 길이보다 수의 범위가 극단적으로 크면 메모리가 엄청 낭비 될 수 있다는 것이다.    
 상황에 맞게 정렬 알고리즘을 써야하고 Quick 정렬의 경우 시간복잡도 평균값이 𝚶(nlogn)으로 빠른편이면서 배열도 하나만 사용하기 때문에 
 공간복잡도는 𝚶(𝑛)으로 시간과 메모리 둘 다 효율적이라 대표적으로 많이 쓰인다.    
+
 <br />    
 
 ### 수행시간   
@@ -40,7 +42,8 @@ share: true
 
 * n < m            
 수행시간: O(m)    
-메모리 요구량: O(m)    
+메모리 요구량: O(m)   
+  
 <br />        
 
 
@@ -59,29 +62,34 @@ Map 인터페이스를 implements 했기 때문에 사용법은 다음과 같다
 
 레드 블랙 트리는 이진 트리이므로, TreeMap 클래스의 데이터 목록은 키(key) 값을 기준으로 정렬되어 있다.          
 그러기 때문에 별도에 정렬은 하지 않고 TreeMap에 값을 순차적으로 출력하면 된다.    
-하지만 TreeMap은 Key값이 중복이 되지 않기 때문에 값의 갯수를 value에 넣어야 한다.
+하지만 TreeMap은 Key값이 중복이 되지 않기 때문에 값의 갯수를 value에 넣어야 한다.  
+
 <br />     
 
 ### 알고리즘 문제     
 * 1920 수 찾기   
     - 문제 <https://www.acmicpc.net/problem/1920>     
     - 코드 <https://github.com/hyerin6/Algorithm/blob/master/Baekjoon/src/training/B1920.java>    
-    
+<br />          
+
 
 * 2750 수 정렬하기    
     - 문제 <https://www.acmicpc.net/problem/2750>         
     - 코드 <https://github.com/hyerin6/Algorithm/blob/master/Baekjoon/src/training/B2750.java>    
+<br />    
 
 
 * 2751 수 정렬하기 2    
     - 문제 <https://www.acmicpc.net/problem/2751>          
     - 코드 <https://github.com/hyerin6/Algorithm/blob/master/Baekjoon/src/training/B2751.java>    
+<br />    
 
 
 * 10989 수 정렬하기 3    
     - 문제 <https://www.acmicpc.net/problem/10989>         
     - 코드 <https://github.com/hyerin6/Algorithm/blob/master/Baekjoon/src/training/B10989.java>          
-  
+<br />   
+
 
 * 10815 숫자 카드    
     - 문제 <https://www.acmicpc.net/problem/10815>           
