@@ -95,7 +95,7 @@ digit의 수를 radix라고 한다.
 <br />
 
 | |(1)|(2)|(3)|(4)|
-|---|---|---|---|---|
+|:---:|:---:|:---:|:---:|:---:|
 |0123|156**0**|00**0**4|0**0**04|**0**004|
 |2154|215**0**|02**2**2|1**0**61|**0**123|
 |0222|106**1**|01**2**3|0**1**23|**0**222|
@@ -127,61 +127,10 @@ digit 수는 작기 때문에, digit 값을 기준으로 정렬하는 작업은 
 
 ### 구현      
 
-```java
-/*
-src 배열의 값들을 정렬하여, dest 배열에 저장함
-signed : 부호를 고려하여 정렬함.
-radix sort 할 때, 마지막 counting sort는 부호를 고려해야함.
-*/
-public static void countingSort(int[] src, int[] dest, int nth, boolean signed) {
-	int N = src.length;
-	int[] count = new int[256];
-
-	for (int i = 0; i < N; ++i) {
-		int value = src[i];
-		int digit = value >> (nth * 8) & 0xFF;
-		++count[digit];
-	}
-	
-	int[] index = new int[256];
-	if (signed == false) {
-		index[0] = 0;
-		for (int i = 1; i < index.length; ++i) {
-			index[i] = index[i - 1] + count[i - 1];
-		}
-	} else {
-		index[128] = 0;
-		for (int i = 129; i < index.length; ++i) {
-			index[i] = index[i - 1] + count[i - 1];
-		}
-		for (int i = 0; i < 128; ++i) {
-			int prev = i == 0 ? 255 : i - 1;
-			index[i] = index[prev] + count[prev];
-		}
-	}
-	
-	for (int i = 0; i < N; ++i) {
-		int value = src[i];
-		int digit = value >> (nth * 8) & 0xFF;
-		dest[index[digit]++] = value;
-	}
-}
-
-public static void radixSort(int[] a) {
-	int[] b = new int[a.length];
-	for (int i = 0; i < 4; ++i) {
-		if (i % 2 == 0) {
-			countingSort(a, b, i, i == 3);
-		} else {
-			countingSort(b, a, i, i == 3);
-		}
-	}
-}
-```
+![carbon](https://user-images.githubusercontent.com/33855307/105186134-ba029f00-5b74-11eb-8612-f913e61811e8.png)   
 
 
 <br />    
-
 
 ### 알고리즘 문제     
 * 1920 수 찾기   
