@@ -3,7 +3,7 @@ layout: post
 title: "ssh config 사용해서 ssh 접속하기"  
 description: "ssh config, private key"
 date: 2021-01-15
-tags: [woofriend]
+tags: [depromeet]
 comments: true
 share: true
 published: true 
