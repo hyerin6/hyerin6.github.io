@@ -19,7 +19,7 @@ share: true
 
 ### 자판기 인터페이스   
 ```
-public interface Ivending {
+public interface Vending {
     void start();
     void chooseProduct();
     void stop();
@@ -29,11 +29,13 @@ public interface Ivending {
 
 ### 캔디 구현체    
 ```
-public class CandyVending implements Ivending {
+public class CandyVending implements Vending {
+
     @Override
     public void start() {
         System.out.println("Start Vending machine");
     }
+    
     @Override
     public void chooseProduct() {
         System.out.println("Produce diiferent candies");
@@ -41,26 +43,31 @@ public class CandyVending implements Ivending {
         System.out.println("pay for candy");
         System.out.println("collect candy");
     }
+    
     @Override
     public void stop() {
         System.out.println("Stop Vending machine");
     }
+    
     @Override
     public void process() {
         start();
         chooseProduct();
         stop();
     }
+    
 }
 ```
 
 ### 음료수 자판기   
 ```
-public class DrinkVending implements Ivending {
+public class DrinkVending implements Vending {
+
     @Override
     public void start() {
         System.out.println("Start Vending machine");
     }
+    
     @Override
     public void chooseProduct() {
         System.out.println("Produce diiferent soft drinks");
@@ -68,16 +75,19 @@ public class DrinkVending implements Ivending {
         System.out.println("pay for drinks");
         System.out.println("collect drinks");
     }
+    
     @Override
     public void stop() {
         System.out.println("stop Vending machine");
     }
+    
     @Override
     public void process() {
         start();
         chooseProduct();
         stop();
     }
+    
 }
 ```
 
@@ -172,7 +182,7 @@ public class VendingManager {
 
 ### 인터페이스    
 ```
-public interface Ivending {
+public interface Vending {
     void start();
     void chooseProduct();
     void stop();
@@ -182,7 +192,7 @@ public interface Ivending {
 
 ### 인터페이스를 구현한 추상 클래스     
 ```
-public abstract class AbstractVending implements Ivending {
+public abstract class AbstractVending implements Vending {
     public void start() {
         System.out.println("Start Vending machine");
     }
@@ -205,7 +215,7 @@ public abstract class AbstractVending implements Ivending {
 ### 구현 클래스에 추상 클래스를 상속한 private inner class 구현 & inner class 객체를 변수로 가지고 포워딩         
 
 ```
-public class CandyVending  implements Ivending {
+public class CandyVending implements Vending {
    
     private class AbstractVendingDelegator extends AbstractVending {
          @Override
@@ -250,21 +260,5 @@ public class CandyVending  implements Ivending {
 <br />    
 
 
-
-
-<details>
-<summary>필기</summary>
-<div markdown="1">
-
-![️이펙티브자바_210620_220447_2](https://user-images.githubusercontent.com/33855307/122675505-b0a95b80-d214-11eb-9080-da277f7577f3.jpg)
-
-![️이펙티브자바_210620_220447_3](https://user-images.githubusercontent.com/33855307/122675509-b56e0f80-d214-11eb-9b5b-9ec8dedf3bf2.jpg)
-
-![️이펙티브자바_210620_220447_4](https://user-images.githubusercontent.com/33855307/122675510-b69f3c80-d214-11eb-9b4f-69707d041b5c.jpg)
-
-![️이펙티브자바_210620_220447_5](https://user-images.githubusercontent.com/33855307/122675512-b8690000-d214-11eb-846a-d87a4c5db04f.jpg)
-
-</div>
-</details>
 
 
