@@ -14,6 +14,7 @@ share: true
 자판기를 개발할 것이다.         
 음료 자판기, 커피 자판기, 라면 자판기 등등 여러 타입이 있다.           
 
+<br />    
 
 # Interface          
 
@@ -26,6 +27,8 @@ public interface Vending {
     void process();
 }
 ```
+
+<br />    
 
 ### 캔디 구현체    
 ```
@@ -59,6 +62,8 @@ public class CandyVending implements Vending {
 }
 ```
 
+<br />    
+
 ### 음료수 자판기   
 ```
 public class DrinkVending implements Vending {
@@ -90,6 +95,8 @@ public class DrinkVending implements Vending {
     
 }
 ```
+
+<br />    
 
 ### main   
 ```
@@ -190,13 +197,18 @@ public interface Vending {
 }
 ```   
 
+<br />    
+
 ### 인터페이스를 구현한 추상 클래스     
 ```
 public abstract class AbstractVending implements Vending {
+
+    // 중복되는 메서드는 구현 
     public void start() {
         System.out.println("Start Vending machine");
     }
     
+    // 구현체마다 다른 기능은 추상 메서드로 정의 
     public abstract void chooseProduct();
     
     public void stop() {
@@ -208,8 +220,11 @@ public abstract class AbstractVending implements Vending {
         chooseProduct();
         stop();
     }
+    
 }
 ```
+
+<br />    
 
 
 ### 구현 클래스에 추상 클래스를 상속한 private inner class 구현 & inner class 객체를 변수로 가지고 포워딩         
@@ -217,6 +232,7 @@ public abstract class AbstractVending implements Vending {
 ```
 public class CandyVending implements Vending {
    
+   // 구현마다 다른 기능은 구현체 클래스에 private inner class에 추상 클래스를 상속받아 재정의 
     private class AbstractVendingDelegator extends AbstractVending {
          @Override
          public void chooseProduct() {
@@ -227,11 +243,12 @@ public class CandyVending implements Vending {
          }
     }
 
+    // inner class의 객체를 변수로 포워딩 
     AbstractVendingDelegator delegator = new AbstractVendingDelegator();
     
     @Override
     public void start() {
-        delegator.start();
+        delegator.start(); // 각 메서드 호출을 내부 클래스의 인스턴스 메서드 호출
     }
     
     @Override
