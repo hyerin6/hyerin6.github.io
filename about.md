@@ -1,13 +1,14 @@
 ---
-title: About
-permalink: /about/
+title: About permalink: /about/
 ---
 
 
 
 <br />  
 
-![KakaoTalk_Photo_2021-06-22-16-59-31](https://user-images.githubusercontent.com/33855307/122886889-524abd00-d37b-11eb-8e12-1c67124af313.jpeg)  
-![KakaoTalk_Photo_2021-06-22-16-59-35](https://user-images.githubusercontent.com/33855307/122886884-51b22680-d37b-11eb-8aea-3562693ab760.jpeg)  
-![KakaoTalk_Photo_2021-06-22-16-59-39](https://user-images.githubusercontent.com/33855307/122886873-4f4fcc80-d37b-11eb-8402-872ceaf738f2.jpeg)     
+
+![KakaoTalk_Photo_2021-06-22-22-52-55](https://user-images.githubusercontent.com/33855307/122937072-a28e4300-d3ac-11eb-868b-fc8f6befdff4.jpeg)  
+![KakaoTalk_Photo_2021-06-22-22-53-04](https://user-images.githubusercontent.com/33855307/122937077-a326d980-d3ac-11eb-9b54-684218cbb2d5.jpeg)  
+![KakaoTalk_Photo_2021-06-22-22-53-11](https://user-images.githubusercontent.com/33855307/122937082-a4580680-d3ac-11eb-85e8-de6c469d4b6e.jpeg)  
+
 
