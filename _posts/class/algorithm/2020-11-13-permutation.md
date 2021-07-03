@@ -4,6 +4,7 @@ title: "순열 permutation"
 description: "프로그래머스 lv2 소수 찾기"
 date: 2020-11-13
 tags: [algorithm]
+categories: [Algorithm]
 comments: true
 share: true
 ---

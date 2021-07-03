@@ -4,6 +4,7 @@ title: "Jenkins 테스트 자동화"
 description: "디프만 파이널 프로젝트 : jenkins CI"
 date: 2020-10-21
 tags: [depromeet, jenkins]
+categories: [Depromeet]
 comments: true
 share: true
 --- 
@@ -12,7 +13,7 @@ share: true
 
 우선 작업(job)을 새로 만들고 git repogitory와 연동했다.   
 
-<br />    
+<br />       
  
 ## 1. Jenkins & Git 연동                
 
@@ -40,7 +41,7 @@ git webhook에서 Pull request를 선택하고 저장하면
 pr에 이벤트가 발생할 때 젠킨스에서 스크립트 실행이 가능해진다.       
 
 <br />    
-
+<br />         
 
 
 ## 2. 젠킨스 설정   
@@ -57,7 +58,8 @@ git 계정 Settings > Developer settings > Personal access tokens 에서 토큰�
 (url에 query string(access_token)으로 보내도 되는데 git에서 권장하지 않기 때문에 언제든지 작동하지 않을 수 있다는 메일이 날아온다.)
 
 
- 
+ <br />          
+<br />         
 
 ## 3. Script         
 
@@ -106,7 +108,8 @@ else \
 fi
 ```       
 
-<br />            
+<br />       
+<br />         
 
 ### 참고       
 

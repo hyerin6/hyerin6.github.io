@@ -4,6 +4,7 @@ title: "git 브랜치 병합 전략 : rebase"
 description: "꿀단지"
 date: 2020-08-09
 tags: [depromeet]
+categories: [Depromeet]
 comments: true
 share: true
 --- 

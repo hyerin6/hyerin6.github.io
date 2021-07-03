@@ -4,6 +4,7 @@ title: "Counting Sort & Radix Sort"
 description: "계수 정렬 & 기수 정렬"
 date: 2021-01-20
 tags: [algorithm]
+categories: [Algorithm]
 comments: true
 share: true
 ---
@@ -67,6 +68,7 @@ Map 인터페이스를 implements 했기 때문에 사용법은 다음과 같다
 하지만 TreeMap은 Key값이 중복이 되지 않기 때문에 값의 갯수를 value에 넣어야 한다.  
 
 <br />     
+<br />           
 
 
 # Radix Sort(기수 정렬)      
@@ -124,6 +126,7 @@ digit의 수를 radix라고 한다.
 digit 수는 작기 때문에, digit 값을 기준으로 정렬하는 작업은 counting sort 알고리즘을 적용하면 된다.        
 
 <br />    
+<br />           
 
 ### 구현      
 
@@ -131,6 +134,7 @@ digit 수는 작기 때문에, digit 값을 기준으로 정렬하는 작업은 
 
 
 <br />    
+<br />         
 
 ### 알고리즘 문제     
 * 1920 수 찾기   

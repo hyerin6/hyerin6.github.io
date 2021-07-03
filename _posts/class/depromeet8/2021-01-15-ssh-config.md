@@ -4,6 +4,7 @@ title: "ssh config 사용해서 ssh 접속하기"
 description: "ssh config, private key"
 date: 2021-01-15
 tags: [depromeet]
+categories: [Depromeet]
 comments: true
 share: true
 published: true 
@@ -15,6 +16,7 @@ published: true
 항상 원격 서버에 public key를 등록하고 (`.ssh/authorized_keys`)                   
 `ssh 계정@호스트주소` 명령으로 ssh 접속을 했는데                    
 이번에는 config 파일을 이용해 원격 접속을 더 간단하게 해보기로 했다.                           
+
 <br />                   
 
 ### config 파일을 이용한 원격 접속              
@@ -26,6 +28,7 @@ cd ~/.ssh
 touch config 
 chmod 600 config
 ```  
+
 <br />    
 
 (2) config 파일 내 원격 접속 정보 추가           
@@ -52,6 +55,7 @@ ssh woof
 ```
 
 직접 설정한 이름을 이용해서 ssh 접속을 간편하게 할 수 있다.      
+
 <br />        
  
 (3) 패스워드가 있다면 패스워드 입력 후 접속이 가능하다.                          

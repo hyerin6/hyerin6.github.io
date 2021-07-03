@@ -4,6 +4,7 @@ title: "Jenkins 배포 자동화"
 description: "디프만 파이널 프로젝트 : jenkins CD"
 date: 2020-11-21
 tags: [depromeet, jenkins]
+categories: [Depromeet]
 comments: true
 share: true
 --- 

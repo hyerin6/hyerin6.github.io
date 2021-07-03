@@ -4,6 +4,7 @@ title: "lowerBound & upperBound"
 description: "KEY를 찾아도 끝내지 않고 계속 탐색 범위를 줄여가는 BinarySearch"
 date: 2021-01-20
 tags: [algorithm]
+categories: [Algorithm]
 comments: true
 share: true
 ---
@@ -34,7 +35,8 @@ static int binarySearch(int[] list, int key) {
 
 key 값을 찾으면 바로 index를 return 하고 못 찾으면 -1을 return 한다.       
 
-<br />            
+<br />    
+<br />         
 
 ## lowerBound, upperBound        
 
@@ -84,6 +86,7 @@ private static int upperBound(List<Integer> data, int target) {
 
 
 <br />     
+<br />         
 
 ### 관련 문제          
 * 문제 <https://www.acmicpc.net/problem/10816>         

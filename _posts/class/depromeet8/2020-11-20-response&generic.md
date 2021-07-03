@@ -4,6 +4,7 @@ title: "ResponseEntity & Generic"
 description: "디프만 파이널 프로젝트"  
 date: 2020-11-20
 tags: [depromeet]
+categories: [Depromeet]
 comments: true
 share: true
 --- 
@@ -12,10 +13,12 @@ share: true
 이미지 저장, 주소 저장, 인기 반려동물과 탐색 정렬 기준 등   
 회의해야 할 게 아직 많이 남았지만 간단하게 필요한 데이터와 관계를 정리해봤다.                 
 
+<br />         
+
 ![스크린샷 2020-11-17 오후 11 59 37](https://user-images.githubusercontent.com/33855307/99406407-312b7500-2931-11eb-8f82-499aa1f31823.png)    
 
 
-<br />     
+<br />       
 
 
 # ResponseEntity     
@@ -35,7 +38,8 @@ new ResponseEntity(header, HttpStatus.OK);  // header와 상태코드(200) 리�
 <https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/http/ResponseEntity.html#ResponseEntity-T-org.springframework.util.MultiValueMap-org.springframework.http.HttpStatus->  
 
 
-<br />       
+<br />        
+<br />         
 
 
 # Generic   
@@ -49,7 +53,8 @@ new ResponseEntity(header, HttpStatus.OK);  // header와 상태코드(200) 리�
 아직 2장을 읽는 중이라 몰랐는데 5장 전체가 제네릭에 관련된 내용이었다..     
 먼저 제네릭 부분부터 읽어보자.   
 
-<br />   
+<br />    
+<br />         
 
 ### 1. 이왕이면 제네릭 타입으로 만들라.     
 
@@ -118,6 +123,7 @@ public Stack() {
 }  
 ```   
 
+<br />         
 
 
 **(2) elements 필드의 타입을 `E[]` 에서 `Object[]`로 바꾸는 방법**        
@@ -152,6 +158,7 @@ public E pop() {
 힙 오염이 맘에 걸리는 개발자는 두 번째 방법을 사용하기도 한다.   
 그러나 두 번째 방법은 배열에서 원소를 읽을 때마다 어노테이션을 붙여줘야 한다.     
 
+<br />         
 
 **정리**    
 클라이언트에서 직접 형변환해야 하는 타입보다 제네릭 타입이 더 안전하고 쓰기 편하다.    
@@ -161,6 +168,7 @@ public E pop() {
 
 
 <br />   
+<br />         
 
 
 ### 2. 이왕이면 제네릭 메서드로 만들라.        
@@ -256,7 +264,7 @@ public static <E extends Comparable<E>> E max(Collection<E> c);
 
 
 <br />          
-
+<br />         
 
 
 ### 3. 한정적 와일드카드를 사용해 API 유연성을 높여라.  

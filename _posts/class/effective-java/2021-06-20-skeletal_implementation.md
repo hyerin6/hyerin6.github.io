@@ -4,6 +4,7 @@ title: "추상 골격 구현 클래스 (Abstract Skeletal Implementation Class)"
 description: "effective java chap4"  
 date: 2021-06-20        
 tags: [java]      
+categories: [Effective Java]
 comments: true    
 share: true
 --- 

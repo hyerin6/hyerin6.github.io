@@ -4,6 +4,7 @@ title: "Maven Wrapper, 상수화, 테스트"
 description: "depromeet final 5 1차 코드리뷰"
 date: 2020-10-14
 tags: [depromeet]
+categories: [Depromeet]
 comments: true
 share: true
 --- 
@@ -36,7 +37,8 @@ mvnw가 설정된 프로젝트는 다음 명령어로 실행한다.
 ./mvnw clean package   
 ```  
 
-<br />    
+<br />     
+<br />         
 
 ## 항상 같은 값을 리턴하는 경우      
 
@@ -51,7 +53,9 @@ Controller에서 위 코드를 반복하게 되었고, 상수화하면 불필요
 private final static ResponseEntity BAD_REQUEST = new ResponseEntity(HttpStatus.BAD_REQUEST);
 ```
  
-<br />     
+<br />        
+<br />         
+
 
 ## 단위테스트 & 통합테스트    
 

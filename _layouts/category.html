@@ -1,6 +1,16 @@
 ---
 layout: default
 ---
+
+
+<header>
+    <div class="header-small">
+        <a href="{{site.url}}{{site.baseurl}}">{{ site.name }}</a>
+    </div>
+</header>
+
+
+<body>
 <ul class="posts-list">
 
     {% assign category = page.category | default: page.title %}
@@ -16,3 +26,4 @@ layout: default
     {% endfor %}
 
 </ul>
+</body>
