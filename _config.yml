@@ -46,12 +46,15 @@ kramdown:
 nav:
   - name:           "About"
     url:            "/about"
+  - name:           "Category"
+    url:            "/category"
   - name:           "Archive"
     url:            "/archive"
   - name:           "Tags"
     url:            "/tags"
   - name:           "Github"
     url:            "https://github.com/hyerin6"
+
 
 # Sass
 sass:
