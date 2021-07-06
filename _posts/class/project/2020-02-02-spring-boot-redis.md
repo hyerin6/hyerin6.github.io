@@ -4,6 +4,7 @@ title: "Redis 사용해보자!"
 description: "Spring boot Redis Cache"
 date: 2020-02-02
 tags: [spring, redis, nexters16]
+categories: [Spring, Redis]
 comments: true
 share: true
 ---

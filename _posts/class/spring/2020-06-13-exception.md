@@ -4,6 +4,7 @@ title: "토비의 스프링 (4)"
 description: "4장 예외"
 date: 2020-06-13
 tags: [spring]
+categories: [Spring]
 comments: true
 share: true
 ---

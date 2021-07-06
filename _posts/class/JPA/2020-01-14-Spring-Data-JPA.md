@@ -4,6 +4,7 @@ title: "JPA 식별자 자동 생성"
 description: "Spring Data JPA"
 date: 2020-01-14
 tags: [spring, jpa, nexters16]
+categories: [JPA, Spring]
 comments: true
 share: true
 ---

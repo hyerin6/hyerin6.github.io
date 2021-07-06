@@ -4,6 +4,7 @@ title: "spring form validation"
 description: "입력 폼에 입력된 내용의 오류 자동 검사"
 date: 2020-02-14
 tags: [spring]
+categories: [Spring]
 comments: true
 share: true
 ---

@@ -4,6 +4,7 @@ title: "Spring Boot Profile 설정"
 description: " "
 date: 2020-01-19
 tags: [spring, nexters16]
+categories: [Spring]
 comments: true
 share: true
 ---

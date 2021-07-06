@@ -4,6 +4,7 @@ title: "Spring IoC & DI"
 description: "제어의 역전/의존성 주입"
 date: 2020-01-31
 tags: [spring]
+categories: [Spring]
 comments: true
 share: true
 ---

@@ -4,6 +4,7 @@ title: "AOP"
 description: "Aspect-Oriented Programming"
 date: 2020-02-14
 tags: [spring]
+categories: [Spring]
 comments: true
 share: true
 ---

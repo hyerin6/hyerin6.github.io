@@ -4,6 +4,7 @@ title: "Spring Security"
 description: "authentication, authorization"
 date: 2020-01-09
 tags: [spring]
+categories: [Spring]
 comments: true
 share: true
 ---
