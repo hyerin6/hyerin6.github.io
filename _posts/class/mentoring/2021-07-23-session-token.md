@@ -3,7 +3,7 @@ layout: post
 title: "Token 인증 방식이 생긴 이유"    
 description: "session vs. token"
 date: 2021-07-23
-tags: [session, token]
+tags: [session, token, cookie, CORS, XSS, CSRF]
 categories: [Security]
 comments: true
 share: true
@@ -74,4 +74,6 @@ CSRF는 악의적인 웹사이트, 전자 메일, 블로그, 인스턴트 메시
 이 취약점은 브라우저가 세션 쿠키, IP주소 또는 각 요청과 유사한 인증 리소스를 자동으로 보내는 경우에 발생 할 수 있다.    
 
 
-<br />          
+<br />            
+
+
