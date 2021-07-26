@@ -3,8 +3,8 @@ layout: post
 title: "Token 인증 방식이 생긴 이유"    
 description: "session vs. token"
 date: 2021-07-23
-tags: [session, token, cookie, CORS, XSS, CSRF]
-categories: [Security]
+tags: [session, token, cookie, CORS, XSS, CSRF, web]
+categories: [Security, Web]
 comments: true
 share: true
 ---
