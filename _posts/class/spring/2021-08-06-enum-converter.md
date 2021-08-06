@@ -11,7 +11,9 @@ share: true
 
 <br />     
 
-지금까지 프로젝트에서 Enum을 사용할 때, `남성/여성`을 표현하기 위해 사용해본 적이 있다.  
+지금까지 프로젝트에서 Enum을 사용할 때, `남성/여성`을 표현하기 위해 사용해본 적이 있다.   
+JPA 프로젝트에서 enum을 사용하는 방법은 다음과 같다.     
+
 <br />    
 
 ## `@Enumerated`       
@@ -28,8 +30,8 @@ share: true
   DB에 데이터를 낭비하면서 넣게 된다.      
   
 
-<br />     
-<br />    
+<br />       
+<br />      
 
 
 ## `@Converter`    
@@ -53,6 +55,7 @@ Type enum을 만들고 `@Enumerated` 사용의 문제점을 해결하기 위해
 <br />     
 
 * Like  
+
 ```
 @Entity
 public class Like {
@@ -77,6 +80,7 @@ public class Like {
 <br />    
 
 * Type   
+
 ```
 public enum Type {
 	POST(1), COMMENT(2);
@@ -104,7 +108,8 @@ public enum Type {
 <br />    
 
 
-* LikeTypeConverter       
+* LikeTypeConverter         
+
 ```
 @Converter
 public class LikeTypeConverter implements AttributeConverter<Type, Integer> {
