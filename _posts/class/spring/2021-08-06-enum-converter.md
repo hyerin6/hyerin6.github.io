@@ -52,48 +52,6 @@ Type enum을 만들고 `@Enumerated` 사용의 문제점을 해결하기 위해
 
 <br />     
 
-* Post 
-```
-@Entity
-public class Post {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
-
-	private String content;
-
-	. . .
-	
-}
-```
-
-<br />    
-
-* Comment   
-```
-@Entity
-public class Comment {
-	@Id
-	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private long id;
-
-	private String content;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "user_id")
-	private User user;
-
-	@ManyToOne(fetch = FetchType.LAZY)
-	@JoinColumn(name = "post_id")
-	private Post post;
-
-	. . .
-
-}
-```
-
-<br />    
-
 * Like  
 ```
 @Entity
@@ -102,7 +60,7 @@ public class Like {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 
-	@Enumerated(EnumType.STRING)
+	@Convert(converter = LikeTypeConverter.class)
 	private Type type;
 
 	@ManyToOne
@@ -112,7 +70,7 @@ public class Like {
 	private Long parentId;
 
 	. . .
-	
+
 }
 ```
 
@@ -128,6 +86,18 @@ public enum Type {
 	Type(int type) {
 		this.type = type;
 	}
+
+	public int toDbValue() {
+		return type;
+	}
+
+	public static Type from(Integer dbData) {
+		return Stream.of(Type.values())
+			.filter(x -> x.type == dbData)
+			.findFirst()
+			.orElseThrow(IllegalArgumentException::new);
+	}
+
 }
 ```
 
@@ -136,21 +106,19 @@ public enum Type {
 
 * LikeTypeConverter       
 ```
+@Converter
 public class LikeTypeConverter implements AttributeConverter<Type, Integer> {
 
     // DB에 어떤 값이 저장되는지 
 	@Override
 	public Integer convertToDatabaseColumn(Type attribute) {
-		return attribute.type;
+		return attribute.toDbValue();
 	}
-
+	
     // DB에서 Entity로 값을 넣을 때 어떤 값을 리턴하는지 
 	@Override
 	public Type convertToEntityAttribute(Integer dbData) {
-		return Stream.of(Type.values())
-			.filter(x -> x.type == dbData)
-			.findFirst()
-			.orElseThrow(IllegalArgumentException::new);
+		return Type.from(dbData);
 	}
 }
 ```
