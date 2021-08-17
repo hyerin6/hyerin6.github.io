@@ -15,8 +15,7 @@ share: true
 
 
 
-<img src="/Users/hyerin/Desktop/KakaoTalk_Photo_2021-08-17-23-00-42.jpeg" alt="KakaoTalk_Photo_2021-08-17-23-00-42" style="zoom:70%;" />
-
+![KakaoTalk_Photo_2021-08-17-23-00-42](https://user-images.githubusercontent.com/33855307/129752405-32d58181-4260-43ce-aa8d-2ece9164f964.jpeg)
 
 
 스프링의 처리 과정을 보면 예외가 발생하는 부분은 크게 두 가지로 나눌 수 있다.    
