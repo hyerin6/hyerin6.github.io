@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "Spring Security 로그인 절차"
-description: "Spring Security Architecture"
+description: "Spring Security"
 date: 2021-08-22
 tags: [spring, security, architecture]
 categories: [Security, Spring]
@@ -162,7 +162,9 @@ public Authentication attempAuthentication(HttpServletRequest request, HttpServl
 
 
 
-`attempAuthentication(request, response)` 메소드를 보면 요청으로부터 username, password를 얻어오고 
+`attempAuthentication(request, response)` 메소드를 보면 요청으로부터
+
+username, password를 얻어오고
 
 그 값으로 UsernamePasswordAuthenticationToken(Authentication)을 생성한다. 
 
