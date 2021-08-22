@@ -188,3 +188,13 @@ AuthenticationProvider 인터페이스를 구현해서 ProviderManager가
 
 
 <br />
+<br />
+
+
+
+### 참고
+* <https://mangkyu.tistory.com/76>
+* <https://jeong-pro.tistory.com/205>
+* <https://coding-start.tistory.com/153>
+
+<br />
