@@ -17,12 +17,13 @@ share: true
 
 <img width="661" alt="스크린샷 2021-08-24 오후 11 21 13" src="https://user-images.githubusercontent.com/33855307/130633816-e2e3e1a7-0f07-4c92-9657-895a63622688.png">
 
-
+<br />
 
 
 
 Spring Security와 OAuth2.0을 사용하여 위와 같이 Kakao Login 기능을 구현해봤다. 
 
+<br />
 
 
 Spring Security에 대한 포스팅은 다음 링크를 참고
@@ -39,9 +40,9 @@ Spring Security에 대한 포스팅은 다음 링크를 참고
 
 OAuth2.0 로그인을 사용한다면 UsernamePasswordAuthenticationFilter 대신 OAuth2LoginAuthenticationFilter가 호출된다.
 
-두 필터의 상위 클래스는 AbstractAuthenticationProcessingFilter이고, 스프링 시큐리티가 상위 클래스를 호출하면 
-
-로그인 방식에 따라 구현체인 UsernamePasswordAuthenticationFilter와 OAuth2LoginAuthenticationFilter가 동작한다.
+두 필터의 상위 클래스는 AbstractAuthenticationProcessingFilter이고,
+스프링 시큐리티가 상위 클래스를 호출하면 로그인 방식에 따라 구현체인
+UsernamePasswordAuthenticationFilter와 OAuth2LoginAuthenticationFilter가 동작한다.
 
 
 
@@ -61,7 +62,8 @@ OAuth2.0 로그인을 사용한다면 UsernamePasswordAuthenticationFilter 대�
 
   
 
-* `userService()`는 OAuth2 인증 과정에서 Authentication을 생성에 필요한 OAuth2User를 반환하는 클래스를 지정한다.
+* `userService()`는 OAuth2 인증 과정에서 Authentication을 생성에 필요한
+OAuth2User를 반환하는 클래스를 지정한다.
 
   
 
@@ -93,7 +95,8 @@ OAuth2.0 로그인을 사용한다면 UsernamePasswordAuthenticationFilter 대�
 
    OAuth2LoginAuthenticationProvider의 `authenticate()` 호출 
 
-5. `authenticate()` 처리 과정에서 OAuth2User를 생성하기 위해 OAuth2UserService의 `loadUser()` 호출 
+5. `authenticate()` 처리 과정에서 OAuth2User를 생성하기 위해
+OAuth2UserService의 `loadUser()` 호출
 
 6. `loadUser()` 처리 과정에서 OAuth2User를 반환 
 
@@ -111,19 +114,19 @@ OAuth2.0 로그인을 사용한다면 UsernamePasswordAuthenticationFilter 대�
 1. 인증되지 않은 사용자가 인증이 필요한 URL에 접근하려 한다면 authenticationEntityPoint에서 예외 처리 
 2. 인증된 사용자가 권한이 부족한 URL에 접근하려 한다면 accessDeniedHandler에서 예외 처리 
 
-
+<br />
 
 > 🧙🏻‍♀️ 요약
 >
 > AbstractAuthenticationProcessingFilter에서 OAuth2 로그인 과정 호출 
 >
-> ▶️ OAuth2LoginAuthenticationFilter의 `attemptAuthentication()`에서 인증 과정 수행 
+> -> OAuth2LoginAuthenticationFilter의 `attemptAuthentication()`에서 인증 과정 수행
 >
-> ▶️ `attemptAuthentication()` 처리 과정에서 OAuth2LoginAuthenticationProvider의 `authenticate()` 호출
+>️ -> `attemptAuthentication()` 처리 과정에서 OAuth2LoginAuthenticationProvider의 `authenticate()` 호출
 >
-> ▶️ `authenticate()`처리 과정에서 OAuth2UserService의 `loadUser()` 호출
+>️ -> `authenticate()`처리 과정에서 OAuth2UserService의 `loadUser()` 호출
 >
-> ▶️ AbstractAuthenticationProcessingFilter에서 successHandler의 `onAuthenticationSuccess()`을 호출 
+>️ -> AbstractAuthenticationProcessingFilter에서 successHandler의 `onAuthenticationSuccess()`을 호출
 
 
 
@@ -139,13 +142,14 @@ OAuth2.0 로그인을 사용한다면 UsernamePasswordAuthenticationFilter 대�
 
 Spring Security와 OAuth2를 사용해서 자신이 등록한 kakao api의 인증 코드 api를 호출하려면 해당 역할을 하는 endpoint를 알아야 한다.
 
-여기서 endpointsms Filter이고 해당 역할을 하는 Filter는 OAuth2AuthorizationRequestRedirectFilter이다. 
+여기서 endpointsms Filter이고 해당 역할을 하는 Filter는
+OAuth2AuthorizationRequestRedirectFilter이다.
 
 이 필터에서 this.authorizationRequestResolver가 registrationID인 kakao 값으로 설정 정보를  조회한다.
 
 인증 코드를 얻기 위해 호출할 API 주를 만들고 해당 주소로 리다이렉션한다.
 
-
+<br />
 
 Spring Security OAuth2 설정을 끝내고 브라우저 주소창에 
 
@@ -169,7 +173,7 @@ code를 요청할 때 `redirect_uri`을 보내는데 `redirect_uri`를 어떻게
 
 직접 Controller에서 token을 얻는 API를 만드는 예제를 본 적이 있는데  프레임워크를 사용하고 있기 때문에 나는 프레임워크를 이용할 것이다.
 
-
+<br />
 
 Access token을 획득하는 역할의 Filter는 OAuth2LoginAuthenticationFilter이다.
 
@@ -205,7 +209,7 @@ Spring Security는 인증을 하면 인증 정보를 SecurityContextHolder 클�
 
 세션 키로 메모리에 저장된 인증 정보를 꺼내서 무언가 처리하고 싶다면 다음과 같이 사용하면 된다.
 
-
+<br />
 
 * controller에서 매개변수로 받는 방법
   `@AuthenticationPrincipal OAuth2User oauth2User`
