@@ -63,7 +63,8 @@ UsernamePasswordAuthenticationFilter와 OAuth2LoginAuthenticationFilter가 동�
   
 
 * `userService()`는 OAuth2 인증 과정에서 Authentication을 생성에 필요한
-OAuth2User를 반환하는 클래스를 지정한다.
+
+    OAuth2User를 반환하는 클래스를 지정한다.
 
   
 
@@ -89,14 +90,17 @@ OAuth2User를 반환하는 클래스를 지정한다.
 
 2. AbstractAuthenticationProcessingFilter에서 OAuth2 로그인 과정을 호출 
 
-3. Resource Server에서 넘겨주는 정보대로 OAuth2LoginAuthentiationFilter의 `attemptAuthentication()`에서 인증 과정을 수행 
+3. Resource Server에서 넘겨주는 정보대로
+
+    OAuth2LoginAuthentiationFilter의 `attemptAuthentication()`에서 인증 과정을 수행
 
 4. attemptAuthentication() 처리 과정에서 OAuth2AuthenticationToken을 생성하기 위해 
 
    OAuth2LoginAuthenticationProvider의 `authenticate()` 호출 
 
 5. `authenticate()` 처리 과정에서 OAuth2User를 생성하기 위해
-OAuth2UserService의 `loadUser()` 호출
+
+    OAuth2UserService의 `loadUser()` 호출
 
 6. `loadUser()` 처리 과정에서 OAuth2User를 반환 
 
@@ -122,11 +126,13 @@ OAuth2UserService의 `loadUser()` 호출
 >
 > -> OAuth2LoginAuthenticationFilter의 `attemptAuthentication()`에서 인증 과정 수행
 >
->️ -> `attemptAuthentication()` 처리 과정에서 OAuth2LoginAuthenticationProvider의 `authenticate()` 호출
+>️ -> `attemptAuthentication()` 처리 과정에서
+>     OAuth2LoginAuthenticationProvider의 `authenticate()` 호출
 >
 >️ -> `authenticate()`처리 과정에서 OAuth2UserService의 `loadUser()` 호출
 >
->️ -> AbstractAuthenticationProcessingFilter에서 successHandler의 `onAuthenticationSuccess()`을 호출
+>️ -> AbstractAuthenticationProcessingFilter에서
+>    successHandler의 `onAuthenticationSuccess()`을 호출
 
 
 
@@ -194,6 +200,37 @@ Spring Security는 기본적으로 세션 기반으로 동작한다.
 그러나 stateless로 만들고 싶은 경우 OAuth2 인증 처리 후 실행되는 successHandler를 커스텀하면 된다. 
 
 이 방법은 현재 프로젝트에서 kakao라는 provider에 의존하는 문제가 있다.
+
+이 의존 문제는 OAuth2UserService의 `loadUser()` 메소드에서 `Map<String, Object>` 타입으로
+
+OAuth2 회원 정보 조회 API의 Response를 파싱하는 코드를 소셜에 맞게 변경해야 한다는 것이다.
+
+<br />
+
+
+이 문제는 CustomUserTypesOAuth2UserService를 사용하여 해결할 수 있다.
+
+
+Custom User Type을 Map에 담아 파라미터로 넘겨서 사용하고
+Map의 Key는 Client의 Registration ID로 설정하는 것이다.
+
+설정은 다음과 같이 하면 된다.
+
+
+```
+@Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+            .anyRequest().authenticated()
+            .and()
+            .oauth2Login() // oauth2 login 설정
+            // customUserType을 추가하면, 내부적으로 'CustomUserTypesOAuth2UserService' 클래스 사용
+            .userInfoEndpoint()
+            .customUserType(KakaoOAuth2User.class, "kakao");
+    }
+}
+```
+
 
 
 
