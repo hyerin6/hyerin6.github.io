@@ -176,4 +176,16 @@ create table IF NOT EXISTS oauth_client_details (
 이번주부터는 Spring Security를 사용하지 않고 JWT를 사용한 Kakao 로그인을 구현할 예정이다.
 
 <br />
+<br />
+
+
+
+## 참고
+* <https://daddyprogrammer.org/post/1287/spring-oauth2-authorizationserver-database/>
+
+* <https://daddyprogrammer.org/post/1754/spring-boot-oauth2-resourceserver/>
+
+* <https://www.oauth.com/oauth2-servers/token-introspection-endpoint/>
+
+<br />
 
