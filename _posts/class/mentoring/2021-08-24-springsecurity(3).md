@@ -246,6 +246,6 @@ Spring Security는 인증을 하면 인증 정보를 SecurityContextHolder 클�
 위 방법으로 JWT를 사용하지 않고 구현하려면 구현해야 하는 클래스도 많고 설정해야 하는 부분도 많으며, 문제점도 있다.
 그래서 JWT를 함께 사용하는 예제가 많은데 그 이유에 대해서는 다음 게시글에서 확인할 수 있다.
 
-
+<https://hyerin6.github.io/2021-08-24/springsecurity(4)/>
 
 
