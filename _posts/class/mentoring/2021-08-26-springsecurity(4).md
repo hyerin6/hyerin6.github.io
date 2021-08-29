@@ -82,7 +82,7 @@ RefreshToken은 OAuth2AuthorizedClientService 클래스에서 받을 수 있다.
 
 
 ## 문제점(1)
-AccessToken은 ResourceServer를 구현해 Introspaction으로 토큰에 대한 인증 과정을 수행해야 한다.
+AccessToken은 `ResourceServer`를 구현해 `Introspection`으로 **토큰에 대한 인증 과정을 수행해야 한다.**
 
 참고: <https://www.oauth.com/oauth2-servers/token-introspection-endpoint/>
 
@@ -101,7 +101,7 @@ access_token은 Bearer 토큰 형식으로 단순히 암호화된 문자열이�
 
 Bearer 토큰으로 리소스 서버에 리소스를 요청하면 해당 토큰이 유효한지, 토큰 인증한 회원이 누구인지 인증서버에 추가 확인하는 과정이 필요하다.
 
-이러한 토큰을 opaque token 이라고 한다.
+이러한 토큰을 `opaque token` 이라고 한다.
 
 
 
@@ -114,9 +114,9 @@ access_token 인증 과정의 번거로움을 보완하기 위해 JWT 토큰 사
 
 JWT는 JSON String이 암호화된 문자열로 토큰 자체에 특정한 정보를 세팅할 수 있다는 것이 특징이다.
 
-회원의 id나 인증에 필요한 정보를 포함시킬 수 있기 때문에 Bearer 토큰처럼 회원 확인을 위해
+회원의 id나 **인증에 필요한 정보를 포함시킬 수 있기 때문에** Bearer 토큰처럼 회원 확인을 위해
 
-인증 서버를 한번 더 거칠 필요가 없다.
+**인증 서버를 한번 더 거칠 필요가 없다.**
 
 JWT를 사용하면 다음과 같은 인증 과정을 갖는다.
 
