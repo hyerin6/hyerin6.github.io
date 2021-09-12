@@ -9,13 +9,15 @@ comments: true
 share: true
 ---
 
+<br />
 
 
 spring security를 사용하지 않고 Kakao API와 JWT를 이용해 직접 회원가입, 로그인을 구현했다. 
 
 유저 정보가 필요한 API들이 많은데 로그인에 성공한 유저의 정보는 어떻게 가져와야할까?
 
-<br /><br />
+<br />
+<br />
 
 ## 로그인한 정보 가져오는 방법 
 
@@ -53,7 +55,7 @@ public class UserContext {
 }
 ```
 
-
+<br />
 
 * ThradLocal 값 저장 
 
@@ -63,7 +65,7 @@ User user = userService.getUser(userId);
 UserContext.CONTEXT.set(user);
 ```
 
-
+<br />
 
 * ThreadLocal 변수 사용 
 
@@ -72,8 +74,8 @@ User user = UserContext.getContext();
 ```
 
 
-
-<br />   
+<br />
+<br />
 
 그러나 위 코드에 아쉬운 점이 있다. 
 
@@ -115,15 +117,20 @@ public @interface Authenticationprincipal {
 
 
 
-어노테이션을 통해 사용자 정보를 받기 위해 다음 `HandlerMethodArgumentResolver` 인터페이스를 구현해야 한다. 
+어노테이션을 통해 사용자 정보를 받기 위해
+
+다음 `HandlerMethodArgumentResolver` 인터페이스를 구현해야 한다.
 
 ![스크린샷 2021-09-12 오후 8 35 29](https://user-images.githubusercontent.com/33855307/132986004-db8542fc-39c0-4258-814e-3920712bd082.png)
 
 
+<br />
 
 `supportsParameter` 메서드를 거쳐 `resolverArgument` 메서드에서 헤더값을 꺼내와 다음과 같이 유저 정보를 리턴할 수 있다.   
 
 이번 프로젝트에서 구현한 코드는 다음과 같다.  
+
+<br />
 
 ```
 @RequiredArgsConstructor
