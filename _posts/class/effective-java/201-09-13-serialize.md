@@ -56,10 +56,40 @@
 
 
 
-<br />
 
 <br />
 
+<br />
+
+
+
+# serialVersionUID가 없으면?
+
+**Q. User를 직렬화 한 데이터를 저장해두고, User에 새로운 필드를 추가하고 기존에 저장해둔 데이터를 역직렬화가 잘 될까?**
+
+<br />
+
+
+* serialVersionUID를 명시한 경우
+
+![v1](https://user-images.githubusercontent.com/33855307/133041925-acb528af-82b0-407d-9df2-63894ea53c97.png)
+
+
+<br />
+
+* serialVersionUID를 명시하지 않은 경우
+
+![v2](https://user-images.githubusercontent.com/33855307/133041929-580476e1-03e4-4e58-b6d3-9673f39bde8d.png)
+
+<br />
+
+
+테스트 코드: <https://github.com/hyerin6/TIL/tree/main/Mentoring/SerializationQuiz>
+
+
+<br />
+
+<br />
 
 
 # 이펙티브 자바 12장 참고 
