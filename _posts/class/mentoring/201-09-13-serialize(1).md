@@ -13,7 +13,9 @@
 <br />
 
 프로젝트를 하던 중 직렬화가 필요한 순간이 많았는데 직렬화가 무엇인지,
+
 왜 필요한지 어떤 주의사항들이 있는지 알아보고자 직접 예제를 통해 학습하고
+
 이펙티브 자바 직렬화 부분을 참고했다.
 
 <br />
@@ -69,6 +71,7 @@
 
 name, age 필드만 있던 User 객체를 직렬화하고
 email 필드를 추가한 후 역직렬화를 해봤다.
+
 serialVersionUID를 명시한 경우와 그렇지 않은 경우
 어떤 차이가 있을까?
 
@@ -81,6 +84,7 @@ serialVersionUID를 명시한 경우와 그렇지 않은 경우
 
 
 email 필드를 추가하고 역직렬화를 했지만 User 객체의 역직렬화는 잘 진행되어
+
 email 필드는 null로 출력되었다.
 
 
@@ -100,7 +104,11 @@ email 필드는 null로 출력되었다.
 <br />
 
 
-테스트 코드: <https://github.com/hyerin6/TIL/tree/main/Mentoring/SerializationQuiz>
 
+* 테스트 코드: <https://github.com/hyerin6/TIL/tree/main/Mentoring/SerializationQuiz>
+
+* 직렬화 주의사항: <https://hyerin6.github.io/2021-09-13/serialize(2)/>
 
 <br />
+
+
