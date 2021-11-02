@@ -144,5 +144,15 @@ JSP를 사용하면 본문을 확인(렌더링된 결과)하는 것이 매우 �
 테스트에서 사용한 mockMVC는 가짜 서블릿 컨테이너이며 실제 서블릿 컨테이너가 할 수 있는 일을 다 할 수 없다. 
 
 <br />
+<br />
+
+# JAR 배포 
 
 
+![KakaoTalk_Photo_2021-11-02-23-15-17](https://user-images.githubusercontent.com/33855307/139864504-6e2ca6ee-7e03-4128-a41a-98e6a0edd0c5.png)
+
+위 사진을 보면 운영 서버에 배포된 후 Thymeleaf로 구현한 view가 잘 뜨는 것을 확인할 수 있다. 
+
+png 파일인 `카카오 로그인` 버튼도 잘 출력된다. 
+
+<br />
