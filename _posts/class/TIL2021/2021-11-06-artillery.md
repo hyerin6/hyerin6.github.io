@@ -2,7 +2,7 @@
 layout: post  
 title: "artillery 사용해서 부하 테스트하기"   
 description: "artillery 간단 소개, 스트레스 테스트"  
-date: 2021-11-08  
+date: 2021-11-06 
 tags: [spring, artillery]
 comments: true  
 share: true
