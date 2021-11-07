@@ -107,7 +107,7 @@ artillery report report.json
 
 결과를 보는 법과 테스트 진행에 자세한 개념은 다음 게시물에서 확인할 수 있다. 
 
-<https://hyerin6.github.io/2021-11-06/stress-test/>
+<https://hyerin6.github.io/2021-11-05/stress-test/>
 
 
 <br />
