@@ -282,6 +282,30 @@ sudo setsebool -P httpd_can_network_connect on
 <br />
 <br />
 
+# Nginx 흐름
+
+
+![nnx](https://user-images.githubusercontent.com/33855307/141668538-e175bdc4-93d0-4a43-9b8c-d7a4b11bda1c.png)
+ 
+서버를 늘리지 않고 단일 서버로 두고 nginx로 요청을 받았을 뿐인데 
+ 
+postman으로 확인해보니 빨라진 응답 결과를 확인할 수 있었다. 
+
+<br />
+
+Nginx는 Event-Driven 구조로 동작하기 때문에 한 개 또는 고정된 프로세스만 생성하여 사용하고, 
+
+비동기 방식으로 요청들을 동시에 처리되는 것처럼 처리할 수 있다. 
+
+Nginx는 새로운 요청이 들어오더라도 새로운 프로세스와 스레드를 생성하지 않기 때문에 
+
+프로세스와 스레드 생성 비용이 존재하지 않고, 적은 자원으로도 효율적인 운용이 가능하다. 
+
+그래서 단일 서버에서도 동시에 많은 연결을 처리할 수 있었다. 
+
+<br />
+<br />
+
 
 ### 참고
 
