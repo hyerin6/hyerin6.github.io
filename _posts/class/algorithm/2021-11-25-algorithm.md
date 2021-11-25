@@ -1,7 +1,7 @@
 ---
 layout: post     
 title: "algorithm class3"   
-description: "Divide and Conquer"      
+description: "Algorithm"      
 date: 2021-11-25        
 tags: [algorithm]       
 categories: [Algorithm]       
