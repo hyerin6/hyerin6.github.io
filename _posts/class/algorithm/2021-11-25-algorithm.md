@@ -333,3 +333,90 @@ public class B5525_v2 {
 }
 ```
 
+
+<br />
+<br />
+
+## [Z](https://www.acmicpc.net/problem/1074)
+
+<img width="600" src="https://user-images.githubusercontent.com/33855307/143773514-570f0db5-e45c-4247-ae60-2c81dd47ce9b.png">
+
+재귀함수로 풀었더니 시간초과로 실패했다.    
+시간을 줄이기 위해서 일일히 좌표에 접근하지 않고 한번에 가는 방법을 생각해야한다.
+
+
+![B1074_img](https://user-images.githubusercontent.com/33855307/143773583-560ef021-9439-44cd-bce5-9cfbffc4c20d.png)
+
+
+4부분으로 계속 나누면 
+
+```java 
+n * n 배열 일 때 각 부분의 첫번째 값 
+(n/2) * (n/2) * 0
+(n/2) * (n/2) * 1
+(n/2) * (n/2) * 2
+(n/2) * (n/2) * 3
+```
+
+
+n이 1이 된다는 것은 x, y 좌표가 r, c랑 같아진다는 것이 이 문제의 풀이이다. 
+
+<br /> 
+
+## 💻  풀이 코드
+
+```java 
+public class B1074 {
+
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+
+		int N = Integer.parseInt(st.nextToken());
+		int r = Integer.parseInt(st.nextToken());
+		int c = Integer.parseInt(st.nextToken());
+
+		int n = (int)Math.pow(2, N);
+		int count = 0;
+		int x = 0;
+		int y = 0;
+
+		/**
+		 * 사각형 절반으로 나눠서 각 사분면으로 계산
+		 * n 이 1 이 된다는 것은 x, y 좌표가 r, c랑 같아진다는 것
+		 */
+		while (n > 0) {
+			n /= 2;
+
+			// x, y 보다 작으면 위로 왼쪽 위로 count
+			if (r < x + n && c < y + n) {
+				count += n * n * 0;
+			}
+			// x보다 작으면 오른쪽 위로 count
+			else if (r < x + n) {
+				count += n * n * 1;
+				y += n;
+			}
+			// y보다 작으면 왼쪽 아래로 count
+			else if (c < y + n) {
+				count += n * n * 2;
+				x += n;
+			}
+			// x, y 보다 크거나 같으면 오른쪽 아래로 count
+			else {
+				count += n * n * 3;
+				x += n;
+				y += n;
+			}
+
+			if (n == 1) {
+				System.out.println(count);
+				break;
+			}
+		}
+	}
+}
+```
+
+<br />  
+
