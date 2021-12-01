@@ -419,4 +419,126 @@ public class B1074 {
 ```
 
 <br />  
+<br />  
 
+
+## [케빈 베이컨의 6단계 법칙](https://www.acmicpc.net/problem/1389)    
+
+알고리즘 분류   
+* 그래프 이론   
+* 그래프 탐색  
+* 너비 우선 탐색  
+* 플로이드–와샬  
+
+<br />  
+
+## 💻  풀이 코드
+
+* BFS  
+
+```java 
+public static void bfs(int num) {
+	Queue<Integer> q = new LinkedList<>();
+	q.offer(num);
+	visit[num] = true;
+	while (!q.isEmpty()) {
+		int cur = q.poll();
+		for (int i = 1; i <= N; ++i) {
+			// 방문하지 않은 노드 && 인접한 노드
+			if (!visit[i] && distance[cur][i] == 1) {
+				q.offer(i);
+				visit[i] = true;
+				count[num][i] = count[num][cur] + 1;
+			}
+		}
+	}
+}
+```
+
+<br />
+
+### 플로이드 와샬(Floyd-Warshall) 알고리즘
+
+[최단 경로 알고리즘 게시글 보러가기](https://hyerin6.github.io/2021-11-04/dijkstra/)    
+
+그래프에서 정점끼리의 최단 경로를 구하는 여러 가지 방법이 있다.     
+* 하나의 정점에서 다른 하나의 정점까지의 최단 경로를 구하는 문제
+* 하나의 정점에서 다른 모든 정점까지의 최단 경로를 구하는 문제
+* 하나의 목적지로가는 모든 최단 경로를 구하는 문제
+* 모든 최단 경로를 구하는 문제
+
+
+플로이드-와샬 알고리즘이란, 위 경우에서 마지막에 해당하는 `모든 최단 경로를 구하는 방법` 이다.          
+다익스트라와 벨만포드가 두 번째에 해당하는 `하나의 정점에서 다른 모든 정점까지의 최단 경로를 구하는 방법` 과는 다르다.          
+
+
+플로이드-와샬은 기준점 K를 두고 I에서 J까지 가는 거리와 I에서 K까지 갔다가 K에서 J까지 가는 거리         
+두가지를 비교하여 최소 값을 최단 거리로 구하는 알고리즘이다.     
+
+<img width="500" src="https://user-images.githubusercontent.com/33855307/144201334-c2b5bb6e-0996-41b7-a157-f3ab05c53af0.png">
+
+
+<br />
+
+```java
+public class B1389_v1 {
+
+	private static int N;
+	private static int M;
+	private static int min = Integer.MAX_VALUE;
+	private static int index = 0;
+	private static int[][] distance;
+	private static int INF = 5001;
+
+	public static void main(String[] args) throws Exception {
+		BufferedReader br = new BufferedReader(new InputStreamReader(System.in));
+		StringTokenizer st = new StringTokenizer(br.readLine());
+
+		N = Integer.parseInt(st.nextToken());
+		M = Integer.parseInt(st.nextToken());
+		distance = new int[N + 1][N + 1];
+
+		for (int i = 1; i <= N; ++i) {
+			for (int j = 1; j <= N; ++j) {
+				if (i == j) {
+					distance[i][j] = 0;
+				} else {
+					distance[i][j] = INF;
+				}
+			}
+		}
+
+		for (int i = 0; i < M; ++i) {
+			st = new StringTokenizer(br.readLine());
+			int start = Integer.parseInt(st.nextToken());
+			int end = Integer.parseInt(st.nextToken());
+			distance[start][end] = 1;
+			distance[end][start] = 1;
+		}
+
+		for (int k = 1; k <= N; ++k) {
+			for (int i = 1; i <= N; ++i) {
+				for (int j = 1; j <= N; ++j) {
+					distance[i][j] = Math.min(distance[i][j], distance[i][k] + distance[k][j]);
+				}
+			}
+		}
+
+		for (int i = 1; i <= N; ++i) {
+			int sum = 0;
+			for (int j = 1; j <= N; ++j) {
+				sum += distance[i][j];
+			}
+			if (sum < min) {
+				min = sum;
+				index = i;
+			}
+		}
+
+		System.out.print(index);
+
+	}
+}
+```
+
+<br />
