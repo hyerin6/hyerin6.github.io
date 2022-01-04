@@ -21,7 +21,7 @@ title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
 name                     : "Hyerin Park"
 description              : "I wanna be a good developer."
-url                      : "https://hyerin6.github.io/"
+url                      : https://hyerin6.github.io/
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : hyerin6/hyerin6.github.io # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
 teaser                   : image/back.png # path of fallback teaser image, e.g. "/assets/images/500x300.png"
