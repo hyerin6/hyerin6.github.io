@@ -4,6 +4,9 @@ categories:
   - Java
 tags:
   - java
+toc: true
+author_profile: true
+toc_sticky: true
 ---
 
 # 자바에서 스레드는 어떻게 사용하나?      

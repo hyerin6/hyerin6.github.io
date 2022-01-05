@@ -11,11 +11,11 @@
 # https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/#installing-the-theme
 
 # theme                  : "minimal-mistakes-jekyll"
-remote_theme           : "mmistakes/minimal-mistakes"
-minimal_mistakes_skin    : "default" # "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
+remote_theme             : "mmistakes/minimal-mistakes"
+minimal_mistakes_skin    : "default" #"default", "air", "aqua", "contrast", "dark", "dirt", "neon", "mint", "plum", "sunrise"
 
 # Site Settings
-locale                   : "ko-KR"
+locale                   :
 title                    : "Hyerin Blog"
 title_separator          : "-"
 subtitle                 : # site tagline that appears below site title in masthead
@@ -24,7 +24,7 @@ description              : "I wanna be a good developer."
 url                      : https://hyerin6.github.io
 baseurl                  : # the subpath of your site, e.g. "/blog"
 repository               : hyerin6/hyerin6.github.io # GitHub username/repo-name e.g. "mmistakes/minimal-mistakes"
-teaser                   : image/back.png # path of fallback teaser image, e.g. "/assets/images/500x300.png"
+teaser                   : # path of fallback teaser image, e.g. "/assets/images/500x300.png"
 logo                     : # path of logo image to display in the masthead, e.g. "/assets/images/88x88.png"
 masthead_title           : # overrides the website title displayed in the masthead, use " " for no title
 # breadcrumbs            : false # true, false (default)
@@ -186,7 +186,9 @@ kramdown:
   toc_levels: 1..6
   smart_quotes: lsquo,rsquo,ldquo,rdquo
   enable_coderay: false
-
+  syntax_highlighter_opts:
+    block:
+      line_numbers: true
 
 # Sass/SCSS
 sass:
@@ -195,7 +197,7 @@ sass:
 
 
 # Outputting
-permalink: /:categories/:title/
+permalink: /:year-:month-:day/:title/
 paginate: 15 # amount of posts to show
 paginate_path: /page:num/
 timezone: # https://en.wikipedia.org/wiki/List_of_tz_database_time_zones

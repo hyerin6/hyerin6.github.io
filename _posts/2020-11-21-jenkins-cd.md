@@ -5,6 +5,9 @@ categories:
   - Jenkins
 tags:
   - jenkins
+toc: true
+author_profile: true
+toc_sticky: true
 ---
 
 어쩌다보니 배포 자동화도 하게 되었는데 ci와 마찬가지로 스크립트를 작성해서 꼼꼼하게 배포 과정을 공부해보기로 했다.

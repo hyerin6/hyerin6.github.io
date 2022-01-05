@@ -2,6 +2,9 @@
 title: "git 브랜치 병합 전략 : rebase"  
 categories:
   - Depromeet 
+toc: true
+author_profile: true
+toc_sticky: true
 ---
 
 

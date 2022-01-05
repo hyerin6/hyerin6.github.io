@@ -4,6 +4,9 @@ categories:
   - Java
 tags:
   - java
+toc: true
+author_profile: true
+toc_sticky: true
 ---
 
 # 어디에 담아야 하는지?  

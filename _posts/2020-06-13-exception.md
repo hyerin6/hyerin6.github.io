@@ -4,6 +4,9 @@ categories:
   - Spring
 tags:
   - spring 
+toc: true
+author_profile: true
+toc_sticky: true
 --- 
 
 ## 예외의 종류와 특징   

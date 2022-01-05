@@ -2,6 +2,9 @@
 title: "Maven Wrapper, 상수화, 테스트"  
 categories:
   - Depromeet 
+toc: true
+author_profile: true
+toc_sticky: true
 ---
  
 디프만 파이널 프로젝트를 시작하면서 회원가입 기능을 구현해보며 코드리뷰를 했다.      

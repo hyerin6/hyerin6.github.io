@@ -6,6 +6,9 @@ categories:
 tags:
   - spring
   - jpa
+toc: true
+author_profile: true
+toc_sticky: true
 --- 
 
 #### JPA가 제공하는 데이터베이스 기본 키 생성 전략   

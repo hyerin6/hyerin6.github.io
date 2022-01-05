@@ -2,6 +2,9 @@
 title: "ResponseEntity & Generic"      
 categories:
   - Depromeet 
+toc: true
+author_profile: true
+toc_sticky: true
 ---
 
 

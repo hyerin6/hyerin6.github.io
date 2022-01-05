@@ -5,6 +5,9 @@ categories:
   - Jenkins
 tags:
   - jenkins
+toc: true
+author_profile: true
+toc_sticky: true
 ---
 
 로그인 기능 개발을 시작하면서 젠킨스를 이용한 자동 배포와 테스트 자동화를 해보기로 했고 테스트 자동화(ci)를 담당하게 되었다.     

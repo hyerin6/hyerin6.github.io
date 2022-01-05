@@ -4,6 +4,9 @@ categories:
   - Java
 tags:
   - java
+toc: true
+author_profile: true
+toc_sticky: true
 ---
 
 # 클래스 정보, 어떻게 알아낼 수 있나?
