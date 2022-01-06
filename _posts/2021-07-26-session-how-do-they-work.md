@@ -4,6 +4,9 @@ categories:
   - Web
 tags:
   - web 
+toc: true
+author_profile: true
+toc_sticky: true
 ---  
 
 <br />      

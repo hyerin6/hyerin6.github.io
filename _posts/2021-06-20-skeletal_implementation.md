@@ -5,6 +5,9 @@ categories:
   - Java
 tags:
   - java
+toc: true
+author_profile: true
+toc_sticky: true
 ---
 
 # 추상 골격 구현 클래스란?    

@@ -44,10 +44,7 @@ public class Post {
 ```
 
 
-<br />        
-<br />       
-<br />        
-
+<br />         
 
 
 ## `@CreatedDate` & `@LastModifiedDate`              
@@ -72,8 +69,7 @@ not-null property references a null or transient value createddate
 
 
 <br />        
-<br />     
-<br />        
+     
 
 
 
@@ -100,8 +96,7 @@ not-null property references a null or transient value createddate
 
 
 <br />        
-<br />     
-<br />    
+   
 
 
 
@@ -112,15 +107,7 @@ not-null property references a null or transient value createddate
 설정 없이 사용할 수 있지만 하이버네이트에 종속되어 버리니      
 `@CreatedDate`를 사용하기로 했다.       
 
-
-
-
-
-
-
-
-<br />        
-<br />     
+  
 <br />  
 
 
@@ -130,7 +117,5 @@ not-null property references a null or transient value createddate
 * <https://docs.jboss.org/hibernate/orm/current/userguide/html_single/Hibernate_User_Guide.html#mapping-generated-CreationTimestamp>     
 * <https://bgpark.tistory.com/133>    
 * <https://docs.jboss.org/hibernate/orm/5.2/userguide/html_single/Hibernate_User_Guide.html#events-jpa-callbacks>     
-
-
 
 <br />    

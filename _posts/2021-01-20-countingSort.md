@@ -3,7 +3,10 @@ title: "Counting Sort & Radix Sort"
 categories:
   - Algorithm
 tags:
-  - algorithm  
+  - algorithm
+toc: true
+author_profile: true
+toc_sticky: true
 ---
 
 # Counting Sort (계수 정렬)     

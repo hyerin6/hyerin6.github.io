@@ -3,7 +3,10 @@ title: "이분그래프란?"
 categories:
   - Algorithm
 tags:
-  - algorithm  
+  - algorithm
+toc: true
+author_profile: true
+toc_sticky: true
 --- 
 
 

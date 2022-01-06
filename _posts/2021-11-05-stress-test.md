@@ -6,6 +6,9 @@ categories:
 tags:
   - spring
   - artillery
+toc: true
+author_profile: true
+toc_sticky: true
 ---
 
 <br />

@@ -2,6 +2,9 @@
 title: "ssh config 사용해서 ssh 접속하기"  
 categories:
   - Depromeet 
+toc: true
+author_profile: true
+toc_sticky: true
 ---
 
 젠킨스를 도커로 띄워 사용하면서 ssh 접속을 자주 경험했었다.     
