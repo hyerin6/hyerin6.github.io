@@ -1,0 +1,1843 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <style> 
+      ::-webkit-scrollbar{width: 12px; height: 5px;}
+      ::-webkit-scrollbar-track {background-color:#4b4f52; border-radius: 16px;}
+      ::-webkit-scrollbar-thumb {background-color:#5e6265; border-radius: 16px;}
+      ::-webkit-scrollbar-thumb:hover {background: #ffd24c;}
+      ::-webkit-scrollbar-button:start:decrement,::-webkit-scrollbar-button:end:increment 
+      {
+          width:12px;height:12px;background:transparent;
+      } 
+    </style>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>[Effective Java] 클래스와 인터페이스 - Hyerin Blog</title>
+<meta name="description" content="클래스와 인터페이스를 쓰기 편하고, 견고하며 유연하게 만드는 방법을 알아보자.">
+
+
+  <meta name="author" content="Hyerin Park">
+  
+  <meta property="article:author" content="Hyerin Park">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Hyerin Blog">
+<meta property="og:title" content="[Effective Java] 클래스와 인터페이스">
+<meta property="og:url" content="http://localhost:4000/2021-06-04/chap4/">
+
+
+  <meta property="og:description" content="클래스와 인터페이스를 쓰기 편하고, 견고하며 유연하게 만드는 방법을 알아보자.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-06-04T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/2021-06-04/chap4/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Hyerin Park",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hyerin Blog Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- start custom head snippets -->
+
+<link rel="apple-touch-icon" sizes="57x57" href="/assets/favicon.ico/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/assets/favicon.ico/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/assets/favicon.ico/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/assets/favicon.ico/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/assets/favicon.ico/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/assets/favicon.ico/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/assets/favicon.ico/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/assets/favicon.ico/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon.ico/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="/assets/favicon.ico/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon.ico/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/assets/favicon.ico/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon.ico/favicon-16x16.png">
+<link rel="manifest" href="/assets/favicon.ico/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/assets/favicon.ico/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+
+<!-- end custom head snippets -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Hyerin Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/categories/">Category</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/year-archive/">Year</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+<div class="sidebar sticky">
+
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/image/profile.png" alt="Hyerin Park" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Hyerin Park</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Backend Developer</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Republic of Korea</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:hyerinn6@email.com" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/hyerin6" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.instagram.com/___hyerin_/" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+          
+            <li><a href="https://blog.naver.com/hyerin_0611" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Naver Blog</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+
+
+
+</div>
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="[Effective Java] 클래스와 인터페이스">
+    <meta itemprop="description" content="클래스와 인터페이스를 쓰기 편하고, 견고하며 유연하게 만드는 방법을 알아보자.">
+    <meta itemprop="datePublished" content="2021-06-04T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="http://localhost:4000/2021-06-04/chap4/" class="u-url" itemprop="url">[Effective Java] 클래스와 인터페이스
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          21 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#15-클래스와-멤버의-접근-권한을-최소화하라">15. 클래스와 멤버의 접근 권한을 최소화하라.</a><ul><li><a href="#정보-은닉의-장점">정보 은닉의 장점</a><ul><li><a href="#1-앞-코드의-public-배열을-private으로-만들고-public-불변-리스트-추가">1) 앞 코드의 public 배열을 private으로 만들고 public 불변 리스트 추가</a></li><li><a href="#2-배열을-private으로-만들고-그-복사본을-반환하는-public-메서드를-추가방어적-복사">2. 배열을 private으로 만들고 그 복사본을 반환하는 public 메서드를 추가(방어적 복사)</a></li></ul></li></ul></li><li><a href="#16-public-클래스에서는-public-필드가-아닌-접근자-메서드를-사용하라">16. public 클래스에서는 public 필드가 아닌 접근자 메서드를 사용하라.</a></li><li><a href="#17-변경-가능성을-최소화하라">17. 변경 가능성을 최소화하라.</a><ul><li><a href="#불변-객체는-단순하다">불변 객체는 단순하다.</a></li><li><a href="#불변-객체는-근본적으로-스레드-안전하여-따로-동기화할-필요가-없다">불변 객체는 근본적으로 스레드 안전하여 따로 동기화할 필요가 없다.</a></li><li><a href="#불변-객체는-자유롭게-공유할-수-있음은-물론-불변-객체끼리는-내부-데이터를-공유할-수-있다">불변 객체는 자유롭게 공유할 수 있음은 물론, 불변 객체끼리는 내부 데이터를 공유할 수 있다.</a></li><li><a href="#객체를-만들-때-다른-불변-객체들을-구성요소로-사용하면-이점이-많다">객체를 만들 때 다른 불변 객체들을 구성요소로 사용하면 이점이 많다.</a></li><li><a href="#불변-객체는-그-자체로-실패-원자성을-제공한다">불변 객체는 그 자체로 실패 원자성을 제공한다.</a></li><li><a href="#불변-클래스에도-단점은-있다-값이-다른면-반드시-독립된-객체로-만들어야-한다는-것이다">불변 클래스에도 단점은 있다. 값이 다른면 반드시 독립된 객체로 만들어야 한다는 것이다.</a></li><li><a href="#multistep-operation----">1. 다단계 연산 (multistep operation)들을 예측하여 기본 기능으로 제공</a></li><li><a href="#package-private-----">2. 클라이언트들이 원하는 복잡한 연산들을 정확히 예측할 수 있으면 package-private의 가변 동반 클래스 만으로 충분하다.</a></li><li><a href="#정리">정리</a></li></ul></li></ul></li><li><a href="#20-추상-클래스보다는-인터페이스를-우선하라">20. 추상 클래스보다는 인터페이스를 우선하라.</a><ul><li><a href="#단순-구현simple-implementation">단순 구현(simple implementation)</a></li></ul></li><li><a href="#21-인터페이스는-구현하는-쪽을-생각해-설계하라">21. 인터페이스는 구현하는 쪽을 생각해 설계하라.</a><ul><li><a href="#자바-8에서-추가된-collection-인터페이스-추가된-removeif-메서드">자바 8에서 추가된 Collection 인터페이스 추가된 removeIf 메서드</a></li><li><a href="#apache가-만든-synchronizedcollection">apache가 만든 SynchronizedCollection</a></li><li><a href="#collectionssynchronizedcollection-클래스의-removeif">Collections.synchronizedCollection 클래스의 removeIf()</a></li><li><a href="#해결-방법은">해결 방법은?</a></li></ul></li><li><a href="#22-인터페이스는-타입을-정의하는-용도로만-사용하라">22. 인터페이스는 타입을 정의하는 용도로만 사용하라.</a></li><li><a href="#23-태그-달린-클래스보다는-클래스-계층구조를-활용하라">23. 태그 달린 클래스보다는 클래스 계층구조를 활용하라.</a><ul><li><a href="#예-원과-사각형을-표현할-수-있는-클래스">예) 원과 사각형을 표현할 수 있는 클래스</a></li><li><a href="#태그-달린-클래스를-클래스-계층구조로-바꾸는-방법">태그 달린 클래스를 클래스 계층구조로 바꾸는 방법</a></li></ul></li><li><a href="#24-멤버-클래스는-되도록-static으로-만들자">24. 멤버 클래스는 되도록 static으로 만들자.</a><ul><li><a href="#1-정적-멤버-클래스">1. 정적 멤버 클래스</a></li><li><a href="#2-비정적-멤버-클래스">2. 비정적 멤버 클래스</a></li><li><a href="#정적-멤버-클래스-vs-비정적-멤버-클래스">정적 멤버 클래스 vs 비정적 멤버 클래스</a><ul><li><a href="#1-객체-생성">(1) 객체 생성</a></li><li><a href="#2-메모리-누수-가능성">(2) 메모리 누수 가능성</a></li><li><a href="#3-사용-시기">(3) 사용 시기</a></li><li><a href="#4-멤버-클래스가-public이나-protected-멤버라면">(4) 멤버 클래스가 public이나 protected 멤버라면?</a></li></ul></li><li><a href="#비정적-멤버-클래스-정리">비정적 멤버 클래스 정리</a></li><li><a href="#3-익명-클래스-anonymous-inner-class">3. 익명 클래스 (Anonymous Inner Class)</a><ul><li><a href="#사용-시기">사용 시기</a></li></ul></li><li><a href="#지역-클래스">지역 클래스</a></li><li><a href="#핵심-정리">핵심 정리</a></li></ul></li><li><a href="#25-톱레벨-클래스는-한-파일에-하나만-담으라">25. 톱레벨 클래스는 한 파일에 하나만 담으라.</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <p>클래스와 인터페이스를 쓰기 편하고, 견고하며 유연하게 만드는 방법을 알아보자.</p>
+
+<p><br /></p>
+
+<h2 id="15-클래스와-멤버의-접근-권한을-최소화하라">15. 클래스와 멤버의 접근 권한을 최소화하라.</h2>
+
+<p>어설프게 설계된 컴포넌트와 잘 설계된 컴포넌트의 가장 큰 차이는?        <br />
+클래스 내부 데이터와 내부 구현 정보를 외부 컴포넌트로부터 얼마나 잘 숨겼느냐다.</p>
+
+<p>잘 설계된 컴포넌트는 모든 내부 구현을 완벽히 숨겨 구현과 API를 깔끔히 분리한다.    <br />
+이는 정보은닉, 혹은 캡슐화라고 하는 개념이기도 하다.</p>
+
+<p><br /></p>
+
+<h3 id="정보-은닉의-장점">정보 은닉의 장점</h3>
+
+<p>1) 시스템 개발 속도를 높인다.  <br />
+   여러 컴포넌트를 병렬로 개발할 수 있기 때문이다.
+   <br />
+2) 시스템 관리 비용을 낮춘다.  <br />
+   각 컴포넌트를 빠르게 파악할 수 있고 교체 부담이 감소한다.  <br />
+   <br />
+3) 정보 은닉 자체가 성능을 높여주지는 않지만 성능 최적에 도움이 된다.     <br />
+   완성된 시스템을 프로파일링해 최적화할 컴포넌트를 정해   <br />
+   다른 컴포넌트에 영향을 주지 않고 해당 컴포넌트만 최적화할 수 있기 때문이다.      <br />
+   <br />
+4) 소프트웨어 재사용성을 높인다.  <br />
+   <br />
+5) 큰 시스템을 제적하는 난이도를 낮춘다.         <br />
+   시스템 전체가 완성되지 않아도 개별 컴포넌트의 동작을 검증할 수 있기 때문이다.</p>
+
+<p><br /></p>
+
+<p>자바는 정보 은닉을 위한 다양한 장치를 제공한다.    <br />
+그중 <strong>접근 제어 매커니즘</strong>은 클래스, 인터페이스, 멤버의 접근성 (접근 허용 범위)을 명시한다.     <br />
+각 요소의 접근성은 그 요소가 선언된 위치, 접근 제한자(private, protected, public)로 정해진다.</p>
+
+<p>접근 제한자를 제대로 활용하는 것이 정보 은닉의 핵심이다.  <br />
+기본 원칙은 <strong>모든 클래스와 멤버의 접근성을 가능한 한 좁혀야 한다</strong>는 것이다.    <br />
+소프트웨어가 올바른 동작을 하는 한 항상 가장 낮은 접근 수준을 부여해야 한다고 할 수 있다.  <br />
+<br /></p>
+
+<p>(가장 바깥) 탑레벨 클래스와 인터페이스에 부여할 수 있는 접근 수준은 <br />
+package-private와 public이다.</p>
+
+<ul>
+  <li>package-private : 해당 패키지에서만 이용할 수 있다.       <br />
+package-private으로 선언하면 API가 아닌 내부 구현이 되어 언제든 수정할 수 있다.  <br />
+즉, 클라이언트에 아무런 피해 없이 다음 릴리스에서 수정, 교체, 제거할 수 있다.  <br />
+<br /></li>
+  <li>public : API가 되므로 하위 호환을 위해 영원히 관리해줘야만 한다.</li>
+</ul>
+
+<p><br /></p>
+
+<p>한 클래스에서만 사용하는 package-private 탑레벨 클래스나 인터페이스는  <br />
+이를 사용하는 클래스 안에 private static으로 중첩시켜보자.   <br />
+탑레벨로 두면 같은 패키지의 모든 클래스가 접근할 수 있지만 private static으로 중첩시키면 <br />
+바깥 클래스 하나에서만 접근할 수 있다.</p>
+
+<p>이보다 더 중요한 것은 <strong>public일 필요가 없는 클래스의 접근 수준을 package-private 탑레벨 클래스로 좁히는 일</strong>이다.  <br />
+public 클래스는 그 패키지의 API인 반면, package-private 탑레벨 클래스는 내부 구현에 속하기 때문이다.</p>
+
+<p><br /></p>
+
+<p>멤버(필드, 메서드, 중첩 클래스, 중첩 인터페이스)에 부여할 수 있는 접근 수준은 네 가지다.</p>
+
+<ul>
+  <li>
+    <p>private: 멤버를 선언한 탑레벨 클래스에서만 접근할 수 있다.</p>
+  </li>
+  <li>
+    <p>package-private: 멤버가 소속된 패키지 안의 모든 클래스에서 접근할 수 있다.           <br />
+접근 제한자를 명시하지 않았을 때 적용되는 패키지 접근 수준이다.           <br />
+(단, 인터페이스의 멤버는 기본적으로 public이 적용된다.)</p>
+  </li>
+  <li>
+    <p>protected: package-private의 접근 범위를 포함하며,       <br />
+이 멤버를 선언한 클래스의 하위 클래스에서도 접근할 수 있다.          <br />
+(제약이 조금 따름)</p>
+  </li>
+  <li>
+    <p>public: 모든 곳에서 접근할 수 있다.        <br />
+<br /></p>
+  </li>
+</ul>
+
+<p>private와 package-private 멤버는 모두 해당 클래스의 구현에 해당하므로 보통은 공개 API에 영향을 주지 않는다.   <br />
+단, Serializable을 구현한 클래스에서는 그 필드들도 외도치 않게 공개 API가 될 수도 있다.</p>
+
+<p><br /></p>
+
+<p>public 클래스에서 멤버의 접근 수준을 package-private에서 protected로   <br />
+바꾸는 순간 그 멤버에 접근할 수 있는 대상 범위가 넓어진다.     <br />
+public클래스의 protected 멤버는 공개 API이므로 영원히 지원돼야 한다. <br />
+따라서 protected 멤버의 수는 적을수록 좋다. <br />
+<br /></p>
+
+<p>멤버 접근성을 좁히지 못하게 방해하는 제약이 있다.       <br />
+상위 클래스의 메서드를 재정의할 때는 그 접근 수준을 상위 클래스에서보다 좁게 설정할 수 없다는 것이다.      <br />
+이 제약은 상위 클래스의 인스턴스는 하위 클래스의 인스턴스로 대체해 사용할 수 있어야 한다는 규칙   <br />
+(리스코프 치환 원칙)을 지키기 위해 필요하다.          <br />
+클래스가 인터페이스를 구현하는 건 이 규칙의 특별한 예로 볼 수 있고   <br />
+이때 클래스는 인터페이스가 정의한 모든 메서드를 public으로 선언해야 한다.    <br />
+<br /></p>
+
+<p><strong>public 클래스의 인스턴스 필드는 되도록 public이 아니어야 한다.</strong>      <br />
+필드가 가변 객체를 참조하거나 final이 아닌 인스턴스 필드를 public으로 선언하면      <br />
+그 필드에 담을 수 있는 값을 제한할 힘을 잃게 된다.</p>
+
+<p>또한 필드가 수정될 때 (락 획득 같은) 다른 작업을 할 수 없게 되므로       <br />
+<strong>public 가변 필드를 갖는 클래스는 일반적으로 스레드 안전하지 않다.</strong></p>
+
+<p>이러한 문제는 정적 필드에서도 마찬가지이나, 예외가 하나 있다.                <br />
+필요한 구성 요소는 상수로 <code class="language-plaintext highlighter-rouge">public static final</code> 필드로 공개해도 좋다.</p>
+
+<p>길이가 0이 아닌 배열은 모두 변경 가능하니 주의하자.     <br />
+따라서 <strong>클래스에서 public static final 배열 필드를 두거나      <br />
+이 필드를 반환하는 접근자 메서드를 제공해서는 안 된다.</strong>          <br />
+이런 필드는 클라이언트에서 내용을 수정할 수 있게 되고 다음과 같은 보안 허점이 존재한다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public static final Thing[] VALUES = { ... };
+</code></pre></div></div>
+
+<p>어떤 IDE가 생성하는 접근자는 private 배열 필드의 참조를 반환하여  <br />
+이 같은 문제를 똑같이 일으키니 주의해야 한다.    <br />
+<br /></p>
+
+<p>해결책은 두 가지다.</p>
+
+<h4 id="1-앞-코드의-public-배열을-private으로-만들고-public-불변-리스트-추가">1) 앞 코드의 public 배열을 private으로 만들고 public 불변 리스트 추가</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public static final Thing[] PRIVATE_VALUES = { ... };
+public static final List&lt;Thing&gt; VALUES = 
+    Collections.unmodifiableList(Arrays.asList(PRIVATE_VALUES));
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h4 id="2-배열을-private으로-만들고-그-복사본을-반환하는-public-메서드를-추가방어적-복사">2. 배열을 private으로 만들고 그 복사본을 반환하는 public 메서드를 추가(방어적 복사)</h4>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>private static final Thing[] PRIVATE_VALUES = { ... };
+public static final Thing[] values() {
+    return PRIVATE_VALUES.clone();
+}
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p>클라이언트가 무엇을 원하는지 판단해 둘 중 하나를 선택하면 된다.</p>
+
+<p><br /></p>
+
+<p>자바 9에서는 모듈 시스템이라는 개념이 도입되면서 <strong>두 가지 암묵적 접근 수준</strong>이 추가되었다.     <br />
+패키지가 클래스들의 묶음이듯, 모듈은 패키지들의 묶음이다.  <br />
+모듈은 자신에 속하는 패키지 중 공개(export)할 것들을 선언한다.  <br />
+protected 혹은 public 멤버라도 해당 패키지를 공개하지 않았다면 모듈 외부에서는 접근할 수 없다.  <br />
+모듈 시스템을 활용하면 클래스를 외부에 공개하지 않으면서도   <br />
+같은 모듈을 이루는 패키지 사이에서는 자유롭게 공유할 수 있다.</p>
+
+<p><br /></p>
+
+<p>두 가지 암묵 접근 수준은 숨겨진 패키지 안에 있는 <br />
+public 클래스의 public 혹은 protected 멤버와 관련이 있다.</p>
+
+<p>이 암묵적 접근 수준들은 각각 public 수준과 protected 수준과 같으나          <br />
+그 효과가 모듈 내부로 한정되는 변종인 것이다.     <br />
+이런 상황은 흔하지 않으며 패키지들 사이에서 클래스들을 재배치하면 대부분 해결된다.</p>
+
+<p>모듈의 JAR 파일을 자신의 모듈 경로가 아닌 애플리케이션의 클래스패스(classpath)에 두면            <br />
+그 모듈 안의 모든 패키지는 마치 모듈이 없는 것처럼 행동한다.     <br />
+즉 모듈이 공개했는지 여부와 상관없이 public 클래스가 선언한             <br />
+모든 public 혹은 protected 멤버를 모듈 밖에서도 접근할 수 있게 된다.</p>
+
+<p>이를 활용한 대표적인 예가 JDK이다. <br />
+자바 라이브러리에서 공개하지 않은 패키지들은 해당 모듈 밖에서는 절대로 접근할 수 없다.  <br />
+<br /></p>
+
+<p>모듈의 장점을 누리려면 해야 할 일이 많다.  <br />
+먼저 패키지들을 모듈 단위로 묶고, 모듈 선언에 패키지들의 모든 의존성을 명시한다.  <br />
+다음 소스 트리를 재배치하고, 모듈 안으로부터 일반 패키지로의 모든 접근에 특별한 조치를 취해야 한다.</p>
+
+<p><br />  <br />
+<br /></p>
+
+<h2 id="16-public-클래스에서는-public-필드가-아닌-접근자-메서드를-사용하라">16. public 클래스에서는 public 필드가 아닌 접근자 메서드를 사용하라.</h2>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class Point {
+    public double x;
+    public double y;
+}
+</code></pre></div></div>
+
+<p>이런 클래스는 데이터 필드에 직접 접근할 수 있으니 캡슐화의 이점을 제공하지 못한다.</p>
+
+<ul>
+  <li>API를 수정하지 않고는 내부 표현을 바꿀 수 없고 불변식을 보장할 수 없다.</li>
+  <li>외부에서 필드에 접근할 때 부수 작업을 수행할 수 없다.</li>
+</ul>
+
+<p>이를 private으로 바꾸고 public 접근자를 추가한다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>private double x;
+
+public double getX() { return x; }
+</code></pre></div></div>
+
+<p>패키지 바깥에서 접근할 수 있는 클래스라면 접근자를 제공함으로써      <br />
+클래스 내부 표현 방식을 언제든 바꿀 수 있는 유연성을 얻을 수 있다.    <br />
+public 클래스가 필드를 공개하려면 이를 사용하는 클라이언트가 생기므로  <br />
+내부 표현 방식을 마음대로 바꿀 수 없게 된다.     <br />
+<br /></p>
+
+<p><strong>package-private 클래스</strong> 혹은 <strong>private 중첩 클래스</strong>라면 데이터 필드를 노출한다 해도 하등의 문제가 없다.      <br />
+클라이언트 코드가 이 클래스 내부 표현에 묶이긴 하나,       <br />
+클라이언트도 어차피 이 클래스를 포함하는 패키지 안에서 동작하는 코드일 뿐이다.         <br />
+따라서 패키지 바깥 코드는 전혀 손대지 않고도 데이터 표현 방식을 바꿀 수 있다.      <br />
+<br /></p>
+
+<p>public 클래스의 필드가 불변이라면 직접 노출할 때의 단점이 조금은 줄어들지만 좋은 생각은 아니다.  <br />
+API를 변경하지 않고는 표현 방식을 바꿀 수 없고  <br />
+필드를 읽을 때 부수 작업을 수행할 수 없다는 단점이 여전하다.      <br />
+단, 불변식은 보장됨</p>
+
+<p><strong>ex.</strong> 불변 필드를 노출한 public 클래스</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public final class Time {
+
+    public final int hour;
+    
+    . . .
+    
+}
+</code></pre></div></div>
+
+<p><br />     <br />
+<br /></p>
+
+<h2 id="17-변경-가능성을-최소화하라">17. 변경 가능성을 최소화하라.</h2>
+
+<p>불변 클래스란 그 인스턴스의 내부 값을 수정할 수 없는 클래스다.    <br />
+불변 클래스는 가변 클래스보다 설계하고 구현, 사용하기 쉬우며 오류 발생 확률도 적고 훨씬 안전하다.</p>
+
+<p>자바 플랫폼 라이브러리에도 다양한 불변 클래스가 있다.</p>
+
+<ul>
+  <li>String</li>
+  <li>기본 타입의 박싱된 클래스들</li>
+  <li>BigInteger</li>
+  <li>BigDecimal</li>
+</ul>
+
+<p><br /></p>
+
+<p>클래스를 불변으로 만들려면 다음 5가지 규칙을 따르면 된다.</p>
+
+<ol>
+  <li>
+    <p>객체의 상태를 변경하는 메서드를 제공하지 않는다.</p>
+  </li>
+  <li>
+    <p>클래스를 확장할 수 없도록 한다.</p>
+  </li>
+  <li>
+    <p>모든 필드를 final로 선언한다.</p>
+  </li>
+  <li>
+    <p>모든 필드를 private으로 선언한다.</p>
+  </li>
+  <li>
+    <p>자신 외에는 내부의 가변 컴포넌트에 접근할 수 없도록 한다.</p>
+  </li>
+</ol>
+
+<p><br /></p>
+
+<h4 id="불변-객체는-단순하다">불변 객체는 단순하다.</h4>
+
+<p>불변 객체는 생성된 시점의 상태를 파괴할 때까지 그대로 간직한다.        <br />
+반면 가변 객체는 변경자 메서드의 상태 전이를 정밀하게 문서로 남겨놓지 않으면       <br />
+신뢰하기 어려울 수도 있다.</p>
+
+<p><br /></p>
+
+<h4 id="불변-객체는-근본적으로-스레드-안전하여-따로-동기화할-필요가-없다">불변 객체는 근본적으로 스레드 안전하여 따로 동기화할 필요가 없다.</h4>
+
+<p>다른 스레드에 영향을 줄 수 없으니 불변 객체는 안심하고 공유할 수 있다.     <br />
+따라서 불변 클래스라면 한번 만든 인스턴스를 최대한 <strong>재활용</strong>하기 권한다.         <br />
+가장 쉬운 방법은 자주 쓰이는 값들을 상수 <strong>public static final</strong>로 제공하는 것이다.</p>
+
+<p><strong>ex)</strong></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public static final Complex ZERO = new Complex(0, 0);
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p>불변 클래스는 자주 사용되는 인스턴스를 캐싱하여 같은 인스턴스를   <br />
+중복 생성하지 않게 해주는 정적 팩토리 메서드를 제공할 수 있다.      <br />
+박싱된 기본 타입 클래스 전부와 BigInteger가 여기 속한다. <br />
+이런 정적 팩토리를 사용하면 여러 클라이언트가 인스턴스를 공유하여  <br />
+메모리 사용량과 가비지 컬렉션 비용이 줄어든다.</p>
+
+<p>새로운 클래스를 설계할 때 public 생성자 대신 정적 팩토리를 만들어두면,    <br />
+클라이언트를 수정하지 않고도 필요에 따라 캐시 기능을 나중에 덧붙일 수 있다.</p>
+
+<p><br /></p>
+
+<h4 id="불변-객체는-자유롭게-공유할-수-있음은-물론-불변-객체끼리는-내부-데이터를-공유할-수-있다">불변 객체는 자유롭게 공유할 수 있음은 물론, 불변 객체끼리는 내부 데이터를 공유할 수 있다.</h4>
+
+<p>BigInteger를 예로 들자.                    <br />
+BigInteger 클래스 내부에서 값의 부호와 크기를 따로 표현하는데         <br />
+부호에는 int 변수를, 크기에는 int 배열을 사용하는 것이다.         <br />
+이때 배열은 비록 가변이지만 복사하지도 않고 원본 인스턴스가 가리키는 내부 배열을 그대로 가리킨다.</p>
+
+<p><br /></p>
+
+<h4 id="객체를-만들-때-다른-불변-객체들을-구성요소로-사용하면-이점이-많다">객체를 만들 때 다른 불변 객체들을 구성요소로 사용하면 이점이 많다.</h4>
+
+<p>구조가 아무리 복잡하더라도 불변식을 유지하기 훨씬 수월하기 때문이다.    <br />
+좋은 예로, 불변 객체는 맵의 키와 집합(Set) 원소로 쓰기에 안성맞춤이다.    <br />
+맵이나 집합은 안에 담긴 값이 바뀌면 불변식이 허물어지는데    <br />
+불변 객체를 사용하면 그런 걱정은 하지 않아도 된다.</p>
+
+<p><br /></p>
+
+<h4 id="불변-객체는-그-자체로-실패-원자성을-제공한다">불변 객체는 그 자체로 실패 원자성을 제공한다.</h4>
+
+<p>상태가 절대 변하지 않으니 불일치 상태에 빠질 가능성이 없다.</p>
+
+<blockquote>
+  <p>실패 원자성 : <br />
+메서드에서 예외가 발생한 후에도 그 객체는 여전히 유효한 상태이어야 한다.</p>
+</blockquote>
+
+<p><br /></p>
+
+<h4 id="불변-클래스에도-단점은-있다-값이-다른면-반드시-독립된-객체로-만들어야-한다는-것이다">불변 클래스에도 단점은 있다. 값이 다른면 반드시 독립된 객체로 만들어야 한다는 것이다.</h4>
+
+<p>값의 가짓수가 많다면 이를 모두 만드는 데 큰 비용을 처리해야 한다.</p>
+
+<details>                                       
+<summary>ex) 백만 비트짜리 BigInteger에서 비트 하나를 바꿔야 한다.</summary>                                    
+<div>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>BigInteger moby = ...;
+moby = moby.flipBit(0);
+</code></pre></div>    </div>
+
+    <p>flipBit 메서드는 새로운 BigInteger 인스턴스를 생성한다.  <br />
+원본과 한 비트만 다른 백만 비트짜리 인스턴스를 만들었다. <br />
+이 연산은 BigInteger의 크기에 비례해 시간과 공간을 잡아먹는다.</p>
+
+    <p>BigInteger처럼 임의 길이의 비트 순열을 표현하는 BitSet은 가변이고  <br />
+원하는 비트 하나만 상수 시간 안에 바꿔주는 메서드를 제공한다.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>BigSet moby = ...;
+moby.flip(0);
+</code></pre></div>    </div>
+
+    <p>원하는 객체를 완성하기까지의 단계가 많고,   <br />
+그 중간 단계에서 만들어진 객체들이 모두 버려진다면 성능 문제가 더 불거진다.</p>
+
+    <p>이 문제를 해결하는 방법은 다음 두 가지이다.</p>
+
+    <h4 id="multistep-operation----">1. 다단계 연산 (multistep operation)들을 예측하여 기본 기능으로 제공</h4>
+
+    <p>이런 다단계 연산을 기본으로 제공하면 더 이상 각 단계마다 객체를 생성하지 않아도 된다.  <br />
+불변 객체는 내부적으로 아주 영리한 방식으로 구현할 수 있기 때문이다.  <br />
+<br /></p>
+
+    <h4 id="package-private-----">2. 클라이언트들이 원하는 복잡한 연산들을 정확히 예측할 수 있으면 package-private의 가변 동반 클래스 만으로 충분하다.</h4>
+
+    <p>그렇지 않다면 이 클래스를 public으로 제공하는 것이 최선이다.               <br />
+대표적인 예로 String 클래스가 있다.              <br />
+String의 가변 동반 클래스가 StringBuilder(와 StringBuffer)</p>
+
+    <p><br /></p>
+
+  </div>                                
+</details>
+
+<p><br /></p>
+
+<p>불변 클래스를 만드는 또 다른 설계 방법 몇 가지가 있다. <br />
+클래스가 불변임을 보장하려면 자신을 상속하지 못하게 해야 한다고 했는데  <br />
+가장 쉬운 방법은 final 클래스로 선언하는 것이지만, 더 유연한 방법이 있다.</p>
+
+<p>모든 <strong>생성자를 private 혹은 package-private으로</strong> 만들고 <strong>public 정적 팩토리를 제공</strong>하는 방법이다.    <br />
+다음은 구체적인 예제 코드이다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public class Complex {
+  private final double re;
+  private final double im;
+  
+  private Complex(double re, double im) {
+    this.re = re;
+    this.im = im;
+  }
+  
+  public static Complex valueOf(double re, double im) {
+    return new Complex(re, im);
+  }
+
+}
+</code></pre></div></div>
+
+<p>위 방식이 최선일 때가 많다.</p>
+
+<p>바깥에서 볼 수 없는 package-private 구현 클래스를 원하는 만큼 만들어 활용할 수 있으니 훨씬 유연하다.      <br />
+패키지 바깥의 클라이언트 입장에서 이 불변 객체는 사실상 final이다.       <br />
+정적 팩토리 방식은 다수의 구현 클래스를 활용한 유연성을 제공하고,   <br />
+다음 릴리스에서 객체 캐싱 기능을 추가해 성능을 끌어올릴 수도 있다.</p>
+
+<details>                                       
+<summary>BigInteger는?</summary>                                     
+<div>
+    <p><br /></p>
+
+    <p>BigInteger와 BigDecimal의 메서드들은 모두 재정의할 수 있게 설계되었고,  <br />
+하위 호환성이 발목을 잡아 아직 문제 해결을 하지 못했다.   <br />
+때문에 만약 신뢰할 수 없는 클라이언트로부터 BigInteger와 BigDecimal 인스턴스를 <br />
+인수로 받는다면 주의해야 한다.  <br />
+이 값들이 불변이어야 보안을 지킬 수 있다면 인수로 받은 객체가 진짜인지 확인해야 한다.  <br />
+신뢰할 수 없는 하위 클래스의 인스턴스라고 확인되면, 이 인수들을 가변이라고 가정하고  <br />
+방어적으로 복사해 사용해야 한다는 뜻이다.</p>
+
+    <div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public static BigInteger safeInstance(BigInteger val) {
+    return val.getClass() == BigInteger.class ?
+           val : new BigInteger(val.toByteArray());
+}
+</code></pre></div>    </div>
+
+    <p><br /></p>
+
+  </div>                                  
+</details>
+
+<p><br /></p>
+
+<h4 id="정리">정리</h4>
+
+<ul>
+  <li>
+    <p>어떤 메서드도 객체의 상태 중 외부에 비치는 값을 변경할 수 없다.</p>
+  </li>
+  <li>
+    <p>클래스는 꼭 필요한 경우가 아니라면 불변이어야 한다.</p>
+  </li>
+  <li>
+    <p>불변으로 만들 수 없는 클래스라도 변경할 수 있는 부분은 최소화하자.</p>
+  </li>
+  <li>
+    <p>다른 합당한 이유가 없다면 모든 필드는 <code class="language-plaintext highlighter-rouge">private final</code> 이어야 한다.</p>
+  </li>
+  <li>
+    <p>생성자는 불변식 설정이 모두 완료된, 초기화가 완벽히 끝난 상태의 객체를 생성해야 한다.</p>
+  </li>
+</ul>
+
+<p><br />   <br />
+<br /></p>
+
+<p><img src="https://user-images.githubusercontent.com/33855307/122661409-d27af200-d1c4-11eb-8134-25a3966b7afa.jpg" alt="️이펙티브자바_210619_234935_1" /></p>
+
+<p><img src="https://user-images.githubusercontent.com/33855307/122661407-d149c500-d1c4-11eb-8a56-76e7ac6620df.jpg" alt="️이펙티브자바_210619_234935_2" /></p>
+
+<p><img src="https://user-images.githubusercontent.com/33855307/122661406-d0189800-d1c4-11eb-8e32-a893344f0c91.jpg" alt="️이펙티브자바_210619_234935_3" /></p>
+
+<p><img src="https://user-images.githubusercontent.com/33855307/122661404-cbec7a80-d1c4-11eb-87a4-801097e469c8.jpg" alt="️이펙티브자바_210619_234935_4" /></p>
+
+<p><br />   <br />
+<br /></p>
+
+<h2 id="20-추상-클래스보다는-인터페이스를-우선하라">20. 추상 클래스보다는 인터페이스를 우선하라.</h2>
+
+<p>자바가 제공하는 다중 구현 매커니즘은 <strong>인터페이스</strong>와 <strong>추상 클래스</strong>다.       <br />
+자바 8부터 인터페이스도 디폴트 메서드를 제공할 수 있게 되어 두 메커니즘 모두 인스턴스 메서드를 구현 형태로 제공할 수 있다.         <br />
+둘의 가장 큰 차이는 <strong>추상 클래스가 정의한 타입을 구현하는 클래스는 반드시 추상 클래스의 하위 클래스가 되어야 한다</strong>는 점이다.      <br />
+자바는 단일 상속만 지원하므로 추상 클래스 방식은 <strong>새로운 타입을 정의하는 데 커다란 제약</strong>을 갖고 있는 것이다.</p>
+
+<p>반면 기존 클래스 위에 새로운 추상 클래스를 끼워넣기는 어려운 게 일반적이다.   <br />
+두 클래스가 같은 추상 클래스를 확장하길 원한다면, 그 추상 클래스는 계층구조상 두 클래스의 공통 조상이어야 한다.      <br />
+이 방식은 클래스 계층구조에 혼란을 일으킨다.</p>
+
+<p><br /></p>
+
+<p>인터페이스는 믹스인(mixin) 정의에 안성맞춤이다.     <br />
+<strong>믹스인이란 클래스가 구현할 수 있는 타입</strong>으로 믹스인을 구현한 클래스에     <br />
+원래의 ‘주된 타입’ 외에도 <strong>특정 선택적 행위를 제공한다고 선언하는 효과</strong>를 준다.       <br />
+예) Comparable은 자신을 구현한 클래스의 인스턴스들끼리는 순서를 정할 수 있다고 선언하는 믹스인 인터페이스이다.</p>
+
+<p>추상 클래스로는 믹스인을 정의할 수 없다.  <br />
+이유는 앞서와 같이, 기존 클래스에 덧씌울 수 없기 때문이다.        <br />
+클래스는 두 부모를 둘 수 없고 클래스 계층구조에는 믹스인을 삽입하기에 합리적인 위치가 없기 때문이다.</p>
+
+<p>mixin에 대해 더 알아보기 : <a href="https://hyerin6.github.io/2021-06-21/mixin/">https://hyerin6.github.io/2021-06-21/mixin/</a></p>
+
+<p><br /></p>
+
+<p>인터페이스로는 계층구조가 없는 타입 프레임워크를 만들 수 있다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public interface Singer {
+    AudioClip sing(Song s);
+}
+
+public interface SongWriter {
+    Song compose(int chartPosition);
+}
+</code></pre></div></div>
+
+<p>위와 같은 가수 인터페이스와 작곡가 인터페이스가 있다.       <br />
+우리 주변에 작곡도 하는 가수가 제법있는데,  <br />
+타입을 인터페이스로 정의하면 가수 클래스가 Singer와 Songwriter 모두를 구현해도 문제가 없다.    <br />
+Singer와 Songwriter 모두를 확장하고 새로운 메서드까지 추가한 제 3의 인터페이스를 정의할 수도 있다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// Singer와 Songwriter 모두 구현 
+public class People implements Singer, SongWriter {
+    @Override
+    public void Sing(String s) {
+
+    }
+    @Override
+    public void Compose(int chartPosition) {
+
+    }
+}
+
+// Singer와 Songwriter 모두 확장, 새로운 메서드까지 추가한 제 3의 인터페이스 정의 
+public interface SingerSongWriter extends Singer, Songwriter {
+        AudioClip strum();
+        void actSensitive();
+}
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p>위와 같은 구조를 클래스로 만들려면?</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public abstract class Singer {
+    abstract void sing(String s);
+}
+
+public abstract class SongWriter {
+    abstract void compose(int chartPosition);
+}
+
+public abstract class SingerSongWriter {
+    abstract void strum();
+    abstract void actSensitive();
+    abstract void Compose(int chartPosition);
+    abstract void sing(String s);
+}
+</code></pre></div></div>
+
+<p>가능한 조합 전부를 각각의 클래스로 정의한 고도비만 계층구조가 만들어질 것이다.      <br />
+추상 클래스로 만들었기 때문에 Singer 클래스와 SongWriter 클래스를 둘다 상속할 수 없어     <br />
+다음과 같은 SingerSongWriter라는 또 다른 추상 클래스를 만들어서 클래스 계층을 표현할 수 밖에 없다.    <br />
+매개변수 타입만 다른 메서드들을 수없이 많이 가진 거대한 클래스를 낳을 수 있다. <br />
+이는 조합 폭발(combinato-rial explosion)이라고 부르는 현상이다.</p>
+
+<p><br /></p>
+
+<p><strong>래퍼 클래스 관용구와 함께 사용하면 인터페이스는 기능을 향상 시키는 안전하고 강력한 수단이 된다.</strong> <br />
+타입을 추상 클래스로 정의해두면 그 타입에 기능을 추가하는 방법은 상속뿐이다.     <br />
+상속해서 만든 클래스는 래퍼 클래스보다 활용도가 떨어지고 깨지기는 더 쉽다.   <br />
+<br /></p>
+
+<p>인터페이스 메서드 중 구현 방법이 명백한 것이 있다면, 그 구현을 디폴트 메서드로 제공할 수 있다.  <br />
+그런데 디폴트 메서드에도 제약은 있다.</p>
+
+<p>1) Object의 equals, hashcode 같은 메서드는 디폴트 메서드로 제공해서는 안된다.
+2) public이 아닌 정적 멤버도 가질 수 없다.
+3) 본인이 만들지 않은 인터페이스에는 디폴트 메서드를 추가할 수 없다.</p>
+
+<p><br /></p>
+
+<p>인터페이스와 추상 골격 구현 (skeletal implementation) 클래스를 함께 제공하는 식으로  <br />
+인터페이스와 추상 클래스의 장점을 가질 수 있다.  <br />
+인터페이스로 타입 정의, 필요한 디폴트 메서드 구현     <br />
+추상 골격 구현 클래스는 나머지 메서드까지 구현   <br />
+이렇게 골격 구현을 확장하는 것만으로 이 인터페이스를 구현하는데 필요한 일이 대부분 완료된다.  <br />
+이는 템플릿 메서드 패턴과 같다.</p>
+
+<p>예) 컬렉션 프레임워크의 AbstractList, AbstractSet 클래스   <br />
+두 추상 클래스는 각각 List, Set 인터페이스의 추상 골격 구현 클래스이다.</p>
+
+<p><br /></p>
+
+<p>추상 골격 구현 클래스는 아래 게시물에서 더 알아보자.<br />
+<a href="https://hyerin6.github.io/2021-06-20/skeletal_implementation/">https://hyerin6.github.io/2021-06-20/skeletal_implementation/</a></p>
+
+<p>위 게시물에서 예제로 인터페이스의 디폴트 메소드를 사용하지 않고 추상 골격 구현 클래스를 만들어 중복을 제거했다.      <br />
+그런데 Vending을 구현하는 구현 클래스가 VendingManuFacturer라는 제조사 클래스를 상속받아야해서  <br />
+추상 골격 구현을 확장하지 못하는 상황일 땐 어떻게 해야할까?</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public class VendingManuFacturer {
+    public void printManufacturerName() { . . . }
+}
+
+// 상속받아야 하는 클래스를 구현체가 상속받는다.
+public class SnackVending extends VendingManufacturer implements Vending {
+    InnerAbstractVending innerAbstractVending = new InnerAbstractVending();
+
+    @Override
+    public void start() {
+        innerAbstractVending.start();
+    }
+
+    @Override
+    public void chooseProduct() {
+        innerAbstractVending.chooseProduct();
+    }
+
+    @Override
+    public void stop() {
+        innerAbstractVending.stop();
+    }
+
+    @Override
+    public void process() {
+        printManufacturerName();
+        innerAbstractVending.process();
+    }
+
+    private class InnerAbstractVending extends AbstractVending {
+        @Override
+        public void chooseProduct() {
+            System.out.println("choose product");
+            System.out.println("chocolate");
+            System.out.println("cracker");
+        }
+    }
+}
+</code></pre></div></div>
+
+<p>인터페이스를 구현한 클래스에서 해당 골격 구현을 확장한 private 내부 클래스를 정의하고      <br />
+<strong>각 메소드 호출을 내부 클래스의 인스턴스에 전달하여 골격 구현 클래스를 우회적으로 이용</strong>하는 방식을      <br />
+<strong>시뮬레이트한 다중 상속</strong>(simulated multiple inheritance)이라고 한다.</p>
+
+<p><br /></p>
+
+<h3 id="단순-구현simple-implementation">단순 구현(simple implementation)</h3>
+
+<p>단순 구현은 골격 구현의 작은 변종이다.    <br />
+단순 구현도 골격 구현과 같이 상속을 위해 인터페이스를 구현한 것이지만,    <br />
+추상 클래스가 아니란 점이 다르다.  <br />
+이러한 단순 구현은 그대로 써도 되고 필요에 맞게 확장해도 된다.    <br />
+예) AbstractMap.SimpleEntry</p>
+
+<p><br />           <br />
+<br /></p>
+
+<h2 id="21-인터페이스는-구현하는-쪽을-생각해-설계하라">21. 인터페이스는 구현하는 쪽을 생각해 설계하라.</h2>
+
+<p>자바 8전에 기존 구현체를 깨뜨리지 않고는 인터페이스에 메서드를 추가할 방법이 없었다.        <br />
+자바 8에서 기존 인터페이스에 메서드를 추가할 수 있도록 디폴트 메서드를 소개했지만,     <br />
+위험이 완전히 사라진 것은 아니다.</p>
+
+<p>디폴트 메서드를 선언하면 그 인터페이스를 구현한 후   <br />
+디폴트 메서드를 재정의하지 않은 모든 클래스에서 디폴트 구현이 쓰이게 된다.    <br />
+그러나 모든 기존 구현체들과 매끄럽게 연동되리라는 보장은 없다.  <br />
+디폴트 메서드는 구현 클래스에 대해 아무것도 모른 채 합의 없이 삽입될 뿐이다.</p>
+
+<p>자바 8에서 핵심 컬렉션 인터페이스들에 다수의 디폴트 메서드가 추가되었다.  <br />
+주로 람다를 활용하기 위해서다.  <br />
+하지만 생각할 수 있는 모든 상황에서 불변식을 해치지 않는 디폴트 메서드를 작성하기란 어렵다.</p>
+
+<h3 id="자바-8에서-추가된-collection-인터페이스-추가된-removeif-메서드">자바 8에서 추가된 Collection 인터페이스 추가된 removeIf 메서드</h3>
+
+<p>반복자를 이용해 순회하면서 각 원소를 인수로 넣어 predicate를 호출해서,   <br />
+predicate가 true를 반환하면 iterator의 <code class="language-plaintext highlighter-rouge">remove()</code> 메서드를 호출해 원소를 제거 한다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>default boolean removeIf(Predivate&lt;? super E&gt; filter) {
+    Objects.requireNonNull(filter);
+    boolean result = false;
+    for ( Iterator&lt;E&gt; it = iterator(); it.hashNext(); ) {
+        if (filter.test(it.next())) {
+            it.remove();
+            result = true;
+        }
+    }
+    return result;
+}
+</code></pre></div></div>
+
+<p>이렇게 Collection에 새롭게 들어간 디폴드 메서는 과연 모든 Collection에 대해 정상작동 할까?</p>
+
+<p><br /></p>
+
+<h3 id="apache가-만든-synchronizedcollection">apache가 만든 SynchronizedCollection</h3>
+
+<p>이 클래스는 스레드 안정성을 위해서 동기화가 되어있는 List의 wrapper 클래스이다.        <br />
+다음과 같이 코드를 보면 동기화 코드가 있는걸 확인할 수 있다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code> @Override
+    public boolean add(final E object) {
+        synchronized (lock) {
+            return decorated().add(object);
+        }
+    }
+</code></pre></div></div>
+
+<p>그러나 이 클래스는 removeIf 메서드를 재정의하지 않는다.          <br />
+즉 자바8과 함께 쓴다면 <strong>스레드 안전성</strong>을 갖지 못한다.</p>
+
+<blockquote>
+  <p>removeIf의 구현은 동기화에 대해 아무것도 모르기 때문에 락 객체를 사용할 수 없다.  <br />
+SynchronizedCollection 인스턴스를 여러 스레드가 공유하는 환경에서 한 스레드가 removeIf를 호출하면  <br />
+ConcurrentModificationException이 발생하거나 다른 예기치 못한 결과로 이루어 질 수 있다.</p>
+</blockquote>
+
+<p>JDK에서 이런 문제를 예방하기 위해 구현 클래스에서 removeIf() 디폴트 메서드를 재정의했다.</p>
+
+<h3 id="collectionssynchronizedcollection-클래스의-removeif">Collections.synchronizedCollection 클래스의 removeIf()</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@Override
+public boolean removeIf(Predicate&lt;? super E&gt; filter) {
+    synchronized (mutex) {
+        return c.removeIf(filter);
+    }
+}
+</code></pre></div></div>
+
+<p>하지만 JDK에 속하지 않은 제 3의 기존 컬렉션 구현체들은 이런 언어 차원의 인터페이스에 맞춰 수정될 기회가 없다.</p>
+
+<p><br /></p>
+
+<h3 id="해결-방법은">해결 방법은?</h3>
+
+<ul>
+  <li>기존 인터페이스에 디폴트 메서드로 새 메서드를 추가하는 일은 꼭 필요한 경우가 아니면 피해야 한다.   <br />
+<br /></li>
+  <li>새로운 인터페이스를 만드는 경우라면 표준적인 메서드 구현을 제공하는 데 아주 유용한 수단이다.     <br />
+<br /></li>
+  <li>디폴트 메서드는 인터페이스로부터 메서드를 제거하거나 기존 메서드의 시그니처를 수정하는 용도가 아님을 명심        <br />
+<br /></li>
+  <li>디폴트 메서드라는 도구가 생겼어도 인터페이스 설계는 세심하게  <br />
+<br /></li>
+  <li>새로운 인터페이스는 릴리스 전에 반드시 테스트를 거쳐야 한다.  <br />
+<br /></li>
+  <li>인터페이스를 릴리스한 후라도 결함을 수정하는게 가능한 경우도 있겠지만, 절대 그 가능성에 기대서는 안된다.</li>
+</ul>
+
+<p><br />       <br />
+<br /></p>
+
+<h2 id="22-인터페이스는-타입을-정의하는-용도로만-사용하라">22. 인터페이스는 타입을 정의하는 용도로만 사용하라.</h2>
+
+<ul>
+  <li>인터페이스 : 자신을 구현한 클래스의 인스턴스를 참조할 수 있는 타입 역할</li>
+  <li>인터페이스 구현 : 자신의 인스턴스로 무엇을 할 수 있는지 클라이언트에게 얘기해주는 것    <br />
+<br /></li>
+</ul>
+
+<p>예) 상수 인터페이스  <br />
+메서드 없이 상수를 뜻하는 static final 필드만 갖고 있는 인터페이스  <br />
+정규화된 이름을(qualified name) 쓰는 것을 피하고자 이 인터페이스를 구현한다.</p>
+
+<p>상수는 내부 구현에 해당한다.     <br />
+상수 인터페이스 구현     <br />
+-&gt; 내부 구현을 클래스의 API로 노출하는 행위        <br />
+-&gt; 클라이언트 코드가 내부 구현에 해당하는 이 상수들에 종속</p>
+
+<p><br />   <br />
+<br /></p>
+
+<h2 id="23-태그-달린-클래스보다는-클래스-계층구조를-활용하라">23. 태그 달린 클래스보다는 클래스 계층구조를 활용하라.</h2>
+
+<p>두 가지 이상의 의미를 표현할 수 있으며,    <br />
+그중 현재 표현하는 의미를 태그 값으로 알려주는 클래스가 있다.     <br />
+<br /></p>
+
+<h3 id="예-원과-사각형을-표현할-수-있는-클래스">예) 원과 사각형을 표현할 수 있는 클래스</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class Figure {
+    enum Shape { RECTANGLE, CIRCLE };
+    
+    // 태그 필드 - 현재 모양을 나타낸다.   
+    final Shape shape;
+    
+    // 다음 필드들은 모양이 사각형일 때만 쓰인다. (RECTANGLE)
+    double length;
+    double width;
+    
+    // 다음 필드는 모양이 원일 때만 쓰인다. (CIRCLE)   
+    double radius;
+    
+    // 사각형 생성자   
+    Figure(double length, double width) { . . . }
+    
+    // 원 생성자 
+    Figure(double radius) { . . . }
+    
+    double area() {
+        switch(shape) {
+            . . .
+        }
+    }
+     
+}
+</code></pre></div></div>
+
+<p>태그 달린 클래스에는 단점이 한가득이다.</p>
+
+<ul>
+  <li>열거 타입 선언</li>
+  <li>태그 필드</li>
+  <li>switch</li>
+  <li>가독성</li>
+  <li>다른 의미를 위한 코드로 인한 메모리 낭비</li>
+  <li>필드를 final로 선언하려면 해당 의미에 쓰이지 않는 필드도 생성자에서 초기화해야함</li>
+  <li>또 다른 의미를 추가하면 코드 수정 (ex. switch 문을 찾아 새 의미 처리 코드 추가)</li>
+  <li>인스턴스의 타입만으로 현재 나타내는 의미를 알 수 없다.</li>
+</ul>
+
+<p>태그 달린 클래스는 장황하고, 오류를 내기 쉽고 비효율적이다.</p>
+
+<p><br /></p>
+
+<p>객체 지향 언어는 타입 하나로 다양한 의미의 객체를 표현하는 훨씬 나은 수단을 제공한다. <br />
+-&gt; 클래스 계층구조를 활용하는 <strong>서브 타이핑(subtyping)</strong> 이다.  <br />
+<br /></p>
+
+<h3 id="태그-달린-클래스를-클래스-계층구조로-바꾸는-방법">태그 달린 클래스를 클래스 계층구조로 바꾸는 방법</h3>
+
+<p>(1) 가장 먼저 계층 구조의 <strong>루트(root)가 될 추상 클래스</strong> 정의    <br />
+(2) 태그 값에 따라 동작이 달라지는 메서드는 추상 메서드로 선언    <br />
+(3) 태그 값에 상관없는 동작이 일정한 메서드는 루트 클래스에 일반 메서드로 추가     <br />
+(4) 모든 하위 클래스에서 공통으로 사용하는 데이터 필드들도 전부 루트 클래스에 올림    <br />
+(5) 루트 클래스를 확장한 구체 클래스를 의미별로 하나씩 정의한다.</p>
+
+<p><br /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// Figure.java 
+abstract class Figure {
+    abstract double area();
+}
+
+// Circle.java 
+class Circle extends Figure {
+    final double radius;
+
+    Circle(double radius) { this.radius = radius; }
+
+    @Override 
+    double area() { return Math.PI * (radius * radius); }
+}
+
+// Rectangle.java
+class Rectangle extends Figure {
+    final double length;
+    final double width;
+
+    Rectangle(double length, double width) {
+        this.length = length;
+        this.width  = width;
+    }
+    
+    @Override 
+    double area() { return length * width; }
+}
+
+// Square.java
+class Square extends Rectangle {
+    Square(double side) {
+        super(side, side);
+    }
+}
+</code></pre></div></div>
+
+<ul>
+  <li>루트 클래스 : Figure</li>
+  <li>태그 값에 따라 동작이 달라지는 구현체 : Square, Rectangle <br />
+<br /></li>
+</ul>
+
+<p>(1) 루트 클래스를 건드리지 않고 다른 개발자들이 독립적으로 계층구조 사용, 확장 가능</p>
+
+<p>(2) 타입이 의미별로 존재</p>
+
+<ul>
+  <li>변수 의미를 명시하거나 제한 가능</li>
+  <li>특정 의미만 매개변수로 받기 가능</li>
+</ul>
+
+<p>(3) 타입 사이의 자연스러운 계층 관계를 반영할 수 있어    <br />
+유연성과 컴파일타임 타입 검사 능력이 높아짐</p>
+
+<p><br />      <br />
+<br /></p>
+
+<h2 id="24-멤버-클래스는-되도록-static으로-만들자">24. 멤버 클래스는 되도록 static으로 만들자.</h2>
+
+<p>중첩 클래스는 자신을 감싼 바깥 클래스에서만 쓰여야 하며,  <br />
+그 외에 쓰임새가 있다면 톱레벨 클래스로 만들어야 한다.</p>
+
+<ul>
+  <li>정적 멤버 클래스</li>
+  <li>(비정적) 멤버 클래스</li>
+  <li>익명 클래스</li>
+  <li>지역 클래스</li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="1-정적-멤버-클래스">1. 정적 멤버 클래스</h3>
+
+<p>정적 멤버 클래스는 바깥 클래스의 private 멤버에도 접근할 수 있다는 점만 제외하면 일반 클래스와 똑같다.       <br />
+private으로 선언하면 바깥 클래스에서만 접근할 수 있다.</p>
+
+<p><br /></p>
+
+<h3 id="2-비정적-멤버-클래스">2. 비정적 멤버 클래스</h3>
+
+<p>정적 멤버 클래스와 비정적 멤버 클래스의 구문상 차이는 static이 있고 없고 차이다. 의미상 차이는 꽤 크다.             <br />
+<br /></p>
+
+<h3 id="정적-멤버-클래스-vs-비정적-멤버-클래스">정적 멤버 클래스 vs 비정적 멤버 클래스</h3>
+
+<h4 id="1-객체-생성">(1) 객체 생성</h4>
+
+<ul>
+  <li>정적 내부 클래스의 경우 다음과 같이 객체 생성이 가능하다.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class A {
+    static class B { ... }
+}
+
+void foo() {
+    A.B b = new B();
+}
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">static</code> 예약어가 있음으로 인해 독립적으로 생성할 수 있다.  <br />
+<br /></p>
+
+<ul>
+  <li>비정적 내부 클래스인 경우 다음과 같이 생성해야 한다.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class A {
+    class B { ... }
+}
+
+void foo() {
+    // ex1
+    A a = new A();
+    A.B b = a.new B();
+    
+    // ex2
+    A.B b = new A().new B();
+}
+</code></pre></div></div>
+
+<p>반드시 A 객체를 생성한 뒤 A 객체를 이용해서 생성해야 한다.   <br />
+즉 비정적 내부 클래스는 바깥 클래스에 대한 참조가 필요하다는 것이다.</p>
+
+<p><br /></p>
+
+<h4 id="2-메모리-누수-가능성">(2) 메모리 누수 가능성</h4>
+
+<p>비정적 내부 클래스의 경우 바깥 클래스에 대한 참조를 가지고 있기 때문에 메모리 누수가 발생할 여지가 있다.   <br />
+바깥 클래스는 더 이상 사용되지 않지만 내부 클래스의 참조로 인해 GC가 수거하지 못해      <br />
+바깥 클래스의 메모리 해제를 하지 못하는 경우가 발생할 수 있다.</p>
+
+<p>정적 내부 클래스의 경우 바깥 클래스에 대한 참조 값을 가지고 있지 않기 때문에 메모리 누수가 발생하지 않는다.</p>
+
+<p><br /></p>
+
+<h4 id="3-사용-시기">(3) 사용 시기</h4>
+
+<p>메모리 누수가 발생할 수 있는 문제점이 있기 때문에     <br />
+내부 클래스가 독립적으로 사용된다면 정적 클래스로 선언하여 사용하는 것이 좋다.    <br />
+<br /></p>
+
+<ul>
+  <li>비정적 멤버 클래스    <br />
+비정적 클래스를 어댑터 패턴을 이용하여 <strong>바깥 클래스를 다른 클래스로 제공할 때</strong> 사용하면 좋다.    <br />
+예) HashSet의 <code class="language-plaintext highlighter-rouge">keySet()</code> : Map의 key에 해당하는 값들을 Set으로 반환     <br />
+어댑터 패턴을 이용해서 Map을 Set으로 제공한다.    <br />
+<br /></li>
+  <li>정적 멤버 클래스       <br />
+바깥 클래스가 표현하는 객체의 한 부분(구성 요소)을 나타낼 때 쓴다.    <br />
+예) Map 구현체의 <code class="language-plaintext highlighter-rouge">키-값</code> 쌍을 표현하는 엔트리 객체      <br />
+엔트리 선언 시 static을 빠뜨려도 맵은 동작하겠지만    <br />
+모든 엔트리가 바깥 Map으로 참조를 갖게 되어 공간과 시간이 낭비된다.</li>
+</ul>
+
+<p><br /></p>
+
+<h4 id="4-멤버-클래스가-public이나-protected-멤버라면">(4) 멤버 클래스가 public이나 protected 멤버라면?</h4>
+
+<p>공개된 클래스의 public이나 protected 멤버라면 정적이냐 아니냐는 두 배로 중요해진다.   <br />
+멤버 클래스 역시 공개 API가 되기 때문에 향후 릴리스에서 static을 붙이면 하위 호환성이 떨어진다.</p>
+
+<p><br /></p>
+
+<h3 id="비정적-멤버-클래스-정리">비정적 멤버 클래스 정리</h3>
+
+<ul>
+  <li>비정적 멤버 클래스의 인스턴스는 바깥 클래스의 인스턴스와 암묵적으로 연결       <br />
+비정적 멤버 클래스의 인스턴스 메서드에서 정규화된 this를 사용            <br />
+(<code class="language-plaintext highlighter-rouge">클래스명.this</code> 형태로 바깥 클래스의 이름을 명시하는 용법)               <br />
+<br /></li>
+  <li>바깥 인스턴스의 메서드를 호출하거나 바깥 인스턴스의 참조를 가져올 수 있다.                       <br />
+<br /></li>
+  <li>비정적 멤버 클래스의 인스턴스와 바깥 인스턴스 사이의 관계는       <br />
+멤버 클래스가 인스턴스화될 때 확립되며, 더 이상 변경할 수 없다.</li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="3-익명-클래스-anonymous-inner-class">3. 익명 클래스 (Anonymous Inner Class)</h3>
+
+<ul>
+  <li>
+    <p>이름이 없다.</p>
+  </li>
+  <li>
+    <p>바깥 클래스의 멤버도 아니다.</p>
+  </li>
+  <li>
+    <p>멤버와 달리 쓰리는 시점에 동시에 인스턴스가 만들어진다.</p>
+  </li>
+  <li>
+    <p>오직 비정적인 문맥에서 사용될 때만 바깥 클래스의 인스턴스를 참조할 수 있다.</p>
+  </li>
+  <li>
+    <p>정적 문맥에서라도 상수 변수 이외의 정적 멤버는 가질 수 있다.</p>
+  </li>
+</ul>
+
+<p>즉, 상수 표현을 위해 초기화된 final 기본 타입과 문자열 필드만 가질 수 있음  <br />
+<br /></p>
+
+<p>익명 클래스는 응용하는 데 제약이 많은 편이다.</p>
+
+<ul>
+  <li>
+    <p>선언한 지점에서만 인스턴스를 만들 수 있다.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">instanceof</code> 검사나 클래스의 이름이 필요하 작업은 수행 불가</p>
+  </li>
+  <li>
+    <p>여러 인터페이스를 구현할 수 없다.</p>
+  </li>
+  <li>
+    <p>인터페이스를 구현하는 동시에 다른 클래스를 상속할 수 없다.</p>
+  </li>
+  <li>
+    <p>익명 클래스를 사용하는 클라이언트는 그 익명 클래스가 상위 타입에서 상속한 멤버 외에는 호출할 수 없다.</p>
+  </li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// 인터페이스 사용
+public interface Monster{
+    String getName();
+} 
+
+public static void main(String args[]){
+    Monster monster = new Monster(){
+        String name;
+        public String getName(){
+            return name;
+        }
+    };
+    System.out.println(monster.getName());
+}
+
+
+// 클래스 상속 사용 
+public class Pet{
+    String name = "부모 클래스";
+    public String getName(){
+            return name;
+    }
+}
+
+public static void main(String[] args){
+    Pet pet = new Pet(){
+            String name = "익명 내부 클래스";
+            @Override
+            public String getName(){
+                return name;
+            }
+    };
+    System.out.println(pet.getName()); // 결과 : 익명 내부 클래스
+}
+</code></pre></div></div>
+
+<p>Pet 익명 클래스는 Pet 클래스는 아니다.                    <br />
+생성된 인스턴스의 클래스 이름 확인 <code class="language-plaintext highlighter-rouge">instance.getClass().getName</code>                <br />
+<code class="language-plaintext highlighter-rouge">Pet + $ + n(생성된 몇번 째)</code> 이런식의 클래스 이름이 나온다.             <br />
+인터페이스로 선언된 익명 클래스는 현재 main에 속해있는 클래스 이름을 반환한다.           <br />
+즉 자바에서는 이 서로 두개의 클래스를 같은 클래스로 보고 있지 않다는 것이다.</p>
+
+<p><br /></p>
+
+<h4 id="사용-시기">사용 시기</h4>
+
+<ul>
+  <li>
+    <p>자바가 람다를 지원하기 전에 즉석에서 작은 함수 객체나 처리 객체를 만드는 데 <br />
+익명 클래스를 주로 사용했다.</p>
+  </li>
+  <li>
+    <p>정적 팩토리 메서드를 구현할 때 사용한다.</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="지역-클래스">지역 클래스</h3>
+
+<p>네 가지 중첩 클래스 중 가장 드물게 사용된다.</p>
+
+<p>지역 클래스는 지역 변수처럼 메소드 내부에 정의되는 클래스를 말한다.</p>
+
+<ul>
+  <li>지역 클래스 지역 변수를 선언할 수 있는 곳이면 실질적으로 어디서든 선언할 수 있고,    <br />
+유효 범위도 지역 변수와 같다. <br />
+<br /></li>
+  <li>멤버 클래스처럼 이름이 있고 반복해서 사용할 수 있다.   <br />
+<br /></li>
+  <li>익명 클래스처럼 비정적 문맥에서 사용될 때만 바깥 인스턴스를 참조할 수 있으며 <br />
+정적 멤버는 가질 수 없다.</li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="핵심-정리">핵심 정리</h3>
+
+<ul>
+  <li>메서드 밖에서도 사용해야 하거나 메서드 안에 정의하기엔 너무 길다면 멤버 클래스로 만든다.         <br />
+<br /></li>
+  <li>멤버 클래스의 인스턴스 각각이 바깥 인스턴스를 참조한다면 비정적으로,        <br />
+그렇지 않으면 정적으로 만든다.      <br />
+<br /></li>
+  <li>중첩 클래스가 한 메서드 안에서만 쓰인다면 그 인스턴스를 생성하는 시점이 단 한 곳이고         <br />
+해당 타입으로 쓰기에 적합한 클래스나 인터페이스가 이미 있다면 익명 클래스로 만든다.        <br />
+그렇지 않으면 지역 클래스로 만든다.</li>
+</ul>
+
+<p><br />   <br />
+<br /></p>
+
+<h2 id="25-톱레벨-클래스는-한-파일에-하나만-담으라">25. 톱레벨 클래스는 한 파일에 하나만 담으라.</h2>
+
+<p>소스 파일 하나에 톱레벨 클래스를 여러 개 선언하더라도 자바 컴파일러가 불평하지는 않지만      <br />
+아무런 이득 없이 위험을 감수해야 하는 행위다.</p>
+
+<p>한 클래스를 여러 가지로 정의할 수 있지만 어느 소스 파일을 먼저 컴파일하냐에 따라 달라진다.
+<br /></p>
+
+<p>예) 집기(Utensil)와 디저트(Dessert) 클래스를 담은 Utensil.java</p>
+
+<ul>
+  <li>Main.java</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public class Main {
+    public static void main(String[] args) {
+        System.out.println(Utensil.Name + Dessert.Name);       
+    }
+}
+</code></pre></div></div>
+
+<ul>
+  <li>Utensil.java<br />
+```
+class Utensil { 
+  static final String NAME = “pan”;
+}</li>
+</ul>
+
+<p>class Dessert { 
+    static final String NAME = “cake”;
+}</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>
+* Dessert.java    
+</code></pre></div></div>
+<p>class Utensil { 
+    static final String NAME = “pot”;
+}</p>
+
+<p>class Dessert { 
+    static final String NAME = “pie”;
+}
+```</p>
+
+<p><br /></p>
+
+<p>이때 우연히 똑같은 두 클래스를 담은 Dessert.java 파일을 만들었다고 해보자.</p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">javac Main.java Dessert.java</code> 명령으로 컴파일한다면?     <br />
+컴파일 오류가 나고 클래스 중복 정의했다고 알려줄 것이다.    <br />
+<br /></li>
+  <li><code class="language-plaintext highlighter-rouge">javac Main.java</code>나 <code class="language-plaintext highlighter-rouge">javac Main.java Utensil.java</code> 명령으로 컴파일하면?  <br />
+pancake를 출력한다.   <br />
+<br /></li>
+  <li><code class="language-plaintext highlighter-rouge">javac Main.java Dessert.java</code> 명령으로 컴파일하면? <br />
+potpie를 출력한다. <br />
+<br /></li>
+</ul>
+
+<p>컴파일러에 어느 소스 파일을 먼저 건네느냐에 따라 동작이 달라지므로 반드시 바로 잡아야 하는 문제다.    <br />
+<br /></p>
+
+<p>해결책은 톱레벨 클래스들을 서로 소스 파일로 분리하면 그만이다.  <br />
+다른 클래스에 딸린 부차적인 클래스라면 정적 멤버 클래스를 사용하는 방법을 고민해볼 수 있다.</p>
+
+<p>정적 멤버 클래스로 만들면 읽기 좋고, private으로 선언하면 접근 범위도 최소로 관리할 수 있다.</p>
+
+<p><br /></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#java" class="page__taxonomy-item p-category" rel="tag">java</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#effective-java" class="page__taxonomy-item p-category" rel="tag">Effective Java</a><span class="sep">, </span>
+    
+      <a href="/categories/#java" class="page__taxonomy-item p-category" rel="tag">Java</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2021-06-04T00:00:00+09:00">June 4, 2021</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=%5BEffective+Java%5D+%ED%81%B4%EB%9E%98%EC%8A%A4%EC%99%80+%EC%9D%B8%ED%84%B0%ED%8E%98%EC%9D%B4%EC%8A%A4%20http%3A%2F%2Flocalhost%3A4000%2F2021-06-04%2Fchap4%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2F2021-06-04%2Fchap4%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2F2021-06-04%2Fchap4%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/2021-06-01/chap3/" class="pagination--pager" title="[Effective Java] 모든 객체의 공통 메서드
+">Previous</a>
+    
+    
+      <a href="/2021-06-17/issue54/" class="pagination--pager" title="Sign up, Sign in 구현
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">You May Also Enjoy</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2022-01-05/blog/" rel="permalink">Jekyll - minimal mistakes 사용법
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> January 05 2022</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2021-12-28/lambda/" rel="permalink">lambda 와 effectively final
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 28 2021</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2021-12-23/request/" rel="permalink">HttpMessageNotReadableException 해결하기
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 23 2021</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2021-12-19/sort/" rel="permalink">Sort
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 19 2021</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="mailto:hyerinn6@email.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+        
+      
+        
+          <li><a href="https://github.com/hyerin6" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.instagram.com/___hyerin_/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+        
+          <li><a href="https://blog.naver.com/hyerin_0611" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Naver Blog</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2022 Hyerin Park. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'hyerin6/hyerin6.github.io');
+    script.setAttribute('issue-term', 'pathname');
+    
+    script.setAttribute('theme', 'github-light');
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+
+
+  </body>
+</html>

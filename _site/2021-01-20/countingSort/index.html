@@ -1,0 +1,873 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <style> 
+      ::-webkit-scrollbar{width: 12px; height: 5px;}
+      ::-webkit-scrollbar-track {background-color:#4b4f52; border-radius: 16px;}
+      ::-webkit-scrollbar-thumb {background-color:#5e6265; border-radius: 16px;}
+      ::-webkit-scrollbar-thumb:hover {background: #ffd24c;}
+      ::-webkit-scrollbar-button:start:decrement,::-webkit-scrollbar-button:end:increment 
+      {
+          width:12px;height:12px;background:transparent;
+      } 
+    </style>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Counting Sort &amp; Radix Sort - Hyerin Blog</title>
+<meta name="description" content="Counting Sort (계수 정렬)">
+
+
+  <meta name="author" content="Hyerin Park">
+  
+  <meta property="article:author" content="Hyerin Park">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Hyerin Blog">
+<meta property="og:title" content="Counting Sort &amp; Radix Sort">
+<meta property="og:url" content="http://localhost:4000/2021-01-20/countingSort/">
+
+
+  <meta property="og:description" content="Counting Sort (계수 정렬)">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-01-20T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/2021-01-20/countingSort/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Hyerin Park",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hyerin Blog Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- start custom head snippets -->
+
+<link rel="apple-touch-icon" sizes="57x57" href="/assets/favicon.ico/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/assets/favicon.ico/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/assets/favicon.ico/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/assets/favicon.ico/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/assets/favicon.ico/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/assets/favicon.ico/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/assets/favicon.ico/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/assets/favicon.ico/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon.ico/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="/assets/favicon.ico/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon.ico/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/assets/favicon.ico/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon.ico/favicon-16x16.png">
+<link rel="manifest" href="/assets/favicon.ico/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/assets/favicon.ico/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+
+<!-- end custom head snippets -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Hyerin Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/categories/">Category</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/year-archive/">Year</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+<div class="sidebar sticky">
+
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/image/profile.png" alt="Hyerin Park" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Hyerin Park</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Backend Developer</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Republic of Korea</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:hyerinn6@email.com" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/hyerin6" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.instagram.com/___hyerin_/" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+          
+            <li><a href="https://blog.naver.com/hyerin_0611" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Naver Blog</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+
+
+
+</div>
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Counting Sort &amp; Radix Sort">
+    <meta itemprop="description" content="Counting Sort (계수 정렬)">
+    <meta itemprop="datePublished" content="2021-01-20T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="http://localhost:4000/2021-01-20/countingSort/" class="u-url" itemprop="url">Counting Sort &amp; Radix Sort
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#counting-sort-계수-정렬">Counting Sort (계수 정렬)</a><ul><li><a href="#정렬-방법">정렬 방법</a></li><li><a href="#수행시간">수행시간</a></li><li><a href="#treemap">TreeMap</a></li></ul></li></ul></li><li><a href="#radix-sort기수-정렬">Radix Sort(기수 정렬)</a><ul><li><a href="#용어-정리">용어 정리</a></li><li><a href="#구현">구현</a></li><li><a href="#알고리즘-문제">알고리즘 문제</a></li></ul></li></ul></li></ul>
+
+            </nav>
+          </aside>
+        
+        <h1 id="counting-sort-계수-정렬">Counting Sort (계수 정렬)</h1>
+
+<p>보통 빠르다는 정렬 알고리즘으로는 대표적으로    <br />
+퀵 정렬(Quick Sort), 힙 정렬(Heap Sort), 합병 정렬(Merge Sort) 등이 있다.    <br />
+정렬은 보통 데이터끼리 비교하는 경우가 많아 𝚶(nlogn)보다 작아질 수 없는 것이 한계다.     <br />
+<br /></p>
+
+<h3 id="정렬-방법">정렬 방법</h3>
+<p>(1) 정렬할 배열에 들어있는 값들 각각의 수를 세기 위한 count 배열을 생성한다.  <br />
+값의 종류가 많지 않다면, count 배열의 크기도 크지 않을 것이다.</p>
+
+<p>(2) 정렬할 배열을 선형 탐색하며, 각 값들의 수를 센다.</p>
+
+<p>(3) 각 값들의 수는 알고 있다는 것은, 정렬 결과 배열에 각 값들이 순서대로 몇 개씩 들어있어야 하는지 안다는 것이다. 정렬 결과 배열을 생성한다.</p>
+
+<p>두 수를 비교하는 과정이 없기 때문에 빠른 배치가 가능하지만 count 배열이라는 새로운 배열을 선언해야 한다.        <br />
+배열 안에 있는 max값의 범위에 따라 counting 배열의 길이가 달라지게 된다.       <br />
+예로들어 10개의 원소를 정렬하고자 하는데, 수의 범위가 0~1억이라면 메모리가 매우 낭비가 된다.</p>
+
+<p>즉 Counting Sort가 효율적인 상황에서 쓰려면 수열의 길이보다 수의 범위가 극단적으로 크면 메모리가 엄청 낭비 될 수 있다는 것이다.  <br />
+상황에 맞게 정렬 알고리즘을 써야하고 Quick 정렬의 경우 시간복잡도 평균값이 𝚶(nlogn)으로 빠른편이면서 배열도 하나만 사용하기 때문에 
+공간복잡도는 𝚶(𝑛)으로 시간과 메모리 둘 다 효율적이라 대표적으로 많이 쓰인다.</p>
+
+<p><br /></p>
+
+<h3 id="수행시간">수행시간</h3>
+<p>수행시간: O(n + m)  <br />
+메모리 요구량: O(n + m)</p>
+
+<ul>
+  <li>
+    <p>n &gt; m        <br />
+수행시간: O(n)  <br />
+메모리 요구량: O(n)  <br />
+<br /></p>
+  </li>
+  <li>
+    <p>n &lt; m          <br />
+수행시간: O(m)  <br />
+메모리 요구량: O(m)</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="treemap">TreeMap</h3>
+<p>counting sort를 구현할 때, 자바의 TreeMap 클래스가 유용하다.  <br />
+Map 인터페이스를 implements 했기 때문에 사용법은 다음과 같다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>- 데이터 저장: map.put(key, value)
+- 데이터 값 조회: map.get(key)
+- 데이터 제거: map.remove(key)
+</code></pre></div></div>
+
+<ul>
+  <li>HashMap 클래스는 해시 테이블 자료구조로 구현되었고, put, get, remove 모두 O(1) 이다.</li>
+  <li>TreeMap 클래스는 레드 블랙 트리 자료구조로 구현되었다. put, get, remove 모두 O(log N) 이다.</li>
+</ul>
+
+<p>레드 블랙 트리는 이진 트리이므로, TreeMap 클래스의 데이터 목록은 키(key) 값을 기준으로 정렬되어 있다.        <br />
+그러기 때문에 별도에 정렬은 하지 않고 TreeMap에 값을 순차적으로 출력하면 된다.  <br />
+하지만 TreeMap은 Key값이 중복이 되지 않기 때문에 값의 갯수를 value에 넣어야 한다.</p>
+
+<p><br />   <br />
+<br /></p>
+
+<h1 id="radix-sort기수-정렬">Radix Sort(기수 정렬)</h1>
+
+<p>낮은 자리 수 부터 비교하여 정렬해 간다는 것을 기본 개념으로 하는 정렬 알고리즘이다.        <br />
+자릿수가 고정되어 있으니, 안전성이 있고(이때 데이터들 간의 상대적 순서는 보존되어야 한다.)      <br />
+기수 정렬은 비교 연산을 하지 않으며, 무엇보다도 전체 시간복잡도 역시 O(dn)이어서, 정수와 같은 자료의 정렬 속도가 매우 빠르다.      <br />
+정렬할 데이터의 radix가 작은 경우에 활용할 수 있다.</p>
+
+<p>하지만, 데이터 전체 크기에 기수 테이블의 크기만한 메모리가 더 필요하다.       <br />
+기수 정렬은 정렬 방법의 특수성 때문에, 부동소수점 실수처럼 특수한 비교 연산이 필요한 데이터에는 적용할 수 없지만, 사용 가능할 때에는 매우 좋은 알고리즘이다.     <br />
+<br /></p>
+
+<h3 id="용어-정리">용어 정리</h3>
+<ul>
+  <li>
+    <p>digit <br />
+십진수의 digit는 10개이다. (0,1,2,3,4,5,6,7,8,9) <br />
+이진수의 digit는 2개이다. (0,1)  <br />
+16진수의 digit는 16개이다. (0,1,2,3,4,5,6,7,8,9,A,B,C,D,E,F)  <br />
+<br /></p>
+  </li>
+  <li>
+    <p>radix    <br />
+digit의 수를 radix라고 한다.<br />
+십진수의 radix는 10 이다.<br />
+이진수의 radix는 2 이다.<br />
+16진수의 radix는 16 이다.<br />
+<br /></p>
+  </li>
+</ul>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center"> </th>
+      <th style="text-align: center">(1)</th>
+      <th style="text-align: center">(2)</th>
+      <th style="text-align: center">(3)</th>
+      <th style="text-align: center">(4)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">0123</td>
+      <td style="text-align: center">156<strong>0</strong></td>
+      <td style="text-align: center">00<strong>0</strong>4</td>
+      <td style="text-align: center">0<strong>0</strong>04</td>
+      <td style="text-align: center"><strong>0</strong>004</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">2154</td>
+      <td style="text-align: center">215<strong>0</strong></td>
+      <td style="text-align: center">02<strong>2</strong>2</td>
+      <td style="text-align: center">1<strong>0</strong>61</td>
+      <td style="text-align: center"><strong>0</strong>123</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">0222</td>
+      <td style="text-align: center">106<strong>1</strong></td>
+      <td style="text-align: center">01<strong>2</strong>3</td>
+      <td style="text-align: center">0<strong>1</strong>23</td>
+      <td style="text-align: center"><strong>0</strong>222</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">0004</td>
+      <td style="text-align: center">022<strong>2</strong></td>
+      <td style="text-align: center">21<strong>5</strong>0</td>
+      <td style="text-align: center">2<strong>1</strong>50</td>
+      <td style="text-align: center"><strong>0</strong>283</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">0283</td>
+      <td style="text-align: center">012<strong>3</strong></td>
+      <td style="text-align: center">21<strong>5</strong>4</td>
+      <td style="text-align: center">2<strong>1</strong>54</td>
+      <td style="text-align: center"><strong>1</strong>061</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">1560</td>
+      <td style="text-align: center">028<strong>3</strong></td>
+      <td style="text-align: center">15<strong>6</strong>0</td>
+      <td style="text-align: center">0<strong>2</strong>22</td>
+      <td style="text-align: center"><strong>1</strong>560</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">1061</td>
+      <td style="text-align: center">215<strong>4</strong></td>
+      <td style="text-align: center">10<strong>6</strong>1</td>
+      <td style="text-align: center">0<strong>2</strong>83</td>
+      <td style="text-align: center"><strong>2</strong>150</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">2150</td>
+      <td style="text-align: center">000<strong>4</strong></td>
+      <td style="text-align: center">02<strong>8</strong>3</td>
+      <td style="text-align: center">1<strong>5</strong>60</td>
+      <td style="text-align: center"><strong>2</strong>154</td>
+    </tr>
+  </tbody>
+</table>
+
+<p>(1) 일의 자리를 기준으로 정렬한다.<br />
+(2) 십의 자리를 기준으로 정렬한다.<br />
+(3) 백의 자리를 기준으로 정렬한다.<br />
+(4) 천의 자리를 기준으로 정렬한다. 이 단계에서 정렬이 완료된다.   <br />
+<br /></p>
+
+<p>만약 배열에 음수도 들어있다면,  <br />
+모든 자릿 수를 정렬한 후에, 부호(+,-)를 고려하여 순서를 변경하는 작업을 추가하거나, <br />
+아니면 미리 양수와 음수를 분리한 후, 양수 부분과 음수 부분을 따로 radix sort해야 한다. <br />
+배열에서 양수와 음수를 분리할 때는 quick sort의 partition을 응용할 수 있다.    <br />
+<br /></p>
+
+<p>대부분의 데이터에서 자릿 수는 상수이다.   <br />
+그런데, 각 자리의 정렬을 O(N lo gN) 시간에 한다면, radix sort의 시간도 O(N lo gN) 시간이된다. <br />
+각 자리의 정렬을 O(N) 시간에 한다면, radix sort의 시간도 O(N) 시간이 된다.  <br />
+각 자리의 값의 수는 digit 수와 같다.  <br />
+digit 수는 작기 때문에, digit 값을 기준으로 정렬하는 작업은 counting sort 알고리즘을 적용하면 된다.</p>
+
+<p><br />  <br />
+<br /></p>
+
+<h3 id="구현">구현</h3>
+
+<p><img src="https://user-images.githubusercontent.com/33855307/105186134-ba029f00-5b74-11eb-8612-f913e61811e8.png" alt="carbon" /></p>
+
+<p><br />  <br />
+<br /></p>
+
+<h3 id="알고리즘-문제">알고리즘 문제</h3>
+<ul>
+  <li>1920 수 찾기
+    <ul>
+      <li>문제 <a href="https://www.acmicpc.net/problem/1920">https://www.acmicpc.net/problem/1920</a></li>
+      <li>코드 <a href="https://github.com/hyerin6/Algorithm/blob/master/Baekjoon/src/training/B1920.java">https://github.com/hyerin6/Algorithm/blob/master/Baekjoon/src/training/B1920.java</a>  <br />
+<br /></li>
+    </ul>
+  </li>
+  <li>2750 수 정렬하기
+    <ul>
+      <li>문제 <a href="https://www.acmicpc.net/problem/2750">https://www.acmicpc.net/problem/2750</a></li>
+      <li>코드 <a href="https://github.com/hyerin6/Algorithm/blob/master/Baekjoon/src/training/B2750.java">https://github.com/hyerin6/Algorithm/blob/master/Baekjoon/src/training/B2750.java</a>  <br />
+<br /></li>
+    </ul>
+  </li>
+  <li>2751 수 정렬하기 2
+    <ul>
+      <li>문제 <a href="https://www.acmicpc.net/problem/2751">https://www.acmicpc.net/problem/2751</a></li>
+      <li>코드 <a href="https://github.com/hyerin6/Algorithm/blob/master/Baekjoon/src/training/B2751.java">https://github.com/hyerin6/Algorithm/blob/master/Baekjoon/src/training/B2751.java</a>  <br />
+<br /></li>
+    </ul>
+  </li>
+  <li>10989 수 정렬하기 3
+    <ul>
+      <li>문제 <a href="https://www.acmicpc.net/problem/10989">https://www.acmicpc.net/problem/10989</a></li>
+      <li>코드 <a href="https://github.com/hyerin6/Algorithm/blob/master/Baekjoon/src/training/B10989.java">https://github.com/hyerin6/Algorithm/blob/master/Baekjoon/src/training/B10989.java</a>        <br />
+<br /></li>
+    </ul>
+  </li>
+  <li>10815 숫자 카드
+    <ul>
+      <li>문제 <a href="https://www.acmicpc.net/problem/10815">https://www.acmicpc.net/problem/10815</a></li>
+      <li>코드 <a href="https://github.com/hyerin6/Algorithm/blob/master/Baekjoon/src/training/B10815.java">https://github.com/hyerin6/Algorithm/blob/master/Baekjoon/src/training/B10815.java</a>    <br />
+<br /></li>
+    </ul>
+  </li>
+  <li>2075 N번째 큰 수
+    <ul>
+      <li>문제 <a href="https://www.acmicpc.net/problem/2075">https://www.acmicpc.net/problem/2075</a></li>
+      <li>코드1 (priorityQueue 사용) <a href="https://github.com/hyerin6/Algorithm/blob/master/Baekjoon/src/training/B2075.java">https://github.com/hyerin6/Algorithm/blob/master/Baekjoon/src/training/B2075.java</a></li>
+      <li>코드2 (radix sort 사용) <a href="https://github.com/hyerin6/Algorithm/blob/master/Baekjoon/src/training/B2075_v2.java">https://github.com/hyerin6/Algorithm/blob/master/Baekjoon/src/training/B2075_v2.java</a></li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<p><img src="https://user-images.githubusercontent.com/33855307/105185553-fbdf1580-5b73-11eb-8cdc-f6030c0f58bb.png" alt="스크린샷 2021-01-20 오후 10 53 03" /></p>
+
+<ul>
+  <li>제출번호 <code class="language-plaintext highlighter-rouge">25490906</code>: radix sort로 구현한 결과</li>
+  <li>제출번호 <code class="language-plaintext highlighter-rouge">25477319</code>: priorityQueue로 구현한 결과</li>
+</ul>
+
+<p><br /></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#algorithm" class="page__taxonomy-item p-category" rel="tag">algorithm</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#algorithm" class="page__taxonomy-item p-category" rel="tag">Algorithm</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2021-01-20T00:00:00+09:00">January 20, 2021</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Counting+Sort+%26+Radix+Sort%20http%3A%2F%2Flocalhost%3A4000%2F2021-01-20%2FcountingSort%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2F2021-01-20%2FcountingSort%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2F2021-01-20%2FcountingSort%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/2021-01-15/ssh-config/" class="pagination--pager" title="ssh config 사용해서 ssh 접속하기
+">Previous</a>
+    
+    
+      <a href="/2021-01-21/lowerBound&upperBound/" class="pagination--pager" title="lowerBound &amp; upperBound
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">You May Also Enjoy</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2022-01-05/blog/" rel="permalink">Jekyll - minimal mistakes 사용법
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> January 05 2022</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2021-12-28/lambda/" rel="permalink">lambda 와 effectively final
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 28 2021</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2021-12-23/request/" rel="permalink">HttpMessageNotReadableException 해결하기
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 23 2021</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2021-12-19/sort/" rel="permalink">Sort
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 19 2021</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="mailto:hyerinn6@email.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+        
+      
+        
+          <li><a href="https://github.com/hyerin6" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.instagram.com/___hyerin_/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+        
+          <li><a href="https://blog.naver.com/hyerin_0611" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Naver Blog</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2022 Hyerin Park. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'hyerin6/hyerin6.github.io');
+    script.setAttribute('issue-term', 'pathname');
+    
+    script.setAttribute('theme', 'github-light');
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+
+
+  </body>
+</html>

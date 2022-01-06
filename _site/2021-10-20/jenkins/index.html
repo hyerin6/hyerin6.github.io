@@ -1,0 +1,859 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <style> 
+      ::-webkit-scrollbar{width: 12px; height: 5px;}
+      ::-webkit-scrollbar-track {background-color:#4b4f52; border-radius: 16px;}
+      ::-webkit-scrollbar-thumb {background-color:#5e6265; border-radius: 16px;}
+      ::-webkit-scrollbar-thumb:hover {background: #ffd24c;}
+      ::-webkit-scrollbar-button:start:decrement,::-webkit-scrollbar-button:end:increment 
+      {
+          width:12px;height:12px;background:transparent;
+      } 
+    </style>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Jenkins CI/CD - Hyerin Blog</title>
+<meta name="description" content="">
+
+
+  <meta name="author" content="Hyerin Park">
+  
+  <meta property="article:author" content="Hyerin Park">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Hyerin Blog">
+<meta property="og:title" content="Jenkins CI/CD">
+<meta property="og:url" content="http://localhost:4000/2021-10-20/jenkins/">
+
+
+  <meta property="og:description" content="">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-10-20T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/2021-10-20/jenkins/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Hyerin Park",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hyerin Blog Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- start custom head snippets -->
+
+<link rel="apple-touch-icon" sizes="57x57" href="/assets/favicon.ico/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/assets/favicon.ico/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/assets/favicon.ico/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/assets/favicon.ico/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/assets/favicon.ico/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/assets/favicon.ico/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/assets/favicon.ico/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/assets/favicon.ico/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon.ico/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="/assets/favicon.ico/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon.ico/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/assets/favicon.ico/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon.ico/favicon-16x16.png">
+<link rel="manifest" href="/assets/favicon.ico/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/assets/favicon.ico/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+
+<!-- end custom head snippets -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Hyerin Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/categories/">Category</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/year-archive/">Year</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+<div class="sidebar sticky">
+
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/image/profile.png" alt="Hyerin Park" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Hyerin Park</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Backend Developer</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Republic of Korea</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:hyerinn6@email.com" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/hyerin6" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.instagram.com/___hyerin_/" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+          
+            <li><a href="https://blog.naver.com/hyerin_0611" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Naver Blog</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+
+
+
+</div>
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Jenkins CI/CD">
+    <meta itemprop="description" content="">
+    <meta itemprop="datePublished" content="2021-10-20T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="http://localhost:4000/2021-10-20/jenkins/" class="u-url" itemprop="url">Jenkins CI/CD
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#cicd란">CI/CD란?</a><ul><li><a href="#지속적인-통합">지속적인 통합</a></li><li><a href="#지속적인-서비스-제공">지속적인 서비스 제공</a></li><li><a href="#지속적인-배포">지속적인 배포</a></li></ul></li></ul></li></ul></li><li><a href="#cicd-프로세스-속에서의-애플리케이션-배포-과정">CI/CD 프로세스 속에서의 애플리케이션 배포 과정</a></li><li><a href="#jenkins-설치--기본-설정">Jenkins 설치 &amp; 기본 설정</a></li><li><a href="#pr-이벤트-발생-후-머지해도-되는지-자동으로-체크">PR 이벤트 발생 후 머지해도 되는지 자동으로 체크</a></li><li><a href="#원하는-branch-배포하기">원하는 branch 배포하기</a></li><li><a href="#끝">끝!</a><ul><li><a href="#참고">참고</a></li></ul></li></ul></li></ul>
+
+            </nav>
+          </aside>
+        
+        <p><br /></p>
+
+<p>지금 진행중인 <a href="https://github.com/hyerin6/SNS">SNS 프로젝트</a> 에 Cacahe를 적용하기 전에</p>
+
+<p>캐시 적용 전, 후 부하 테스트 결과의 차이를 확인하기 위해서</p>
+
+<p>배포를 위해 Jenkins로 CI/CD 부터 자동화 시켜보자.</p>
+
+<p><br /></p>
+
+<p>Jenkins 관련 포스팅</p>
+
+<ul>
+  <li><a href="https://hyerin6.github.io/2020-04-21/0421/">Docker로 Jenkins 사용하기</a></li>
+  <li><a href="https://hyerin6.github.io/2020-11-21/jenkins-cd/">Jenkins 배포 자동화 스크립트</a></li>
+  <li><a href="https://hyerin6.github.io/2020-10-21/jenkins-ci/">Jenkins 테스트 자동화 스크립트</a></li>
+  <li><a href="https://hyerin6.github.io/2020-04-24/0424/">자동 배포 마무리</a></li>
+</ul>
+
+<p><br />
+<br /></p>
+
+<h1 id="cicd란">CI/CD란?</h1>
+
+<p><a href="https://www.redhat.com/ko/topics/devops/what-is-ci-cd">RedHat</a> 에서 정의한 CI/CD의 개념은 애플리케이션 개발 단계를 자동화하여 애플리케이션을 보다 짧은 주기로 고객에게 제공하는 방법이다.</p>
+
+<p>이렇게만 들으면 왜 CI/CD 자동화를 구축해야 하는지 와닿지 않는다.</p>
+
+<p>애플리케이션의 규모가 크다고 가정하자.</p>
+
+<p>그럼 단순히 개발하고 테스트, 빌드, 배포를 하는데만 시간이 꽤 걸릴 것이다.</p>
+
+<p>또한 한 사람이 관리하는 게 아니라 몇십명으로 구성된 팀이 관리할 것이기 때문에</p>
+
+<p>이 애플리케이션의 수정본을 하나로 합치는 것부터 배포까지 시간이 오래 걸려 긴 배포 주기를 갖게 될 것이다.</p>
+
+<p>시간이 오래 걸리면 사용자의 피드백을 빠르게 반영할 수 없고 배포 과정 속에서 문제가 발생할 가능성도 높다.</p>
+
+<p><br /></p>
+
+<p>이런 문제점을 개선하기 위해 CI/CD를 적용해야 한다.</p>
+
+<p>애플리케이션 코드 병합부터 테스트, 배포까지 라이프사이클 전체에 걸쳐</p>
+
+<p>자동화시켜 더 짧은 주기로 고객들에게 애플리케이션을 제공할 수 있어야 한다.</p>
+
+<p><br /></p>
+
+<p>따라서 CI/CD는 지속적인 통합(Continuous Integration),</p>
+
+<p>지속적인 서비스 제공(Continuous Delivery), 지속적인 배포(Continuous Deployment)로 구성되어 있다.</p>
+
+<p><br /></p>
+
+<h4 id="지속적인-통합">지속적인 통합</h4>
+
+<p>지속적인 통합, CI(Continuous Integration)란 자동화된 빌드 및 테스트가 수행된 후,</p>
+
+<p>개발자가 코드 변경 사항을 중앙 리포지토리에 정기적으로 병합하는 DevOps 소프트웨어 개발 방식이다.</p>
+
+<p>버전 관리를 통한 코드 병합, 빌드, 테스트, 오류 보고를 자동화하여 반복적인 작업을 줄이고,</p>
+
+<p>발생한 문제에 대해 빠르게 처리가 가능하여 더 좋은 품질의 소프트웨어를 개발할 수 있다.</p>
+
+<p><br /></p>
+
+<h4 id="지속적인-서비스-제공">지속적인 서비스 제공</h4>
+
+<p>지속적인 서비스 제공, CD(Continuous Delivery)는 반복적인 작업을 자동화한 CI 과정을 거친 소스코드를 레포지토리에 자동으로 반영하는 단계를 의미한다.</p>
+
+<p>바로 프로덕션 단계로 배포하는 지속적인 배포 단계로 확장이 가능하지만, 따로 테스트 환경에 배포하여 추가적인 여러 사용자 차원에서 테스트를 검증할 수 있다.</p>
+
+<p><br /></p>
+
+<h4 id="지속적인-배포">지속적인 배포</h4>
+
+<p>지속적인 배포, CD(Continuous Deployment)는 CI/CD의 마지막 단계로 모든 테스트를 거친 코드를 레포지토리에 자동으로 반영하는 지속적인 서비스 제공 단계의 확장된 형태이다.</p>
+
+<p>애플리케이션을 프로덕션 단계로 자동으로 배포하는 작업을 자동화하여, 개발자가 변경 사항을 적용한 후 짧은 시간 이내에 사용자는 새로운 버전의 애플리케이션을 사용할 수 있다.</p>
+
+<p><br />
+<br /></p>
+
+<h1 id="cicd-프로세스-속에서의-애플리케이션-배포-과정">CI/CD 프로세스 속에서의 애플리케이션 배포 과정</h1>
+
+<p><img src="https://user-images.githubusercontent.com/33855307/138029194-9eb77ce3-1c83-49a0-b46a-e8a282a74e7d.jpeg" alt="ㅋ" /></p>
+
+<ol>
+  <li>개발자는 소스 코드를 수정하고, 코드 컨벤션을 준수했는지,
+코드가 잘 작동하는지 Pull Request를 보내 자동으로 확인합니다.</li>
+  <li>변경된 소스 코드에 대해 코드 리뷰를 진행한다.</li>
+  <li>코드 리뷰가 끝나면 PR Merge 작업이 수행된다.</li>
+  <li>배포 가능한 소스 코드를 주기적으로 빌드하여 테스트 버전을 생성한 후, 여러 테스트를 진행한다.</li>
+  <li>테스트 과정에서 발생한 오류를 수정하여 스토어에 배포한다.</li>
+</ol>
+
+<p><br /></p>
+
+<p>위와 같은 작업을 자동화하여 배포 주기 단축 및 불편함을 최소화하는 것이 CI/CD 구축 목적이다.</p>
+
+<p><br />
+<br /></p>
+
+<h1 id="jenkins-설치--기본-설정">Jenkins 설치 &amp; 기본 설정</h1>
+<p>Jenkins는 CI/CD 자동화를 제공하는 툴이다.</p>
+
+<p>다양한 플로그인과 문서를 지원하기 때문에 나도 프로젝트에서 항상 사용해왔다.</p>
+
+<p><br /></p>
+
+<p>설치 방법이 어려운건 아닌데 최신 버전이 아니면 플러그인이 정상적으로 설치되지 않는다.</p>
+
+<p>클라우드에서 제공하는 Jenkins 서버는 최신 버전이 설치되지 않는 경우가 많으니</p>
+
+<p>직접 설치하는게 좋을 것 같다.</p>
+
+<p><br /></p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nv">$ </span><span class="nb">sudo </span>yum <span class="nb">install </span>wget
+<span class="nv">$ </span><span class="nb">sudo </span>yum <span class="nb">install </span>maven
+<span class="nv">$ </span><span class="nb">sudo </span>yum <span class="nb">install </span>git
+
+<span class="nv">$ </span><span class="nb">sudo </span>wget <span class="nt">-O</span> /etc/yum.repos.d/jenkins.repo https://pkg.jenkins.io/redhat-stable/jenkins.repo
+<span class="nv">$ </span><span class="nb">sudo </span>rpm <span class="nt">--import</span> https://pkg.jenkins.io/redhat-stable/jenkins.io.key
+<span class="nv">$ </span><span class="nb">sudo </span>yum <span class="nb">install </span>jenkins
+<span class="nv">$ </span><span class="nb">sudo </span>systemctl start jenkins
+<span class="nv">$ </span><span class="nb">sudo </span>systemctl status jenkins
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p>위와 같은 명령어로 Jenkins를 설치하고 시작할 수 있다.</p>
+
+<p>이 외에 주의할 점은 java, gradle 버전 체크이다.</p>
+
+<p>당연히 동일해야 하므로 확인해보는 것이 좋다.</p>
+
+<p><br /></p>
+
+<p><img src="https://user-images.githubusercontent.com/33855307/138067726-3d024db4-aa77-41b5-9553-19fb78ed6b9d.png" alt="스크린샷 2021-10-20 오후 2 23 41" />
+<img src="https://user-images.githubusercontent.com/33855307/138067732-1844e27a-cc33-4abb-a0b9-6b1f556d0eab.png" alt="스크린샷 2021-10-20 오후 2 23 32" /></p>
+
+<p><br />
+<br /></p>
+
+<h1 id="pr-이벤트-발생-후-머지해도-되는지-자동으로-체크">PR 이벤트 발생 후 머지해도 되는지 자동으로 체크</h1>
+<p>PR을 올렸는데 merge해도 될지 자동으로 테스트 후,</p>
+
+<p>결과를 Git에 출력해주는 CI를 구축했다.</p>
+
+<p>만약 빌드에 실패하면 merge할 수 없다고 알려주고</p>
+
+<p>Details 클릭 시 스크립트를 보여주기 때문에 빠르게 오류를 찾고</p>
+
+<p>PR 이벤트에 관련된 작업을 쉽게 자동화할 수 있다.</p>
+
+<p><br /></p>
+
+<p>다음과 같이 PR이 발생하면 젠킨스 작업이 진행된다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/33855307/139387597-9ffcd233-9e82-43a3-a995-52d5a5aaf6ee.png" alt="스크린샷 2021-10-29 오후 3 31 32" /></p>
+
+<p><br /></p>
+
+<p>젠킨스 작업이 완료되면 PR 페이지에서 결과를 확인할 수 있다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/33855307/139387618-3ace786b-5686-4ff8-a38b-25d3f0b93269.png" alt="스크린샷 2021-10-29 오후 3 29 51" /></p>
+
+<p><br />
+<br /></p>
+
+<h1 id="원하는-branch-배포하기">원하는 branch 배포하기</h1>
+<p>학습을 목적으로 진행하는 프로젝트이기 때문에 master 브랜치에 push 될 때</p>
+
+<p>무조건 배포되게 설정하지 않고 Git에서 내가 원하는 브랜치를 배포하기 위해서</p>
+
+<p>Build With Parameters에 String 매개변수를 지정해놨다.</p>
+
+<p>브랜치를 입력하고 빌드 하기를 누르면 해당 브랜치를 clone 하고 운영 서버에 배포된다.</p>
+
+<p><br /></p>
+
+<p><img width="882" alt="스크린샷 2021-11-01 오전 10 34 28" src="https://user-images.githubusercontent.com/33855307/139609728-ea34c42e-3cdb-4cc4-a59b-ed1bbf5020f3.png" /></p>
+
+<p><br /></p>
+
+<p>Jenkins에서 빌드하고 jar와 config를 운영 서버에 전송하는데</p>
+
+<p>예전 프로젝트에서 배포 과정을 이해하기 위해 scp, ssh 명령어로 직접 전송하고 배포했는데</p>
+
+<p>Jenkins의 Publish Over SSH 플러그인을 사용하면 쉽게 파일들을 전송할 수 있다.</p>
+
+<p>한가지 주의할 점은 절대경로가 아닌 상대경로로 지정해야 정상적으로 작동한다는 것이다.</p>
+
+<p>운영 서버와 ssh 접속 설정은 <code class="language-plaintext highlighter-rouge">젠킨스 시스템 설정 &gt; Publish over SSH</code> 에서 가능하다.</p>
+
+<p>port, password, remote directory 까지 쉽게 설정할 수 있다.</p>
+
+<p><br /></p>
+
+<p><img width="937" alt="스크린샷 2021-11-01 오전 10 30 00" src="https://user-images.githubusercontent.com/33855307/139609548-a6c33f16-e2ae-43f1-888e-57d5a0bc1aa8.png" /></p>
+
+<p><br /></p>
+
+<ul>
+  <li>Name: SSH Server 이름을 선택하면 된다.</li>
+  <li>Verbose output in console을 체크하면 빌드할 때 상세 내역이 표시 된다.</li>
+  <li>Source files : 전송할 파일을 지정한다. 전체 파일 이동을 하려면 <code class="language-plaintext highlighter-rouge">**/*</code> 과 같이 입력</li>
+  <li>Remove prefix : Source files에서 지정한 경로의 하위 폴더를 지우는 기능 이다.  <br />
+                위의 예시같이 입력한다면 폴더를 제외하고 jar 파일만 전송하게 될 것이다.</li>
+  <li>Remote directory : SSH Server로 지정한 서버의 원격지 폴더이다.</li>
+  <li>Exec command : 파일 전송이 모두 끝난 이후에, SSH Server로 지정한 서버에서 실행될 스크립트를 지정할 수 있는 기능</li>
+</ul>
+
+<p><br />
+<br /></p>
+
+<h1 id="끝">끝!</h1>
+<p><img width="1789" alt="스크린샷 2021-11-01 오전 10 58 10" src="https://user-images.githubusercontent.com/33855307/139611176-cd0cb4ea-e2af-4f89-b16a-2dc99c21c872.png" /></p>
+
+<p><br /></p>
+
+<p><img src="https://user-images.githubusercontent.com/33855307/139800601-750c9537-17f7-4118-8c8d-8e6f83d9982e.png" alt="end" /></p>
+
+<p>모든 설정이 끝나면 위와 같이 테스트, 배포를 편하게 진행할 수 있다.</p>
+
+<p><br />
+<br /></p>
+
+<h3 id="참고">참고</h3>
+<ul>
+  <li><a href="https://www.redhat.com/ko/topics/devops/what-is-ci-cd">https://www.redhat.com/ko/topics/devops/what-is-ci-cd</a></li>
+  <li><a href="https://engineering.linecorp.com/ko/blog/build-a-continuous-cicd-environment-based-on-data/">https://engineering.linecorp.com/ko/blog/build-a-continuous-cicd-environment-based-on-data/</a></li>
+</ul>
+
+<p><br /></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#jenkins" class="page__taxonomy-item p-category" rel="tag">jenkins</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#jenkins" class="page__taxonomy-item p-category" rel="tag">Jenkins</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2021-10-20T00:00:00+09:00">October 20, 2021</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Jenkins+CI%2FCD%20http%3A%2F%2Flocalhost%3A4000%2F2021-10-20%2Fjenkins%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2F2021-10-20%2Fjenkins%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2F2021-10-20%2Fjenkins%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/2021-10-19/vm/" class="pagination--pager" title="Docker를 사용한 이유
+">Previous</a>
+    
+    
+      <a href="/2021-11-02/Thymeleaf/" class="pagination--pager" title="Spring boot Thymeleaf
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">You May Also Enjoy</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2022-01-05/blog/" rel="permalink">Jekyll - minimal mistakes 사용법
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> January 05 2022</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2021-12-28/lambda/" rel="permalink">lambda 와 effectively final
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 28 2021</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2021-12-23/request/" rel="permalink">HttpMessageNotReadableException 해결하기
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 23 2021</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2021-12-19/sort/" rel="permalink">Sort
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 19 2021</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="mailto:hyerinn6@email.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+        
+      
+        
+          <li><a href="https://github.com/hyerin6" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.instagram.com/___hyerin_/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+        
+          <li><a href="https://blog.naver.com/hyerin_0611" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Naver Blog</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2022 Hyerin Park. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'hyerin6/hyerin6.github.io');
+    script.setAttribute('issue-term', 'pathname');
+    
+    script.setAttribute('theme', 'github-light');
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+
+
+  </body>
+</html>

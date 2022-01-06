@@ -1,0 +1,854 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <style> 
+      ::-webkit-scrollbar{width: 12px; height: 5px;}
+      ::-webkit-scrollbar-track {background-color:#4b4f52; border-radius: 16px;}
+      ::-webkit-scrollbar-thumb {background-color:#5e6265; border-radius: 16px;}
+      ::-webkit-scrollbar-thumb:hover {background: #ffd24c;}
+      ::-webkit-scrollbar-button:start:decrement,::-webkit-scrollbar-button:end:increment 
+      {
+          width:12px;height:12px;background:transparent;
+      } 
+    </style>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>HTTP API vs. RESTful API - Hyerin Blog</title>
+<meta name="description" content="API, REST, REST API, RESTful API, HTTP, URL, URI, URN…       개발하면서 많은 키워드들을 보게 되는데 정확히 어떤 의미인지 정리해보자.">
+
+
+  <meta name="author" content="Hyerin Park">
+  
+  <meta property="article:author" content="Hyerin Park">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Hyerin Blog">
+<meta property="og:title" content="HTTP API vs. RESTful API">
+<meta property="og:url" content="http://localhost:4000/2021-07-23/restfulapi/">
+
+
+  <meta property="og:description" content="API, REST, REST API, RESTful API, HTTP, URL, URI, URN…       개발하면서 많은 키워드들을 보게 되는데 정확히 어떤 의미인지 정리해보자.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-07-23T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/2021-07-23/restfulapi/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Hyerin Park",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hyerin Blog Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- start custom head snippets -->
+
+<link rel="apple-touch-icon" sizes="57x57" href="/assets/favicon.ico/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/assets/favicon.ico/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/assets/favicon.ico/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/assets/favicon.ico/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/assets/favicon.ico/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/assets/favicon.ico/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/assets/favicon.ico/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/assets/favicon.ico/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon.ico/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="/assets/favicon.ico/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon.ico/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/assets/favicon.ico/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon.ico/favicon-16x16.png">
+<link rel="manifest" href="/assets/favicon.ico/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/assets/favicon.ico/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+
+<!-- end custom head snippets -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Hyerin Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/categories/">Category</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/year-archive/">Year</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+<div class="sidebar sticky">
+
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/image/profile.png" alt="Hyerin Park" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Hyerin Park</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Backend Developer</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Republic of Korea</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:hyerinn6@email.com" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/hyerin6" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.instagram.com/___hyerin_/" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+          
+            <li><a href="https://blog.naver.com/hyerin_0611" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Naver Blog</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+
+
+
+</div>
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="HTTP API vs. RESTful API">
+    <meta itemprop="description" content="  API, REST, REST API, RESTful API, HTTP, URL, URI, URN…      개발하면서 많은 키워드들을 보게 되는데 정확히 어떤 의미인지 정리해보자.">
+    <meta itemprop="datePublished" content="2021-07-23T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="http://localhost:4000/2021-07-23/restfulapi/" class="u-url" itemprop="url">HTTP API vs. RESTful API
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#api">API</a></li><li><a href="#rest-representational-state-transfer">REST (Representational State Transfer)</a><ul><li><a href="#rest-구성-요소">REST 구성 요소</a></li><li><a href="#rest-특징">REST 특징</a></li></ul></li></ul></li><li><a href="#rest-api">REST API</a></li><li><a href="#restful-api">RESTful API</a></li><li><a href="#http">HTTP</a><ul><li><a href="#비연결성-connectionless">비연결성 (Connectionless)</a></li><li><a href="#무상태-stateless">무상태 (Stateless)</a></li><li><a href="#응답-상태-코드">응답 상태 코드</a></li><li><a href="#http-method">HTTP Method</a></li></ul></li></ul></li><li><a href="#uri-url-urn">URI, URL, URN</a><ul><li><a href="#uri">URI</a></li><li><a href="#url">URL</a></li><li><a href="#urn">URN</a></li><li><a href="#참고">참고</a></li></ul></li></ul></li></ul>
+
+            </nav>
+          </aside>
+        
+        <blockquote>
+  <p>API, REST, REST API, RESTful API, HTTP, URL, URI, URN…      <br />
+개발하면서 많은 키워드들을 보게 되는데 정확히 어떤 의미인지 정리해보자.</p>
+</blockquote>
+
+<p><br /></p>
+
+<h1 id="api">API</h1>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>예) 
+나 - 리모컨 - 에어컨
+손님 - 점원 - 요리사 
+</code></pre></div></div>
+
+<p>여기서 API는 리모컨과 점원이라고 할 수 있다. <br />
+<br /></p>
+
+<p>API는 응용 프로그램(애플리케이션)에서 운영체제나 프로그래밍 언어가 제공하는 기능을 제어할 수 있게 만든 인터페이스를 의미한다.  <br />
+즉 API는 애플리케이션과 운영체제, 애플리케이션과 프로그래밍 언어가 제공하는 기능 사이의 <code class="language-plaintext highlighter-rouge">상호작용</code>을 도와준다.</p>
+
+<p><br /> <br />
+<br /></p>
+
+<h1 id="rest-representational-state-transfer">REST (Representational State Transfer)</h1>
+<p>REST는 자원을 이름으로 구분, 해당 자원의 상태를 주고 받는 것을 의미한다.</p>
+
+<ul>
+  <li>http uri를 통해 자원을 명시한다.</li>
+  <li>http method를 통해 해당 자원에 대한 CURD 연상을 적용하는 것을 의미한다.</li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="rest-구성-요소">REST 구성 요소</h3>
+<ul>
+  <li>자원(resource): HTTP URI</li>
+  <li>자원에 대한 행위: HTTP Method</li>
+  <li>자원에 대한 행위의 내용: HTTP Message Pay Load</li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="rest-특징">REST 특징</h3>
+<ul>
+  <li>server-client 구조</li>
+  <li>stateless (무상태)</li>
+  <li>cacheable (캐시 처리 기능)</li>
+  <li>Layered system (계층화)</li>
+  <li>uniform interface (인터페이스 일관성)</li>
+</ul>
+
+<p><br />    <br />
+<br /></p>
+
+<h1 id="rest-api">REST API</h1>
+<p>REST의 원리를 따르는 API를 의미한다. <br />
+리소스에 대한 행위를 http method로 정의하는 방식이다.   <br />
+<br /></p>
+
+<ul>
+  <li><code class="language-plaintext highlighter-rouge">http://hyerin.com/run</code> 명사 사용, 마지막에 슬래시(<code class="language-plaintext highlighter-rouge">/</code>) ❌</li>
+  <li><code class="language-plaintext highlighter-rouge">http://hyerin.com/test-blog</code> 언더바(<code class="language-plaintext highlighter-rouge">_</code>) ❌, 하이픈(<code class="language-plaintext highlighter-rouge">-</code>) 🆗</li>
+  <li><code class="language-plaintext highlighter-rouge">http://hyerin.com/photo.png</code> ➡️ <code class="language-plaintext highlighter-rouge">/photo</code> 파일 확장자는 URI에 포함되지 않는다.</li>
+  <li><code class="language-plaintext highlighter-rouge">http://hyerin.com/post/1</code> 행위를 포함하지 않는다.</li>
+</ul>
+
+<p><br />  <br />
+<br /></p>
+
+<h1 id="restful-api">RESTful API</h1>
+<p>REST API 설계 가이드를 따라 API를 만드는 것이다.  <br />
+RESTful API 자체만으로 API의 목적이 무엇인지 쉽게 알 수 있다.</p>
+
+<p><br /><br />
+<br /></p>
+
+<h1 id="http">HTTP</h1>
+<p>하이퍼텍스트(html) 문서를 교환하기 위해 만들어진 프로토콜이다.  <br />
+윕상에서 네트워크로 서버끼리 통신할 때 어떠한 형식으로 서로 통신하자고 규정해 놓은 통신구조라고 보면 된다.</p>
+
+<p><br /></p>
+
+<h3 id="비연결성-connectionless">비연결성 (Connectionless)</h3>
+<p>비연결성은 클라이언트와 서버가 한 번 연결을 맺은 후, <br />
+클라이언트 요청에 대해 서버가 응답을 마치면 연결을 끊어버리는 성징을 말한다.</p>
+
+<p>http 프로토콜은 왜 한 번 맺은 연결을 끊을까?<br />
+http는 인터넷 상에서 불특정 다수의 통신 환경을 기반으로 설계되었다.  <br />
+만약 서버에서 다수의 클라이언트와 연결을 계속 유지해야 한다면 많은 리소스가 발생한다. <br />
+<br /></p>
+
+<p><strong>장점)</strong> 연결을 유지하기 위한 리소스를 줄이면 더 많은 연결을 할 수 있으므로 비연결적인 특징을 갖고 있다. <br />
+<strong>단점)</strong> 그러나 서버는 클라이언트를 기억하고 있지 않으므로 동일한 클라이언트의 모든 요청에 대해 <br />
+매번 새로운 연결을 연결/해제 해야 하므로 오버헤드가 발생한다.<br />
+<br /></p>
+
+<p><strong>keepAlive</strong><br />
+오버헤드에 대한 해결책으로 http의 keepAlive 속성을 사용할 수 있다.  <br />
+keepAlive는 지정된 시간동안 서버와 클라이언트 사이에서 패킷 교환이 없을 경우,  <br />
+상대방에게 안부를 묻기 위해 패킷을 주기적으로 보내는데 패킷에 반응이 없으면 접속을 끊는다.    <br />
+그러나 keepAlive 속성이 완벽한 해결책은 아니다. <br />
+keepAlive 상태로 유지하기 위해 메모리를 많이 사용하게 되므로 주의해야 한다.</p>
+
+<p><br />         <br />
+<br /></p>
+
+<h3 id="무상태-stateless">무상태 (Stateless)</h3>
+<p>Connectionless로 인해 서버는 클라이언트를 식별할 수 없다. 이를 Stateless라고 한다. <br />
+클라이언트의 상태를 모른다는 것은 요청이 오면 그에 따른 응답을 할 뿐 <br />
+각각의 요청과 응답은 독립적이며, 어떤 상태를 저장하지 않는다는 의미다. <br />
+<br /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>쇼핑몰에서 옷을 구매하기 위해 로그인 했다.     
+로그아웃하기 전까지 '로그인'이라는 상태가 계속 유지되는 것처럼 보이지만     
+로그인 상태는 유지되지 않는다.   
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p>그렇다면 매번 로그인을 다시 해야하나?   <br />
+상태를 기억하는 방법은 다양하다.</p>
+
+<ul>
+  <li>Cookie, Session, Token: <a href="https://hyerin6.github.io/2021-07-23/session-token/">https://hyerin6.github.io/2021-07-23/session-token/</a></li>
+  <li>OAuth 2.0: <a href="https://hyerin6.github.io/2021-07-23/OAuth2/">https://hyerin6.github.io/2021-07-23/OAuth2/</a></li>
+</ul>
+
+<p><br />  <br />
+<br /></p>
+
+<h3 id="응답-상태-코드">응답 상태 코드</h3>
+<ul>
+  <li>100 ~ 메시지 정보</li>
+  <li>200 ~ 요청 성공</li>
+  <li>300 ~ 리다이렉션</li>
+  <li>400 ~ 클라이언트 에러</li>
+  <li>500 ~ 서버 에러</li>
+  <li>참고: <a href="https://brunch.co.kr/@leedongins/65">https://brunch.co.kr/@leedongins/65</a></li>
+</ul>
+
+<p><br />  <br />
+<br /></p>
+
+<h3 id="http-method">HTTP Method</h3>
+<p>클라이언트가 서버에 요청할 때 어떤 목적을 갖는 행위힌지 HTTP Method에 명시한다.  <br />
+<br /></p>
+
+<ul>
+  <li>
+    <p>GET<br />
+GET 메서드는 특정 리소스의 표시를 요청한다. <br />
+GET을 사용하는 요청은 오직 데이터를 받기만 한다.</p>
+  </li>
+  <li>
+    <p>HEAD<br />
+HEAD 메서드는 GET 메서드의 요청과 동일한 응답을 요구하지만, 응답 본문을 포함하지 않는다.</p>
+  </li>
+  <li>
+    <p>POST<br />
+POST 메서드는 특정 리소스에 엔티티를 제출할 때 쓰인다.  <br />
+이는 종종 서버의 상태의 변화나 부작용을 일으킨다.</p>
+  </li>
+  <li>
+    <p>PUT<br />
+PUT 메서드는 목적 리소스 모든 현재 표시를 요청 payload로 바꾼다.</p>
+  </li>
+  <li>
+    <p>DELETE<br />
+DELETE 메서드는 특정 리소스를 삭제한다.</p>
+  </li>
+  <li>
+    <p>CONNECT<br />
+CONNECT 메서드는 목적 리소스로 식별되는 서버로의 터널을 맺는다.</p>
+  </li>
+  <li>
+    <p>OPTIONS<br />
+OPTIONS 메서드는 목적 리소스의 통신을 설정하는 데 쓰인다.</p>
+  </li>
+  <li>
+    <p>TRACE (en-US)<br />
+TRACE 메서드는 목적 리소스의 경로를 따라 메시지 loop-back 테스트를 한다.</p>
+  </li>
+  <li>
+    <p>PATCH<br />
+PATCH 메서드는 리소스의 부분만을 수정하는 데 쓰인다.</p>
+  </li>
+</ul>
+
+<p><br />  <br />
+<br /></p>
+
+<h1 id="uri-url-urn">URI, URL, URN</h1>
+
+<p><img src="https://user-images.githubusercontent.com/33855307/126861448-ed582c74-9085-45ad-b5dc-8aab2e6b7c20.png" alt="스크린샷 2021-07-24 오후 4 44 37" /></p>
+
+<p><br /></p>
+
+<h3 id="uri">URI</h3>
+<p>서버 리소스 이름은 통합 자원 식별자(uniform resource identifier) 혹은 URI라고 불린다. <br />
+URI는 인터넷의 우편물 주소 같은 것으로, 정보 리소스를 고유하게 식별하고 위치를 지정할 수 있다. <br />
+그리고 이 URI에는 두 가지 형태가 있는데 이것이, URL, URN이라는 것이다.</p>
+
+<p><br /><br />
+<br /></p>
+
+<h3 id="url">URL</h3>
+<p>통합 자원 지시자(uniform resource locator, URL)는 URI의 가장 흔한 형태이다. <br />
+URL은 특정 서버의 한 리소스에 대한 구체적인 위치를 서술한다. <br />
+URL은 리소스가 정확히 어디에 있고 어떻게 접근할 수 있는지 분명히 알려준다.</p>
+
+<p><br /><br />
+<br /></p>
+
+<h3 id="urn">URN</h3>
+<p>URI의 두 번째 형태는 유니폼 리소스 이름(uniform resource name, URN) 이다.  <br />
+URN은 콘텐츠를 이루는 한 리소스에 대해, 그 리소스의 위치에 영향 받지 않는 유일무이한 이름 역할을 한다.  <br />
+이 위치 독립적인 URN은 리소스를 여기저기로 옮기더라도 문제없이 동작한다.  <br />
+리소스가 그 이름을 변하지 않게 유지하는 한, 여러 종류의 네트워크 접속 프로토콜로 접근해도 문제없다.  <br />
+예를 들어, 다음의 URN은 인터넷 표준 문서 ‘RFC 2141’가 어디에 있거나 상관없이 그것을 지칭하기 위해 사용할 수 있다.</p>
+
+<p>단순하게 말하자면, URI는 규약이고, URL은 규약에 대한 형태라고 생각하면 된다.</p>
+
+<p><br />  <br />
+<br /></p>
+
+<h3 id="참고">참고</h3>
+<ul>
+  <li><a href="https://stackoverflow.com/questions/176264/what-is-the-difference-between-a-uri-a-url-and-a-urn">https://stackoverflow.com/questions/176264/what-is-the-difference-between-a-uri-a-url-and-a-urn</a></li>
+</ul>
+
+<p><br /></p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#web" class="page__taxonomy-item p-category" rel="tag">web</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#web" class="page__taxonomy-item p-category" rel="tag">Web</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2021-07-23T00:00:00+09:00">July 23, 2021</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=HTTP+API+vs.+RESTful+API%20http%3A%2F%2Flocalhost%3A4000%2F2021-07-23%2Frestfulapi%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2F2021-07-23%2Frestfulapi%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2F2021-07-23%2Frestfulapi%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/2021-07-23/msa/" class="pagination--pager" title="모놀리틱 서비스 vs. 마이크로 서비스
+">Previous</a>
+    
+    
+      <a href="/2021-07-23/session-token/" class="pagination--pager" title="Token 인증 방식이 생긴 이유
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">You May Also Enjoy</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2022-01-05/blog/" rel="permalink">Jekyll - minimal mistakes 사용법
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> January 05 2022</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2021-12-28/lambda/" rel="permalink">lambda 와 effectively final
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 28 2021</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2021-12-23/request/" rel="permalink">HttpMessageNotReadableException 해결하기
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 23 2021</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2021-12-19/sort/" rel="permalink">Sort
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 19 2021</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="mailto:hyerinn6@email.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+        
+      
+        
+          <li><a href="https://github.com/hyerin6" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.instagram.com/___hyerin_/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+        
+          <li><a href="https://blog.naver.com/hyerin_0611" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Naver Blog</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2022 Hyerin Park. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'hyerin6/hyerin6.github.io');
+    script.setAttribute('issue-term', 'pathname');
+    
+    script.setAttribute('theme', 'github-light');
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,919 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <style> 
+      ::-webkit-scrollbar{width: 12px; height: 5px;}
+      ::-webkit-scrollbar-track {background-color:#4b4f52; border-radius: 16px;}
+      ::-webkit-scrollbar-thumb {background-color:#5e6265; border-radius: 16px;}
+      ::-webkit-scrollbar-thumb:hover {background: #ffd24c;}
+      ::-webkit-scrollbar-button:start:decrement,::-webkit-scrollbar-button:end:increment 
+      {
+          width:12px;height:12px;background:transparent;
+      } 
+    </style>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>ResponseEntity &amp; Generic - Hyerin Blog</title>
+<meta name="description" content="이미지 저장, 주소 저장, 인기 반려동물과 탐색 정렬 기준 등  회의해야 할 게 아직 많이 남았지만 간단하게 필요한 데이터와 관계를 정리해봤다.">
+
+
+  <meta name="author" content="Hyerin Park">
+  
+  <meta property="article:author" content="Hyerin Park">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Hyerin Blog">
+<meta property="og:title" content="ResponseEntity &amp; Generic">
+<meta property="og:url" content="http://localhost:4000/2020-11-20/response&generic/">
+
+
+  <meta property="og:description" content="이미지 저장, 주소 저장, 인기 반려동물과 탐색 정렬 기준 등  회의해야 할 게 아직 많이 남았지만 간단하게 필요한 데이터와 관계를 정리해봤다.">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2020-11-20T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/2020-11-20/response&generic/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Hyerin Park",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hyerin Blog Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- start custom head snippets -->
+
+<link rel="apple-touch-icon" sizes="57x57" href="/assets/favicon.ico/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/assets/favicon.ico/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/assets/favicon.ico/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/assets/favicon.ico/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/assets/favicon.ico/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/assets/favicon.ico/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/assets/favicon.ico/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/assets/favicon.ico/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon.ico/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="/assets/favicon.ico/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon.ico/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/assets/favicon.ico/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon.ico/favicon-16x16.png">
+<link rel="manifest" href="/assets/favicon.ico/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/assets/favicon.ico/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+
+<!-- end custom head snippets -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Hyerin Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/categories/">Category</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/year-archive/">Year</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+<div class="sidebar sticky">
+
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/image/profile.png" alt="Hyerin Park" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Hyerin Park</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Backend Developer</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Republic of Korea</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:hyerinn6@email.com" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/hyerin6" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.instagram.com/___hyerin_/" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+          
+            <li><a href="https://blog.naver.com/hyerin_0611" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Naver Blog</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+
+
+
+</div>
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="ResponseEntity &amp; Generic">
+    <meta itemprop="description" content="이미지 저장, 주소 저장, 인기 반려동물과 탐색 정렬 기준 등 회의해야 할 게 아직 많이 남았지만 간단하게 필요한 데이터와 관계를 정리해봤다.">
+    <meta itemprop="datePublished" content="2020-11-20T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="http://localhost:4000/2020-11-20/response&generic/" class="u-url" itemprop="url">ResponseEntity &amp; Generic
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          6 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#responseentity">ResponseEntity</a></li><li><a href="#generic">Generic</a><ul><li><a href="#1-이왕이면-제네릭-타입으로-만들라">1. 이왕이면 제네릭 타입으로 만들라.</a></li><li><a href="#2-이왕이면-제네릭-메서드로-만들라">2. 이왕이면 제네릭 메서드로 만들라.</a></li><li><a href="#3-한정적-와일드카드를-사용해-api-유연성을-높여라">3. 한정적 와일드카드를 사용해 API 유연성을 높여라.</a></li></ul></li></ul></li></ul>
+
+            </nav>
+          </aside>
+        
+        <p>이미지 저장, 주소 저장, 인기 반려동물과 탐색 정렬 기준 등 <br />
+회의해야 할 게 아직 많이 남았지만 간단하게 필요한 데이터와 관계를 정리해봤다.</p>
+
+<p><br /></p>
+
+<p><img src="https://user-images.githubusercontent.com/33855307/99406407-312b7500-2931-11eb-8f82-499aa1f31823.png" alt="스크린샷 2020-11-17 오후 11 59 37" /></p>
+
+<p><br /></p>
+
+<h1 id="responseentity">ResponseEntity</h1>
+
+<p>ResponseEntity는 HttpEntity를 상속받아 HttpHeader와 body를 가질 수 있다.      <br />
+status field를 가지기 때문에 상태 코드도 리턴해줘야 한다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>new ResponseEntity&lt;&gt;("success", HttpStatus.OK); // 메시지(String)과 상태코드(200)를 리턴
+new ResponseEntity&lt;&gt;(message, HttpStatus.INTERNAL_SERVER_ERROR); // 객체와 상태코드를 오류로 리턴         
+new ResponseEntity(HttpStatus.OK);  // 상태코드(200)만 리턴   
+new ResponseEntity(header, HttpStatus.OK);  // header와 상태코드(200) 리턴   
+</code></pre></div></div>
+
+<ul>
+  <li>참고</li>
+</ul>
+<p><a href="https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/http/ResponseEntity.html#ResponseEntity-T-org.springframework.util.MultiValueMap-org.springframework.http.HttpStatus-">https://docs.spring.io/spring-framework/docs/current/javadoc-api/org/springframework/http/ResponseEntity.html#ResponseEntity-T-org.springframework.util.MultiValueMap-org.springframework.http.HttpStatus-</a></p>
+
+<p><br />      <br />
+<br /></p>
+
+<h1 id="generic">Generic</h1>
+
+<p>이번 프로젝트에서도 클라이언트에 ResponseEntity로 응답하는데     <br />
+제네릭이 사용되서 제네릭에 대해 공부해봐야 겠다는 생각이 들었고       <br />
+먼저 ResponseEntity도 같이 가볍게 정리해봤다. 😊😊</p>
+
+<p>제네릭을 검색해 본적이 많은데 프로그래밍에서 뜻이나 문법만 나와서 <br />
+이펙티브 자바에 제네릭을 왜 사용하는지, 장단점이나 주의할 내용이 있는지 찾아봤더니 역시 관련된 내용이 있었다.   <br />
+아직 2장을 읽는 중이라 몰랐는데 5장 전체가 제네릭에 관련된 내용이었다..   <br />
+먼저 제네릭 부분부터 읽어보자.</p>
+
+<p><br />  <br />
+<br /></p>
+
+<h3 id="1-이왕이면-제네릭-타입으로-만들라">1. 이왕이면 제네릭 타입으로 만들라.</h3>
+
+<p>다음은 단순한 스택 코드이다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public class Stack {  
+    private Object[] elements;    
+        
+    . . .  
+
+}  
+</code></pre></div></div>
+
+<p>이 클래스를 제네릭으로 바꾼다고 해도 클라이언트에는 아무런 해가 없다. <br />
+오히려 위 코드는 클라이언트가 스택에서 꺼낸 객체를 형변환해야 하는데, 이때 런타임 오류가 날 위험이 있다.</p>
+
+<p>일반 클래스를 제네릭 클래스로 만드는 첫 단계는 클래스 선언에 타입 매개변수를 추가하는 일이다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public class Stack&lt;E&gt; {
+    private E[] elements;
+    private static final int DEFAULT_INITIAL_CAPACITY = 16;
+
+    public stack() {
+        elements = new E[DEFAULT_INITIAL_CAPACITY];
+    }
+}
+</code></pre></div></div>
+
+<p>이 상태에서 컴파일하면 다음과 같은 오류가 밟생한다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Stack.java:8: generic array creation 
+    elements = new E[DEFAULT_INITIAL_CAPACITY];
+                ^
+</code></pre></div></div>
+
+<p>E와 같은 실체화 불가 타입으로는 배열을 만들 수 없다.   <br />
+배열을 사용하는 코드를 제네릭으로 만들려 할 때 이 문제가 항상 발목을 잡을 것이다.</p>
+
+<p>해결책은 두 가지가 있다.</p>
+
+<p><strong>(1) 제네릭 배열 생성을 금지하는 제약을 대놓고 우회하는 방법</strong> <br />
+Object 배열을 생성한 다음 제네릭 배열로 형변환해보자. <br />
+컴파일러는 오류 대신 경고를 내보낼 것이다. (일반적으로) 타입 안전하지 않다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Stack.java8: warning: [unchecked] unchecked cast 
+found: Object[], required: E[]  
+elements = (E[]) new Object[DEFAULT_INITIAL_CAPACITY];
+              ^  
+</code></pre></div></div>
+
+<p>컴파일러는 타입 안전한지 증명할 방법이 없지만 우리는 할 수 있다. <br />
+따라서 이 비검사 형변환이 프로그램의 타입 안전성을 해치지 않음을 우리 스스로 확인해야 한다. <br />
+배열 elements는 private 필드에 저장되고, 클라이언트로 반환되거나 다른 메서드에 전달되는 일은 전혀 없다. <br />
+push 메서드를 통해 배열에 저장되는 원소의 타입은 항상 E다. 따라서 이 비검사 형변환은 확실히 안전하다.</p>
+
+<p>비검사 형변환이 안전함을 직접 증명했다면 범위를 좁혀 <code class="language-plaintext highlighter-rouge">@SuppressWarnings</code> 어노테이션으로 해당 경고를 숨긴다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@SuppressWarnings("unckecked")
+public Stack() {
+    elements = (E[]) new Object[DEFAULT_INITIAL_CAPACITY];  
+}  
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p><strong>(2) elements 필드의 타입을 <code class="language-plaintext highlighter-rouge">E[]</code> 에서 <code class="language-plaintext highlighter-rouge">Object[]</code>로 바꾸는 방법</strong>      <br />
+이렇게 하면 첫 번째와는 다른 오류가 발생한다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>Stack.java:19: incompatible types 
+found: Object, required: E
+    E result = elements[--size];
+</code></pre></div></div>
+
+<p>배열이 반환한 원소를 E로 형변환하면 오류 대신 경고가 뜬다.</p>
+
+<p>E는 실체화 불가 타입이므로 컴파일러는 런타임에 이뤄지는 형변환이 안전한지 증명할 방법이 없다. <br />
+이번에도 개발자가 직접 증명하고 경고를 숨길 수 있다.<br />
+pop 메서드 전체에서 경고를 숨기지 않고 비검사 형변환을 수행하는 할당문에서만 숨기는 것이다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public E pop() {  
+    if(size == 0)   
+        throw new EmptyStackException();
+    
+    @SuppressWarnings("unckecked") E result = (E) elements[--size];
+
+    elements[size] = null; //  다 쓴 참조 해제  
+    return result;
+}
+</code></pre></div></div>
+
+<p>첫 번째 방법은 가독성이 좋고 코드가 짧기 때문에 자주 사용되는 방법이지만   <br />
+(E가 Object가 아닌 한) 배열의 런타임 타입이 컴파일타임 타입과 달라 힙 오염(heap pollution)을 일으킨다. <br />
+힙 오염이 맘에 걸리는 개발자는 두 번째 방법을 사용하기도 한다. <br />
+그러나 두 번째 방법은 배열에서 원소를 읽을 때마다 어노테이션을 붙여줘야 한다.</p>
+
+<p><br /></p>
+
+<p><strong>정리</strong>  <br />
+클라이언트에서 직접 형변환해야 하는 타입보다 제네릭 타입이 더 안전하고 쓰기 편하다.  <br />
+그러니 새로운 타입을 설계할 때는 형변환 없이도 사용할 수 있도록 하자. <br />
+그렇게 하려면 제네릭 타입으로 만들어야 할 경우가 많다. 기존 타입 중 제네릭이있어야 하는 게 있다면 제네릭 타입으로 변경하자. <br />
+기존 클라이언트에게 아무 영향을 주지 않으면서 새로운 사용자를 편하게 해줄 수 있다.</p>
+
+<p><br /> <br />
+<br /></p>
+
+<h3 id="2-이왕이면-제네릭-메서드로-만들라">2. 이왕이면 제네릭 메서드로 만들라.</h3>
+
+<p>클래스와 마찬가지로 메서드도 제네릭으로 만들 수 있다.      <br />
+매개변수화 타입을 받는 정적 유틸리티 메서드는 보통 제네릭이다.</p>
+
+<p>다음은 두 집합의 합집합을 반환하는 문제가 있는 메서드다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public static Set union(Set s1, Set s2) {
+    Set result = new HashSet(s1);
+    result.addAll(s2);
+    return result;
+}  
+</code></pre></div></div>
+
+<p>컴파일은 되지만 경고가 두 개 발생한다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>HashSet(Collection&lt;? extends E&gt;) as a member of raw type HashSet 
+    Set result = new HashSet(s1);
+                 ^
+
+addAll(Collection&lt;? extends E&gt;) as a member of raw type Set
+    result.addAll(s2);
+                 ^ 
+</code></pre></div></div>
+
+<p>경고를 없애려면 이 메서드를 타입 안전하게 만들어야 한다. <br />
+메서드 선언에서의 세 집합(입력 2개, 반환 1개)의 원소 타입을 타입 매개변수로 명시하고, <br />
+메서드 안에서도 이 타입 매개변수만 사용하게 수정하면 된다. <br />
+(타입 매개변수들을 선언하는) 타입 매개변수 목록은 메서드의 제한자와 반환 타입 사이에 온다.</p>
+
+<p>다음 코드에서 타입 매개변수 목록은 <code class="language-plaintext highlighter-rouge">&lt;E&gt;</code> 이고 반환 타입은 <code class="language-plaintext highlighter-rouge">Set&lt;E&gt;</code> 이다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public static &lt;E&gt; Set&lt;E&gt; union(Set&lt;E&gt; s1, Set&lt;E&gt; s2) {
+    Set&lt;E&gt; result = new HashSet&lt;&gt;(s1);
+    result.addAll(s2);
+    return result;
+}
+</code></pre></div></div>
+
+<p>직접 형변환하지 않아도 어떤 오류나 경고 없이 컴파일된다.</p>
+
+<p>불변 객체를 여러 타입으로 활용할 수 있게 만들어야 할 때가 있다. <br />
+제네릭은 런타임에 타입 정보가 소거되므로 하나의 객체를 어떤 타입으로든 매개변수화할 수 있다. <br />
+하지만 이렇게 하려면 요청한 타입 매개변수에 맞게 매번 그 객체의 타입을 바꿔주는 정적 팩터리를 만들어야 한다. <br />
+이 패턴은 싱글톤 팩터리라고 하며, <code class="language-plaintext highlighter-rouge">Collections.reverseOrder</code> 같은 함수 객체나 <code class="language-plaintext highlighter-rouge">Collections.emptySet</code> 같은 컬렉션용으로 사용된다.</p>
+
+<p>다음은 제네릭 싱글톤 팩터리 패턴의 예제 코드이다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>private static UnaryOperator&lt;Object&gt; IDENTITY_FN = (t) -&gt; t;
+
+@SuppressWarnings("unckecked")
+public static &lt;T&gt; UnaryOperator&lt;Object&gt; identityFunction() {
+    return (UnaryOperator&lt;T&gt;) IDENTITY_FN;
+}
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">IDENTITY_FN</code>을 <code class="language-plaintext highlighter-rouge">UnaryOperator&lt;T&gt;</code>로 형변환하면 비검사 형변환 경고가 발생한다.    <br />
+<code class="language-plaintext highlighter-rouge">T</code>가 어떤 타입이든 <code class="language-plaintext highlighter-rouge">UnaryOperator&lt;Object&gt;</code>는 <code class="language-plaintext highlighter-rouge">UnaryOperator&lt;T&gt;</code>가 아니기 때문이다.   <br />
+하지만 항등함수한 입력 값을 수정 없이 그대로 반환하는 특별한 함수이므로, <code class="language-plaintext highlighter-rouge">T</code>가 어떤 타입이든 <code class="language-plaintext highlighter-rouge">UnaryOperator&lt;T&gt;</code>를 사용해도 타입 안전하다.   <br />
+이 사실을 알고 있기 때문에 <code class="language-plaintext highlighter-rouge">@SuppressWarnings("unckecked")</code> 어노테이션을 추가하면 오류나 경고 없이 컴파일 된다.</p>
+
+<p>자기 자신이 들어간 표현식을 사용하여 타입 매개변수의 허용 범위를 한정할 수 있다. <br />
+재귀적 타입 한정(recursive type bound)이라는 개념이다. <br />
+재귀적 타입 한정은 주로 타입의 자연적 순서를 정하는 Comparable 인터페이스와 함께 쓰인다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public interface Comparable&lt;T&gt; {  
+    int compareTo(T o);  
+}
+</code></pre></div></div>
+
+<p>여기서 타입 매개변수 <code class="language-plaintext highlighter-rouge">T</code>는 <code class="language-plaintext highlighter-rouge">Comparable&lt;T&gt;</code>를 구현한 타입이 비교할 수 있는 원소의 타입을 정의한다. <br />
+실제로 거의 모든 타입은 자신과 같은 타입의 원소와만 비교할 수 있다.</p>
+
+<p>다음은 이 제약을 코드로 표현한 코드이다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public static &lt;E extends Comparable&lt;E&gt;&gt; E max(Collection&lt;E&gt; c);  
+</code></pre></div></div>
+
+<p>타입 한정인 <code class="language-plaintext highlighter-rouge">&lt;E extends Comparable&lt;E&gt;&gt;</code>는 “모든 타입 E는 자신과 비교할 수 있다.”라고 읽을 수 있다. <br />
+상호 비교 가능하다는 뜻이다.</p>
+
+<p><br />        <br />
+<br /></p>
+
+<h3 id="3-한정적-와일드카드를-사용해-api-유연성을-높여라">3. 한정적 와일드카드를 사용해 API 유연성을 높여라.</h3>
+
+<p>매개변수화 타입은 불공변(invariant)이다.  <br />
+즉 서로 다른 타입 Type1과 Type2가 있을 떄 List<Type1>은 List<Type2>의 하위 타입도 상위 타입도 아니다.     
+예를들어 `List<String>`은 `List<object>`의 하위 타입이 아니라는 뜻이다.  
+`List<object>`에는 어떤 객체든 넣을 수 있지만 `List<String>`에는 문자열만 넣을 수 있다.   
+즉 `List<String>`은 `List<object>`가 하는 일을 제대로 수행하지 못하니 하위 타입이 될 수 없다. (리스코프 치환 원칙에 어긋난다.)</object></String></String></object></object></String></Type2></Type1></p>
+
+<p>Stack의 public API를 추려보자.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public class Stack&lt;E&gt; {
+    public Stack();
+    public void push(E e);
+    public E pop();
+    public boolean isEmpty();
+}
+</code></pre></div></div>
+
+<p>여기에 일련의 원소를 스택에 넣는 메서드를 추가해야 한다고 해보자.</p>
+
+<ul>
+  <li>와일드카드 타입을 사용하지 않는 pushAll 메서드 (결함있음)</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public void pushAll(Iterable&lt;E&gt; src) {
+    for(E e : src)
+        push(e);
+}
+</code></pre></div></div>
+
+<p>이 메서드는 깨끗하게 컴파일되지만 완벽하진 않다. Iterable src의 원소 타입이 스택의 원소 타입과 일치하면 잘 작동한다. <br />
+하지만 <code class="language-plaintext highlighter-rouge">Stack&lt;Number&gt;</code>로 선언한 후 <code class="language-plaintext highlighter-rouge">pushAll(intVal)</code>을 호출하면 다음과 같은 오류 메시지가 뜬다. (intVal은 Integer타입이다.)</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>StackTest.java7: error: incompatible types: Iterable&lt;Integer&gt;
+cannot be converted to Iterable&lt;Number&gt;
+    numberStack.pushAll(integers);
+                        ^
+</code></pre></div></div>
+
+<p>Integer는 Number의 하위 타입이므로 잘 작동할 것 같지만 매개변수화 타입이 불공변이기 때문에 오류 메시지가 뜬다.</p>
+
+<p>이런 상황은 한정적 와일드카드 타입이라는 매개변수화 타입으로 해결할 수 있다.  <br />
+pushAll의 입력 매개변수 타입은 ‘E의 Iterable’이 아니라 ‘E의 하위 타입의 Iterable’이어야 하며,     <br />
+와일드카드 타입 <code class="language-plaintext highlighter-rouge">Iterable&lt;? extends E&gt;</code>가 위와 같은 뜻이 된다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public void pushAll(Iterable&lt;? extends E&gt; src) {  
+    . . .  
+}
+</code></pre></div></div>
+
+<p>이번에는 popAll 메서드를 구현하면서 <code class="language-plaintext highlighter-rouge">Stack&lt;Number&gt;</code>의 원소를 Object용 컬렉션은로 옮긴다고 가정해보자.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public void popAll(Collection&lt;E&gt; dst) {
+     . . .
+}
+
+Stack&lt;Number&gt; numberStack = new Stack&lt;&gt;();
+Collection&lt;Object&gt; objects - ...;
+numberStack.popAll(objects);
+</code></pre></div></div>
+
+<p>위 코드를 컴파일하면 “<code class="language-plaintext highlighter-rouge">Collection&lt;Object&gt;</code>는 <code class="language-plaintext highlighter-rouge">Collection&lt;Number&gt;</code>의 하위 타입이 아니다.” 라는 <br />
+pushAll을 사용했을 때와 비슷한 오류가 발생한다. <br />
+이번에는 pushAll의 입력 매개변수의 타입이 ‘E의 Collection’이 아니라 ‘E의 상위 타입의 Collection’이어야 한다. <br />
+(모든 타입은 자기 자신의 상위 타입이다.) 
+와일드카드 타입을 사용한 <code class="language-plaintext highlighter-rouge">Collection&lt;? super E&gt;</code>가 정확히 이런 의미이다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>public void popAll(Collection&lt;? super E&gt; dst) {
+     . . .
+}
+</code></pre></div></div>
+
+<p>이제 Stack과 클라이언트 코드 모두 말끔히 컴파일된다. <br />
+유연성을 극대화하려면 원소의 생상자나 소비자용 입력 매개변수에 와일드카드 타입을 사용하자.</p>
+
+<p>한편, 입력 매개변수가 생산자와 소비자 역할을 동시에 한다면 와일드카드 타입을 써도 좋을 게 없다.   <br />
+타입을 정확히 지정해야 하는 상황으로 이때는 와일드카드 타입을 쓰지 말아야 한다.</p>
+
+<p><br /></p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#depromeet" class="page__taxonomy-item p-category" rel="tag">Depromeet</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2020-11-20T00:00:00+09:00">November 20, 2020</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=ResponseEntity+%26+Generic%20http%3A%2F%2Flocalhost%3A4000%2F2020-11-20%2Fresponse%26generic%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2F2020-11-20%2Fresponse%26generic%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2F2020-11-20%2Fresponse%26generic%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/2020-11-13/permutation/" class="pagination--pager" title="순열 permutation
+">Previous</a>
+    
+    
+      <a href="/2020-11-21/jenkins-cd/" class="pagination--pager" title="Jenkins 배포 자동화
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">You May Also Enjoy</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2022-01-05/blog/" rel="permalink">Jekyll - minimal mistakes 사용법
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> January 05 2022</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2021-12-28/lambda/" rel="permalink">lambda 와 effectively final
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 28 2021</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2021-12-23/request/" rel="permalink">HttpMessageNotReadableException 해결하기
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 23 2021</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2021-12-19/sort/" rel="permalink">Sort
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 19 2021</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="mailto:hyerinn6@email.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+        
+      
+        
+          <li><a href="https://github.com/hyerin6" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.instagram.com/___hyerin_/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+        
+          <li><a href="https://blog.naver.com/hyerin_0611" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Naver Blog</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2022 Hyerin Park. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'hyerin6/hyerin6.github.io');
+    script.setAttribute('issue-term', 'pathname');
+    
+    script.setAttribute('theme', 'github-light');
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+
+
+  </body>
+</html>

@@ -1,0 +1,925 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <style> 
+      ::-webkit-scrollbar{width: 12px; height: 5px;}
+      ::-webkit-scrollbar-track {background-color:#4b4f52; border-radius: 16px;}
+      ::-webkit-scrollbar-thumb {background-color:#5e6265; border-radius: 16px;}
+      ::-webkit-scrollbar-thumb:hover {background: #ffd24c;}
+      ::-webkit-scrollbar-button:start:decrement,::-webkit-scrollbar-button:end:increment 
+      {
+          width:12px;height:12px;background:transparent;
+      } 
+    </style>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Nginx 로드 밸런싱 구성 - Hyerin Blog</title>
+<meta name="description" content="">
+
+
+  <meta name="author" content="Hyerin Park">
+  
+  <meta property="article:author" content="Hyerin Park">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Hyerin Blog">
+<meta property="og:title" content="Nginx 로드 밸런싱 구성">
+<meta property="og:url" content="http://localhost:4000/2021-10-18/loadbalancing/">
+
+
+  <meta property="og:description" content="">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-10-18T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/2021-10-18/loadbalancing/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Hyerin Park",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hyerin Blog Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- start custom head snippets -->
+
+<link rel="apple-touch-icon" sizes="57x57" href="/assets/favicon.ico/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/assets/favicon.ico/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/assets/favicon.ico/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/assets/favicon.ico/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/assets/favicon.ico/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/assets/favicon.ico/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/assets/favicon.ico/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/assets/favicon.ico/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon.ico/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="/assets/favicon.ico/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon.ico/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/assets/favicon.ico/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon.ico/favicon-16x16.png">
+<link rel="manifest" href="/assets/favicon.ico/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/assets/favicon.ico/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+
+<!-- end custom head snippets -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Hyerin Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/categories/">Category</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/year-archive/">Year</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+<div class="sidebar sticky">
+
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/image/profile.png" alt="Hyerin Park" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Hyerin Park</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Backend Developer</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Republic of Korea</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:hyerinn6@email.com" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/hyerin6" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.instagram.com/___hyerin_/" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+          
+            <li><a href="https://blog.naver.com/hyerin_0611" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Naver Blog</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+
+
+
+</div>
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Nginx 로드 밸런싱 구성">
+    <meta itemprop="description" content="">
+    <meta itemprop="datePublished" content="2021-10-18T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="http://localhost:4000/2021-10-18/loadbalancing/" class="u-url" itemprop="url">Nginx 로드 밸런싱 구성
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          3 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#로드-밸런싱이란">로드 밸런싱이란?</a><ul><li><a href="#q-로드-밸런서가-왜-필요할까">Q. 로드 밸런서가 왜 필요할까?</a></li></ul></li></ul></li><li><a href="#로드-밸런싱-기법">로드 밸런싱 기법</a></li><li><a href="#nginx란">Nginx란?</a></li><li><a href="#nginx-무중단-배포">Nginx 무중단 배포</a><ul><li><a href="#1-젠킨스-설정">1) 젠킨스 설정</a></li><li><a href="#2-nginx-설치">2) Nginx 설치</a><ul><li><a href="#docker-컨테이너를-실행시킬-준비">Docker 컨테이너를 실행시킬 준비</a></li><li><a href="#nginx-설치">Nginx 설치</a></li><li><a href="#로드밸런싱-설정">로드밸런싱 설정</a></li><li><a href="#설정-파일-적용">설정 파일 적용</a></li><li><a href="#nginx-에러-로그-확인">Nginx 에러 로그 확인</a></li><li><a href="#http-프록시를-차단-해결">HTTP 프록시를 차단 해결</a></li></ul></li></ul></li></ul></li><li><a href="#nginx-흐름">Nginx 흐름</a><ul><li><a href="#참고">참고</a></li></ul></li></ul></li></ul>
+
+            </nav>
+          </aside>
+        
+        <p><br /></p>
+
+<p>이전 게시글에서 무중단 배포 환경에 대해 알아보면서</p>
+
+<p>로드 밸런싱에 대해 알게 되었다.</p>
+
+<p>애플리케이션 서버와 사용자 사이에 중계 해줄 리버스 프록시 서버가 필요했고</p>
+
+<p>자연스럽게 트래픽을 분산하여 각 서버가 받는 부하를 분산하는 로드밸런싱도 구성할 수 있게 되었다.</p>
+
+<p><a href="https://hyerin6.github.io/2021-10-17/deploy/">무중단 배포 환경 이해 포스팅 보러가기</a></p>
+
+<p><br />
+<br /></p>
+
+<h1 id="로드-밸런싱이란">로드 밸런싱이란?</h1>
+
+<p>로드밸런서는 서버에 가해지는 부하(로드)를 분산(밸런싱)해주는 장치 또는 기술이다.</p>
+
+<p><br /></p>
+
+<h3 id="q-로드-밸런서가-왜-필요할까">Q. 로드 밸런서가 왜 필요할까?</h3>
+
+<p>클라이언트가 한 두명이면 서버가 여유롭게 응답할 수 있지만</p>
+
+<p>수천만명이라면 하나의 서버는 지쳐서 동작을 멈추게 된다.</p>
+
+<p><br /></p>
+
+<p>이러한 문제를 해결하기 위한 방법은 2가지 이다.</p>
+
+<p>장단점이 있기 때문에 각각의 서비스에 특징과 사용량을 생각해 최적의 방법을 적용하면 된다.</p>
+
+<ul>
+  <li>scale-up : 현재 사용하고 있는 서버 자체의 성능을 증가시켜 처리 능력을 향상시키는 것으로
+cpu, 메모리 업그레이드 등으로 서버의성능을 높이는 방식</li>
+  <li>scale-out : 기존 서버와 비슷한 사양의 사양의 여러 대의 서버를 두는 방법</li>
+</ul>
+
+<p><br /></p>
+
+<p>scale-out의 방식으로 서버를 증설하기로 결정했다면</p>
+
+<p>여러 대의 서버로 트래픽을 균등하게 분산해주는 로드밸런싱이 필요하다.</p>
+
+<p><br />
+<br /></p>
+
+<h1 id="로드-밸런싱-기법">로드 밸런싱 기법</h1>
+
+<p>다음과 같은 다양한 로드 밸런싱 기법이 있다.</p>
+
+<p><br /></p>
+
+<p>• 라운드로빈 방식(Round Robin Method)
+서버에 들어온 요청을 순서대로 돌아가며 배정하는 방식이다.
+클라이언트의 요청을 순서대로 분배하기 때문에 여러 대의 서버가 동일한 스펙을 갖고 있고,
+서버와의 연결(세션)이 오래 지속되지 않는 경우에 활용하기 적합하다.</p>
+
+<p><br /></p>
+
+<p>• 가중 라운드로빈 방식(Weighted Round Robin Method)
+각각의 서버마다 가중치를 매기고 가중치가 높은 서버에 클라이언트 요청을 우선적으로 배분한다.
+주로 서버의 트래픽 처리 능력이 상이한 경우 사용되는 부하 분산 방식이다.
+예를 들어 A라는 서버가 5라는 가중치를 갖고 B라는 서버가 2라는 가중치를 갖는다면,
+로드밸런서는 라운드로빈 방식으로 A 서버에 5개 B 서버에 2개의 요청을 전달한다.</p>
+
+<p><br /></p>
+
+<p>• IP 해시 방식(IP Hash Method)
+클라이언트의 IP 주소를 특정 서버로 매핑하여 요청을 처리하는 방식이다.
+사용자의 IP를 해싱해(Hashing, 임의의 길이를 지닌 데이터를 고정된 길이의 데이터로 매핑하는 것, 또는 그러한 함수) 로드를 분배하기 때문에 사용자가 항상 동일한 서버로 연결되는 것을 보장한다.</p>
+
+<p><br /></p>
+
+<p>• 최소 연결 방식(Least Connection Method)
+요청이 들어온 시점에 가장 적은 연결상태를 보이는 서버에 우선적으로 트래픽을 배분한다.
+자주 세션이 길어지거나, 서버에 분배된 트래픽들이 일정하지 않은 경우에 적합한 방식이다.</p>
+
+<p><br /></p>
+
+<p>• 최소 리스폰타임(Least Response Time Method)
+서버의 현재 연결 상태와 응답시간(Response Time, 서버에 요청을 보내고 최초 응답을 받을 때까지 소요되는 시간)을 모두 고려하여 트래픽을 배분한다.
+가장 적은 연결 상태와 가장 짧은 응답시간을 보이는 서버에 우선적으로 로드를 배분하는 방식이다.</p>
+
+<p><br />
+<br /></p>
+
+<h1 id="nginx란">Nginx란?</h1>
+
+<p>Nginx는 웹 서버, 리버스 프록시, 캐싱, 로드 밸런싱, 미디어 스트리밍 등을 위한 오픈소스 소프트웨어이다.</p>
+
+<p>위에서 계속 언급한 리버스 프록시 서버에 해당한다.</p>
+
+<p>요청을 전달하고 실제 요청에 대한 처리는 뒷단의 웹 애플리케이션 서버들이 처리한다.</p>
+
+<p><br /></p>
+
+<p>어떻게 운영되는지 알아보기 위해 간단한 예제로 Nginx를 사용해보자.</p>
+
+<p><br />
+<br /></p>
+
+<h1 id="nginx-무중단-배포">Nginx 무중단 배포</h1>
+
+<p>Nginx와 스프링 부트 3개의 서버로 무중단 배포를 완성해보자.</p>
+
+<p><br /></p>
+
+<p><img width="707" alt="스크린샷 2021-10-18 오후 2 37 51" src="https://user-images.githubusercontent.com/33855307/137674794-5e4c3335-c0a7-443d-a50c-3ff73bb516bb.png" /></p>
+
+<p><br /></p>
+
+<ul>
+  <li>Nginx는 80번 포트, 443 포트 할당</li>
+  <li>스프링 부트 1, 2, 3은 8080 포트 할당</li>
+  <li>Jenkins는 8080 포트 할당</li>
+</ul>
+
+<p><br />
+<br /></p>
+
+<h3 id="1-젠킨스-설정">1) 젠킨스 설정</h3>
+
+<p>우선 원하는 서버를 생성하고 Jenkins의 공개키(<code class="language-plaintext highlighter-rouge">.ssh/id_rsa.pub</code>)를</p>
+
+<p>스프링 부트 서버 1, 2, 3의 authorized_keys(<code class="language-plaintext highlighter-rouge">.ssh/authorized_keys</code>)에 붙여넣는다.</p>
+
+<p>authorized_keys의 권한을 <code class="language-plaintext highlighter-rouge">chmod 600 ~/.ssh/authorized_keys</code> 변경한다.</p>
+
+<p><br /></p>
+
+<blockquote>
+  <p>GCP를 사용하면 메타 데이터 메뉴에서 SSH 키를 쉽게 등록할 수 있다.</p>
+</blockquote>
+
+<p><br />
+<br /></p>
+
+<p>위 설정이 끝나고 <code class="language-plaintext highlighter-rouge">젠킨스 관리</code> &gt; <code class="language-plaintext highlighter-rouge">시스템 설정</code> &gt; <code class="language-plaintext highlighter-rouge">Publish over SSH</code> 항목에서</p>
+
+<p>Test Configuration을 해보면 SUCCESS가 출력될 것이다.</p>
+
+<p><br /></p>
+
+<p><img src="https://user-images.githubusercontent.com/33855307/137674994-2428b81f-e271-4cc0-8947-fba97c3707af.jpeg" alt="ins1" />
+<img src="https://user-images.githubusercontent.com/33855307/137674986-ccf45041-60dd-4fa0-b18c-a37b152bdcac.jpeg" alt="ins2" /></p>
+
+<p><br /></p>
+
+<ul>
+  <li>Name: 각 인스턴스 구분이 가능하게 지정 (Job에서 표시될 이름)</li>
+  <li>Hostname: 내부 IP</li>
+  <li>Username: ssh 접근 계정 이름, 중복되어도 상관 없음 원하느대로 지정</li>
+  <li>Remote Directory: Jenkins 시스템 설정에서 SSH 설정시 지정한 홈 디렉토리 뒤에 추가로 입력하는 디렉토리 경로</li>
+</ul>
+
+<p><br />
+<br /></p>
+
+<p>git에서 프로젝트를 받아오는 jenkins 설정은 아래 게시글에서 확인할 수 있다.</p>
+
+<p><a href="https://hyerin6.github.io/2020-10-21/jenkins-ci/">https://hyerin6.github.io/2020-10-21/jenkins-ci/</a></p>
+
+<p><br /></p>
+
+<p>컨트롤러만 있는 스프링 부트 프로젝트이기 때문에</p>
+
+<p>배포 스크립트는 다음과 같이 간단하게 작성했다.</p>
+
+<p><br /></p>
+
+<p><img width="982" alt="스크린샷 2021-10-18 오후 2 46 25" src="https://user-images.githubusercontent.com/33855307/137733391-914b6c0e-a07f-4cfe-aa74-05c190ae3a82.png" />
+<img width="979" alt="스크린샷 2021-10-18 오후 2 45 50" src="https://user-images.githubusercontent.com/33855307/137733399-06a45e91-f042-459c-8ce2-67e0ed7aa1d5.png" /></p>
+
+<p><br />
+<br />
+<br /></p>
+
+<h3 id="2-nginx-설치">2) Nginx 설치</h3>
+
+<h4 id="docker-컨테이너를-실행시킬-준비">Docker 컨테이너를 실행시킬 준비</h4>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum <span class="nb">install </span>docker
+<span class="nb">sudo </span>systemctl start docker
+<span class="nb">sudo chmod </span>666 /var/run/docker.sock
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h4 id="nginx-설치">Nginx 설치</h4>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>yum <span class="nb">install </span>nginx
+<span class="nb">sudo </span>systemctl start nginx
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h4 id="로드밸런싱-설정">로드밸런싱 설정</h4>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>vi /etc/nginx/nginx.conf
+</code></pre></div></div>
+
+<p>위 경로의 파일로 들어가 다음과 같은 내용을 추가해야 한다.</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code>upstream cpu-bound-app <span class="o">{</span>
+  server <span class="o">{</span>instance_1번의_ip<span class="o">}</span>:8080 <span class="nv">weight</span><span class="o">=</span>100 <span class="nv">max_fails</span><span class="o">=</span>3 <span class="nv">fail_timeout</span><span class="o">=</span>3s<span class="p">;</span>
+  server <span class="o">{</span>instance_2번의_ip<span class="o">}</span>:8080 <span class="nv">weight</span><span class="o">=</span>100 <span class="nv">max_fails</span><span class="o">=</span>3 <span class="nv">fail_timeout</span><span class="o">=</span>3s<span class="p">;</span>
+  server <span class="o">{</span>instance_3번의_ip<span class="o">}</span>:8080 <span class="nv">weight</span><span class="o">=</span>100 <span class="nv">max_fails</span><span class="o">=</span>3 <span class="nv">fail_timeout</span><span class="o">=</span>3s<span class="p">;</span>
+<span class="o">}</span>
+
+location / <span class="o">{</span>
+  proxy_pass http://cpu-bound-app<span class="p">;</span>
+  proxy_http_version 1.1<span class="p">;</span>
+  proxy_set_header Upgrade <span class="nv">$http_upgrade</span><span class="p">;</span>
+  proxy_set_header Connection <span class="s1">'upgrade'</span><span class="p">;</span>
+  proxy_set_header Host <span class="nv">$host</span><span class="p">;</span>
+  proxy_cache_bypass <span class="nv">$http_upgrade</span><span class="p">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>proxy_pass : 요청이 오면 <code class="language-plaintext highlighter-rouge">http://cpu-bound-app</code>로 전달</li>
+  <li>proxy_set_header XXX : 실제 요청 데이터를 header의 각 항목에 할당
+    <ul>
+      <li>ex) proxy_set_header X-Real-IP $remote_addr: Request Header의 X-Real-IP에 요청자의 IP를 저장</li>
+    </ul>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h4 id="설정-파일-적용">설정 파일 적용</h4>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>systemctl reload nginx
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p>여기까지 설정하면 nginx는 에러 로그를 남긴다.</p>
+
+<p>이유는 SELinux (Security Enhanced Linux)가 함께 작동하는데,</p>
+
+<p>이 SELinux가 HTTP 프록시를 차단하고 있는 것이 문제이다.</p>
+
+<p><br /></p>
+
+<h4 id="nginx-에러-로그-확인">Nginx 에러 로그 확인</h4>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo tail</span> <span class="nt">-f</span> /var/log/nginx/error.log
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h4 id="http-프록시를-차단-해결">HTTP 프록시를 차단 해결</h4>
+
+<p>HTTP 프록시를 허용해주는 커맨드를 실행하면 위 에러를 해결할 수 있다.</p>
+
+<div class="language-shell highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nb">sudo </span>setsebool <span class="nt">-P</span> httpd_can_network_connect on
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p>여기서 -P는 persist의 의미로, 재부팅 후에도 환경설정이 그대로 적용된다는 말이다.</p>
+
+<p>이렇게 함으로써 정상적으로 도메인 접속 후 포트포워딩이 문제 없이 이루어 지는 것을 확인할 수 있었다.</p>
+
+<p><br />
+<br /></p>
+
+<h1 id="nginx-흐름">Nginx 흐름</h1>
+
+<p><img src="https://user-images.githubusercontent.com/33855307/141668538-e175bdc4-93d0-4a43-9b8c-d7a4b11bda1c.png" alt="nnx" /></p>
+
+<p>서버를 늘리지 않고 단일 서버로 두고 nginx로 요청을 받았을 뿐인데</p>
+
+<p>postman으로 확인해보니 빨라진 응답 결과를 확인할 수 있었다.</p>
+
+<p><br /></p>
+
+<p>Nginx는 Event-Driven 구조로 동작하기 때문에 한 개 또는 고정된 프로세스만 생성하여 사용하고,</p>
+
+<p>비동기 방식으로 요청들을 동시에 처리되는 것처럼 처리할 수 있다.</p>
+
+<p>Nginx는 새로운 요청이 들어오더라도 새로운 프로세스와 스레드를 생성하지 않기 때문에</p>
+
+<p>프로세스와 스레드 생성 비용이 존재하지 않고, 적은 자원으로도 효율적인 운용이 가능하다.</p>
+
+<p>그래서 단일 서버에서도 동시에 많은 연결을 처리할 수 있었다.</p>
+
+<p><br />
+<br /></p>
+
+<h3 id="참고">참고</h3>
+
+<ul>
+  <li><a href="https://m.post.naver.com/viewer/postView.nhn?volumeNo=27046347&amp;memberNo=2521903">https://m.post.naver.com/viewer/postView.nhn?volumeNo=27046347&amp;memberNo=2521903</a></li>
+  <li><a href="https://docs.nginx.com/nginx/admin-guide/load-balancer/http-load-balancer/">https://docs.nginx.com/nginx/admin-guide/load-balancer/http-load-balancer/</a></li>
+  <li><a href="https://jojoldu.tistory.com/267">https://jojoldu.tistory.com/267</a></li>
+</ul>
+
+<p><br /></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#spring" class="page__taxonomy-item p-category" rel="tag">spring</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#spring" class="page__taxonomy-item p-category" rel="tag">Spring</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2021-10-18T00:00:00+09:00">October 18, 2021</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Nginx+%EB%A1%9C%EB%93%9C+%EB%B0%B8%EB%9F%B0%EC%8B%B1+%EA%B5%AC%EC%84%B1%20http%3A%2F%2Flocalhost%3A4000%2F2021-10-18%2Floadbalancing%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2F2021-10-18%2Floadbalancing%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2F2021-10-18%2Floadbalancing%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/2021-10-17/deploy/" class="pagination--pager" title="무중단 배포 환경 이해
+">Previous</a>
+    
+    
+      <a href="/2021-10-19/vm/" class="pagination--pager" title="Docker를 사용한 이유
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">You May Also Enjoy</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2022-01-05/blog/" rel="permalink">Jekyll - minimal mistakes 사용법
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> January 05 2022</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2021-12-28/lambda/" rel="permalink">lambda 와 effectively final
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 28 2021</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2021-12-23/request/" rel="permalink">HttpMessageNotReadableException 해결하기
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 23 2021</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2021-12-19/sort/" rel="permalink">Sort
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 19 2021</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="mailto:hyerinn6@email.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+        
+      
+        
+          <li><a href="https://github.com/hyerin6" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.instagram.com/___hyerin_/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+        
+          <li><a href="https://blog.naver.com/hyerin_0611" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Naver Blog</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2022 Hyerin Park. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'hyerin6/hyerin6.github.io');
+    script.setAttribute('issue-term', 'pathname');
+    
+    script.setAttribute('theme', 'github-light');
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+
+
+  </body>
+</html>

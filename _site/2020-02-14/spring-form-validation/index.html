@@ -1,0 +1,898 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <style> 
+      ::-webkit-scrollbar{width: 12px; height: 5px;}
+      ::-webkit-scrollbar-track {background-color:#4b4f52; border-radius: 16px;}
+      ::-webkit-scrollbar-thumb {background-color:#5e6265; border-radius: 16px;}
+      ::-webkit-scrollbar-thumb:hover {background: #ffd24c;}
+      ::-webkit-scrollbar-button:start:decrement,::-webkit-scrollbar-button:end:increment 
+      {
+          width:12px;height:12px;background:transparent;
+      } 
+    </style>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>spring form validation - Hyerin Blog</title>
+<meta name="description" content="Spring Form Validation 1">
+
+
+  <meta name="author" content="Hyerin Park">
+  
+  <meta property="article:author" content="Hyerin Park">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Hyerin Blog">
+<meta property="og:title" content="spring form validation">
+<meta property="og:url" content="http://localhost:4000/2020-02-14/spring-form-validation/">
+
+
+  <meta property="og:description" content="Spring Form Validation 1">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2020-02-14T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/2020-02-14/spring-form-validation/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Hyerin Park",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hyerin Blog Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- start custom head snippets -->
+
+<link rel="apple-touch-icon" sizes="57x57" href="/assets/favicon.ico/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/assets/favicon.ico/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/assets/favicon.ico/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/assets/favicon.ico/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/assets/favicon.ico/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/assets/favicon.ico/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/assets/favicon.ico/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/assets/favicon.ico/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon.ico/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="/assets/favicon.ico/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon.ico/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/assets/favicon.ico/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon.ico/favicon-16x16.png">
+<link rel="manifest" href="/assets/favicon.ico/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/assets/favicon.ico/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+
+<!-- end custom head snippets -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Hyerin Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/categories/">Category</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/year-archive/">Year</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+<div class="sidebar sticky">
+
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/image/profile.png" alt="Hyerin Park" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Hyerin Park</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Backend Developer</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Republic of Korea</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:hyerinn6@email.com" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/hyerin6" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.instagram.com/___hyerin_/" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+          
+            <li><a href="https://blog.naver.com/hyerin_0611" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Naver Blog</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+
+
+
+</div>
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="spring form validation">
+    <meta itemprop="description" content="Spring Form Validation 1">
+    <meta itemprop="datePublished" content="2020-02-14T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="http://localhost:4000/2020-02-14/spring-form-validation/" class="u-url" itemprop="url">spring form validation
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#spring-form-validation-1">Spring Form Validation 1</a><ul><li><a href="#1-배경지식">1. 배경지식</a><ul><li><a href="#1-spring-form-validation">(1) spring form validation</a></li><li><a href="#2-모델-클래스model">(2) 모델 클래스(model)</a></li><li><a href="#3-엔터티-클래스">(3) 엔터티 클래스</a></li><li><a href="#4-모델-클래스와-엔터티-클래스">(4) 모델 클래스와 엔터티 클래스</a></li><li><a href="#5-객체지향-설계">(5) 객체지향 설계</a></li></ul></li><li><a href="#7-컨트롤러-클래스-구현">7. 컨트롤러 클래스 구현</a><ul><li><a href="#1-usercontrollerjava">(1) UserController.java</a></li></ul></li><li><a href="#8-뷰-구현">8. 뷰 구현</a><ul><li><a href="#1-userregisterjsp">(1) user/register.jsp</a></li></ul></li></ul></li><li><a href="#코드-분석">코드 분석</a><ul><li><a href="#11-사용자-아이디-중복-검사-기능-구현">11. 사용자 아이디 중복 검사 기능 구현</a></li></ul></li></ul></li><li><a href="#spring-form-validation-2">Spring Form Validation 2</a><ul><li><a href="#1-validation-message-수정">1. validation message 수정</a><ul><li><a href="#1-목표">(1) 목표</a></li></ul></li><li><a href="#2-validationmessageproperties-생성">(2) ValidationMessage.properties 생성</a></li><li><a href="#2-개별-항목에-대한-에러-메시지-등록">2. 개별 항목에 대한 에러 메시지 등록</a><ul><li><a href="#1-목표-1">(1) 목표</a></li><li><a href="#2-message-애트리뷰트">(2) message 애트리뷰트</a></li></ul></li><li><a href="#3-로직-에러-처리하기">3. 로직 에러 처리하기</a><ul><li><a href="#1-목표-2">(1) 목표</a></li><li><a href="#2-userservicejava">(2) UserService.java</a></li><li><a href="#3-usercontrollerjava">(3) UserController.java</a></li></ul></li></ul></li></ul></li></ul>
+
+            </nav>
+          </aside>
+        
+        <h1 id="spring-form-validation-1">Spring Form Validation 1</h1>
+
+<h3 id="1-배경지식">1. 배경지식</h3>
+<h4 id="1-spring-form-validation">(1) spring form validation</h4>
+<p>입력폼에 입력된 내용의 오류를 spring이 자동으로 검사해주는 기능이다.</p>
+
+<p><strong>입력폼 submit 과정 #1</strong>                       <br />
+spring web mvc로 구현한 입력폼의 submit 과정은 다음과 같다.</p>
+
+<ol>
+  <li>
+    <p>사용자가 웹 브라우저에서 입력폼에 데이터를 입력하고 submit 버튼을 누른다.</p>
+  </li>
+  <li>
+    <p>서버의 url이 요청된다. (http request)            <br />
+입력폼에 입력된 데이터도 이 요청에 같이 담겨 전송된다. (request parameter)</p>
+  </li>
+  <li>
+    <p>spring web mvc 엔진이 그 요청을 받아서 요청된 url과 일치하는 액션메소드를 찾는다.</p>
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@RequestMapping</span><span class="o">(</span><span class="n">value</span><span class="o">=</span><span class="s">"studentEdit"</span><span class="o">,</span> <span class="n">method</span><span class="o">=</span><span class="nc">RequestMethod</span><span class="o">.</span><span class="na">POST</span><span class="o">)</span>
+<span class="kd">public</span> <span class="nc">String</span> <span class="nf">studentEdit</span><span class="o">(</span><span class="nd">@valid</span> <span class="nc">Student</span> <span class="n">student</span><span class="o">,</span> <span class="nc">Model</span> <span class="n">model</span><span class="o">,</span>
+                     <span class="nc">BingingResult</span> <span class="n">bindingResult</span><span class="o">){</span> <span class="o">...</span> <span class="o">}</span>
+</code></pre></div>    </div>
+  </li>
+</ol>
+
+<p>spring form validation 기능을 구현하기 위해, <br />
+@valid 어노테이션과 BindingResult 객체가 추가되었다.   <br />
+검사결과를 bindingResult에 채워진 후에 액션 메소드가 호출된다.</p>
+
+<ol>
+  <li>위 액션메소드의 파라미터가 객체이기 때문에 spring web mvc 엔진이 아래의 일들을 자동으로 처리한다.
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Student</span> <span class="n">student</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Student</span><span class="o">();</span> <span class="c1">// Student 객체 생성</span>
+<span class="n">student</span><span class="o">.</span><span class="na">setStudentNumber</span><span class="o">(</span><span class="s">"201732017"</span><span class="o">);</span> <span class="c1">// 생성된 객체에 request parameter 데이터를 채운다.  </span>
+<span class="n">model</span><span class="o">.</span><span class="na">addAttribute</span><span class="o">(</span><span class="s">"student"</span><span class="o">,</span> <span class="n">student</span><span class="o">);</span> <span class="c1">// 객체를 model 객체에 등록한다.   </span>
+</code></pre></div>    </div>
+  </li>
+  <li>Student 객체에 채워진 데이터에 문제가 없는지 검사한다.    <br />
+데이터를 검사할 규칙이 Student 클래스에 등록되어 있어야 한다.
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Student</span><span class="o">{</span>
+ <span class="nd">@NotEmpty</span> 
+ <span class="nd">@Size</span><span class="o">(</span><span class="n">min</span><span class="o">=</span><span class="mi">9</span><span class="o">,</span> <span class="n">max</span><span class="o">=</span><span class="mi">12</span><span class="o">)</span>
+ <span class="nc">Stirng</span> <span class="n">studentNumber</span><span class="o">;</span>
+	
+ <span class="nd">@NotEmpty</span>
+ <span class="nd">@Size</span><span class="o">(</span><span class="n">min</span><span class="o">=</span><span class="mi">2</span><span class="o">)</span>
+ <span class="nc">String</span> <span class="n">name</span><span class="o">;</span>
+</code></pre></div>    </div>
+    <p>spring form validation 기능을 구현하기 위해 @NotEmpty, @Size 어노테이션이 추가되었다.         <br />
+Student 객체에 채워진 데이터가 이 어노테이션 규칙이 부합하는지 spring web mvc 엔진이 검사한다.   <br />
+검사결과가 BindingResult 객체에 등록한다.</p>
+  </li>
+  <li>액션메소드가 호출된다.<br />
+<code class="language-plaintext highlighter-rouge">studentEdit(student, model, bindingResult)</code></li>
+</ol>
+
+<h4 id="2-모델-클래스model">(2) 모델 클래스(model)</h4>
+<ul>
+  <li>
+    <p>request parametet 데이터를 채우기 위한 객체    <br />
+앞에서 설명한 입력폼 submit 과정에서 사용된 Student 클래스 처럼,            <br />
+request parameter 데이터를 채우기 위한 클래스를 모델 클래스라고 부른다.</p>
+  </li>
+  <li>
+    <p>model 객체에 채워져 뷰에 전달되기 위한 객체      <br />
+spring form validation 규칙을 설정하기 위한 어노테이션을 model 클래스에 추가해야 하는데,     <br />
+그 어노테이션들은 Entity 클래스에서는 사용할 수 없다.</p>
+  </li>
+</ul>
+
+<p><strong>DTO - 데이터를 채워서 전달</strong>         <br />
+<strong>model - 입력 받은 값을 view에서 controller에 전달</strong>              <br />
+<strong>Entity - DB 테이블 구조 그대로</strong></p>
+
+<h4 id="3-엔터티-클래스">(3) 엔터티 클래스</h4>
+<p>JPA 프로그래밍에서 구현하게 되는 @Entity 어노테이션이 붙은 클래스를 엔터티 클래스라고 부른다.       <br />
+엔터티 객체는 JPA Repository의 조회결과 데이터를 리턴할 때 사용되는 객체이다.      <br />
+JPA Repository의 save 메소드를 호출하여 데이터를 저장할 때도 엔터티 객체를 사용한다.</p>
+
+<h4 id="4-모델-클래스와-엔터티-클래스">(4) 모델 클래스와 엔터티 클래스</h4>
+<p>예를들어, 학생 테이블의 경우에 아래의 클래스들을 따로 구현한다.        <br />
+모델 클래스 - StudentModel.java     <br />
+엔터티 클래스 - Student.java</p>
+
+<p>spring form validation 기능을 구현하기 위해서는 엔터티 클래스와 모델 클래스를 구별해서 따로 구현해야 한다.     <br />
+spring form validation 기능을 구현하려면 @NotEmpty, @Size 어노테이션을 사용해야 하는데,    <br />
+이 어노테이션들을 엔터티 클래스에 붙이는 것은 바람직하지 않기 때문이다. (중복이 많아지면 상속해서 구현한다.)</p>
+
+<h4 id="5-객체지향-설계">(5) 객체지향 설계</h4>
+<p>객체지향적으로 바람직한 구조를 만들기 위한 설계 원칙 중 하나는, 클래스들의 역할을 분명히 구분하는 것이다.</p>
+
+<ul>
+  <li>
+    <p>컨트롤러의 역할  <br />
+컨트롤러의 역할은 이름 그대로 지휘 통제하는 것이다.     <br />
+지휘 통제 역할만 해야 한다. 구체적으로 작업을 하는 것은 바람직하지 않다.</p>
+  </li>
+  <li>
+    <p>DAO(Data Access Object) 클래스의 역할       <br />
+DAO의 역할은 데이터베이스 테이블에 SELECT/INSERT/UPDATE/DELETE 하는 작업을 하는 것이다.</p>
+  </li>
+  <li>
+    <p>Service 클래스의 역할     <br />
+DAO 작업을 제외한 나머지 작업들은 서비스 클래스에 구현되어야 한다.</p>
+  </li>
+</ul>
+
+<h3 id="7-컨트롤러-클래스-구현">7. 컨트롤러 클래스 구현</h3>
+<h4 id="1-usercontrollerjava">(1) UserController.java</h4>
+<p><code class="language-plaintext highlighter-rouge">@RequestMapping(value="register", method=RequestMethod.GET)</code>      <br />
+회원가입 입력폼이 처음 실행될 때, GET 방식의 register 액션 메소드가 실행된다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">model.addAttribute("departments", departmentService.findAll());</code>     <br />
+user/register.jsp 뷰 파일을 실행할 때, 학과 목록이 출력되어야 하기 때문에     <br />
+학과 목록이 모델이 들어있어야 한다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">@RequestMapping(value="register", method=RequestMethod.POST)</code>          <br />
+submit 버튼을 눌렀을 때, POST 방식의 register 액션 메소드가 실행된다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="k">if</span><span class="o">(</span><span class="n">bindingResult</span><span class="o">.</span><span class="na">hasErrors</span><span class="o">()){</span>
+	<span class="n">model</span><span class="o">.</span><span class="na">addAttribute</span><span class="o">(</span><span class="s">"departments"</span><span class="o">,</span> <span class="n">departmentService</span><span class="o">.</span><span class="na">findAll</span><span class="o">());</span>
+	<span class="k">return</span> <span class="s">"user/register"</span><span class="o">;</span>
+</code></pre></div></div>
+<p>userModel 모델 객체에 채워진 데이터에 오류가 있다면, if문이 true가 된다.     <br />
+회원가입 입력 항목에 에러가 있기 때문에 회원가입 입력폼이 다시 화면에 나타나야 한다.        <br />
+그래서 “user/register” 뷰 이름을 리턴한다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">userService</span><span class="o">.</span><span class="na">save</span><span class="o">(</span><span class="n">userModel</span><span class="o">);</span>
+<span class="k">return</span> <span class="s">"redirect:registerSuccess"</span><span class="o">;</span>
+</code></pre></div></div>
+<p>데이터가 오류가 없으면, UserRegistrationModel 객체에 입력된 데이터를 user 테이블에 저장한다.       <br />
+그리고 회원가입 성공 화면으로 리다이렉트한다.</p>
+
+<h3 id="8-뷰-구현">8. 뷰 구현</h3>
+<h4 id="1-userregisterjsp">(1) user/register.jsp</h4>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>&lt;form:form method="post" modelAttribute="userRegistrationModel"&gt;
+	...
+	&lt;form:errors path="userid" class="error" /&gt;
+</code></pre></div></div>
+<p>userid 데이터 항목과 관련된 에러 메시지가 자동으로 여기에 표시된다.</p>
+
+<h2 id="코드-분석">코드 분석</h2>
+<p><strong>Q.</strong> user/register.jsp 뷰 파일은 어떤 메소드의 뒤에 이어서 실행되는가?     <br />
+<strong>A.</strong> register GET, POST 방식 메소드</p>
+
+<p><strong>Q.</strong> GET 방식 액션 메소드에서 userRegistrationModel 객체를 모델에 어떻게 등록하였는가?       <br />
+<strong>A.</strong> userRegistrationModel 객체를 파라미터로 받아,      <br />
+spring web mvc 엔진이 객체 생성 객체에 전달받은 파라미터 값 저장, model에 등록을 자동을 해준다.</p>
+
+<p><strong>Q.</strong> POST 방식 액션 메소드에서 userRegistrationModel 객체를 모델에 어떻게 등록하였는가?   <br />
+<strong>A.</strong> 파라미터로 객체를 전달받으면 자동으로 model에 등록된다.</p>
+
+<p><strong>Q.</strong> GET 방식 액션 메소드에서 departments 객체를 모델에 어떻게 등록하였는가?       <br />
+<strong>A.</strong> Model 객체에 addAttribute() 메소드를 이용하여 등록할 수 있다.</p>
+
+<p><strong>Q.</strong> POST 방식 액션 메소드에서 departments 객체를 모델에 어떻게 등록하였는가?     <br />
+<strong>A.</strong> Model 객체에 addAttribute() 메소드를 이용하여 등록할 수 있다.</p>
+
+<h3 id="11-사용자-아이디-중복-검사-기능-구현">11. 사용자 아이디 중복 검사 기능 구현</h3>
+<p>user 테이블의 userid 필드    <br />
+이 필드는 primary key 가 아니다. 이 필드로 unique index를 만들지도 않았다.               <br />
+그렇기 때문에 동일한 값이 INSERT 되어도 에러가 발생하지 않는다.</p>
+
+<p>중복 방지를 위해 unique index를 만들어 주는게 좋다. 하지만 DB에 삽입하기 전에 먼저 검사해서      <br />
+입력폼에서 에러를 표시해 주는 것이 바람직하다.</p>
+
+<h2><br /></h2>
+<p><br /></p>
+
+<h1 id="spring-form-validation-2">Spring Form Validation 2</h1>
+
+<h3 id="1-validation-message-수정">1. validation message 수정</h3>
+<h4 id="1-목표">(1) 목표</h4>
+
+<p><img width="536" alt="스크린샷 2019-12-03 오후 11 17 42" src="https://user-images.githubusercontent.com/33855307/70058923-29d96180-1623-11ea-9632-bb2190683411.png" /></p>
+
+<p>위 화면에서 자동으로 출력된 에러 메시지 문구를 수정하자.</p>
+
+<p>각 validation annotation에 대한 에러 메시지를 ValidationMessage.properties 파일에 등록해 주면 된다.</p>
+
+<h3 id="2-validationmessageproperties-생성">(2) ValidationMessage.properties 생성</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>javax.validation.constraints.Size.message=크기가 {min} 이상 {max} 이하이어야 합니다.
+org.hibernate.validator.constraints.Email.message=이메일 주소가 바르지 않습니다.
+org.hibernate.validator.constraints.NotEmpty.message=필수 입력항목입니다. 
+</code></pre></div></div>
+<p>javax.validation.constraints.Size.message 는 @Size 어노테이션 클래스의 경로명                 <br />
+org.hibernate.validator.constraints.Email.message 는 @Email 어노테이션 클래스의 경로명         <br />
+org.hibernate.validator.constraints.NotEmpty.message 는 @NotEmpty 어노테이션 클래스의 경로명</p>
+
+<h3 id="2-개별-항목에-대한-에러-메시지-등록">2. 개별 항목에 대한 에러 메시지 등록</h3>
+<h4 id="1-목표-1">(1) 목표</h4>
+<p>@NotEmpty 어노테이션에 위배되는 모든 항목에 “필수 입력 항목입니다.” 에러메시지가 동일하게 출력된다.    <br />
+항목에 따라서 다른 에러 메시지가 표시되어야 하는 경우에는       <br />
+@NotEmpty 어노테이션에 message 애트리뷰트 값으로 에러 메시지를 등록하면 된다.</p>
+
+<h4 id="2-message-애트리뷰트">(2) message 애트리뷰트</h4>
+<p>어떤 항목의 @NotEmpty 에러 메시지를 다른 것으로 바꾸려면,    <br />
+이 어노테이션에 message 애트리뷰트 값으로 에러 메시지를 등록하면 된다.</p>
+
+<p>Example</p>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@NotEmpty</span><span class="o">(</span><span class="n">message</span><span class="o">=</span><span class="s">"학번을 입력하세요"</span><span class="o">)</span>
+<span class="nd">@Size</span><span class="o">(</span><span class="n">min</span><span class="o">=</span><span class="mi">6</span><span class="o">,</span> <span class="n">max</span><span class="o">=</span><span class="mi">12</span><span class="o">,</span> <span class="n">message</span><span class="o">=</span><span class="s">"6 자리 이상 12 자리 이하이어야 합니다."</span><span class="o">)</span>
+<span class="nd">@Min</span><span class="o">(</span><span class="n">value</span><span class="o">=</span><span class="mi">1</span><span class="o">,</span> <span class="n">message</span><span class="o">=</span><span class="s">"양의 정수를 입력하세요"</span><span class="o">)</span>
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">@Min(1)</code>   <br />
+위와같이 값이 한개인 어노테이션에서 그 값 한개인 애트리뷰트 이름은 value이다.     <br />
+애트리뷰트 값이 하나 뿐일 때, value 이름을 생략할 수 있다.    <br />
+하지만, 값이 여러개 일 때는 애트리뷰트 이름을 생략할 수 없다. -&gt; <code class="language-plaintext highlighter-rouge">@Min(value=1, message="error message")</code></p>
+
+<h3 id="3-로직-에러-처리하기">3. 로직 에러 처리하기</h3>
+<h4 id="1-목표-2">(1) 목표</h4>
+<p>validation annotation에 의해서 자동으로 검사되기 힘든 에러들도 있다.   <br />
+예를들어, 사용자 아이디 중복을 검사하려면 DB의 user 테이블을 조회해야 한다.    <br />
+입력된 두 비밀번호가 일치하는지 검사하려면, 두 멤버변수를 비교해야 한다.     <br />
+이런 에러 검사는 validation annotation으로 구현하기 힘들고 따로 직접 구현해야 한다.</p>
+
+<ul>
+  <li>로직 에러 처리하기 절차</li>
+</ul>
+
+<p>(1) spring form validation 에러가 있다면, 회원가입 뷰 이름을 리턴한다.  <br />
+회원가입 뷰 이름이 리턴되면 웹 브라우저 창에 회원가입 화면이 다시 출력된다.</p>
+
+<p>(2) 입력된 두 비밀번호가 일치하는지 검사한다.</p>
+
+<p>(3) 일치하지 않으면 비밀번호 불일치 에러이다. <br />
+ 	(3-1) bindingResult 객체에 비밀번호 불일치 에러메시지를 등록한다. <br />
+ 	(3-2) 회원가입 뷰 이름을 리턴한다.</p>
+
+<p>(4) 입력된 사용자 아이디로 DB의 사용자 테이블에서 조회한다.</p>
+
+<p>(5) 조회결과가 null이 아니면, 사용자 아이디 중복 에러이다. <br />
+ 	(5-1) bindingResult 객체에 사용자 아이디 중복 에러 메시지를 등록한다. <br />
+ 	(5-2) 회원가입 뷰 이름을 리턴한다.</p>
+
+<ul>
+  <li>bindingResult 객체에 에러 메시지 등록하기</li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">bindingResult.rejectValue("password2", null, "비밀번호가 일치하지 않습니다.");</code><br />
+rejectValue 메소드를 호출하여 에러 메시지를 등록한다.</p>
+
+<p>첫번째 파라미터 : 에러가 발생한 멤버변수 이름  <br />
+세번쨰 파라미터 : 에러 메시지</p>
+
+<p>bindingResult에 위 에러가 등록되면, 아래 태그에 그 에러 메시지가 출력된다.<br />
+<code class="language-plaintext highlighter-rouge">&lt;form:errors path="password2" class="error" /&gt;</code></p>
+
+<h4 id="2-userservicejava">(2) UserService.java</h4>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">hasErrors</span><span class="o">(</span><span class="nc">UserRegistrationModel</span> <span class="n">userModel</span><span class="o">,</span> <span class="nc">BindingResult</span> <span class="n">bindingResult</span><span class="o">){</span>
+	<span class="k">if</span><span class="o">(</span><span class="n">bindingResult</span><span class="o">.</span><span class="na">hasErrors</span><span class="o">()){</span>
+		<span class="k">return</span> <span class="kc">true</span><span class="o">;</span>
+	<span class="o">}</span>
+		
+	<span class="o">...</span>
+
+<span class="o">}</span>
+</code></pre></div></div>
+
+<h4 id="3-usercontrollerjava">(3) UserController.java</h4>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="nc">String</span> <span class="nf">register</span><span class="o">(...){</span>
+	<span class="k">if</span><span class="o">(</span><span class="n">userService</span><span class="o">.</span><span class="na">hasErrors</span><span class="o">(</span><span class="n">userModel</span><span class="o">,</span> <span class="n">bindingResult</span><span class="o">)){</span>
+		<span class="k">return</span> <span class="s">"user/register"</span><span class="o">;</span>
+	<span class="o">}</span>
+
+	<span class="o">...</span>
+
+<span class="o">}</span>
+</code></pre></div></div>
+<p><strong>Q.</strong> 아까 입력했던 내용이 view에 어떻게 나타나는걸까?  <br />
+<strong>A.</strong> 액션 메소드의 파라미터가 객체일 때, 자동으로 일어나는 일은    <br />
+userModel이 model에 자동으로 addAttribute 된다. (userRegistration이라는 이름으로)</p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#spring" class="page__taxonomy-item p-category" rel="tag">spring</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#spring" class="page__taxonomy-item p-category" rel="tag">Spring</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2020-02-14T00:00:00+09:00">February 14, 2020</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=spring+form+validation%20http%3A%2F%2Flocalhost%3A4000%2F2020-02-14%2Fspring-form-validation%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2F2020-02-14%2Fspring-form-validation%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2F2020-02-14%2Fspring-form-validation%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/2020-02-06/session/" class="pagination--pager" title="세션(session)
+">Previous</a>
+    
+    
+      <a href="/2020-02-25/spring-AOP/" class="pagination--pager" title="AOP
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">You May Also Enjoy</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2022-01-05/blog/" rel="permalink">Jekyll - minimal mistakes 사용법
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> January 05 2022</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2021-12-28/lambda/" rel="permalink">lambda 와 effectively final
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 28 2021</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2021-12-23/request/" rel="permalink">HttpMessageNotReadableException 해결하기
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 23 2021</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2021-12-19/sort/" rel="permalink">Sort
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 19 2021</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="mailto:hyerinn6@email.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+        
+      
+        
+          <li><a href="https://github.com/hyerin6" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.instagram.com/___hyerin_/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+        
+          <li><a href="https://blog.naver.com/hyerin_0611" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Naver Blog</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2022 Hyerin Park. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'hyerin6/hyerin6.github.io');
+    script.setAttribute('issue-term', 'pathname');
+    
+    script.setAttribute('theme', 'github-light');
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+
+
+  </body>
+</html>

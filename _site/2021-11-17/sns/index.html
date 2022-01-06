@@ -1,0 +1,789 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <style> 
+      ::-webkit-scrollbar{width: 12px; height: 5px;}
+      ::-webkit-scrollbar-track {background-color:#4b4f52; border-radius: 16px;}
+      ::-webkit-scrollbar-thumb {background-color:#5e6265; border-radius: 16px;}
+      ::-webkit-scrollbar-thumb:hover {background: #ffd24c;}
+      ::-webkit-scrollbar-button:start:decrement,::-webkit-scrollbar-button:end:increment 
+      {
+          width:12px;height:12px;background:transparent;
+      } 
+    </style>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>액티브 유저 3억명 이상인 SNS를 개발한다면? - Hyerin Blog</title>
+<meta name="description" content="">
+
+
+  <meta name="author" content="Hyerin Park">
+  
+  <meta property="article:author" content="Hyerin Park">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Hyerin Blog">
+<meta property="og:title" content="액티브 유저 3억명 이상인 SNS를 개발한다면?">
+<meta property="og:url" content="http://localhost:4000/2021-11-17/sns/">
+
+
+  <meta property="og:description" content="">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-11-17T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/2021-11-17/sns/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Hyerin Park",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hyerin Blog Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- start custom head snippets -->
+
+<link rel="apple-touch-icon" sizes="57x57" href="/assets/favicon.ico/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/assets/favicon.ico/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/assets/favicon.ico/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/assets/favicon.ico/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/assets/favicon.ico/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/assets/favicon.ico/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/assets/favicon.ico/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/assets/favicon.ico/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon.ico/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="/assets/favicon.ico/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon.ico/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/assets/favicon.ico/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon.ico/favicon-16x16.png">
+<link rel="manifest" href="/assets/favicon.ico/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/assets/favicon.ico/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+
+<!-- end custom head snippets -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Hyerin Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/categories/">Category</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/year-archive/">Year</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+<div class="sidebar sticky">
+
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/image/profile.png" alt="Hyerin Park" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Hyerin Park</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Backend Developer</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Republic of Korea</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:hyerinn6@email.com" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/hyerin6" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.instagram.com/___hyerin_/" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+          
+            <li><a href="https://blog.naver.com/hyerin_0611" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Naver Blog</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+
+
+
+</div>
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="액티브 유저 3억명 이상인 SNS를 개발한다면?">
+    <meta itemprop="description" content="">
+    <meta itemprop="datePublished" content="2021-11-17T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="http://localhost:4000/2021-11-17/sns/" class="u-url" itemprop="url">액티브 유저 3억명 이상인 SNS를 개발한다면?
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          2 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#sns-특징">SNS 특징</a></li><li><a href="#팔로워-수에-따른-타임라인-구현">팔로워 수에 따른 타임라인 구현</a><ul><li><a href="#1-팔로우-수가-많은-셀럽">1) 팔로우 수가 많은 셀럽</a></li><li><a href="#2-일반-팔로워">2) 일반 팔로워</a></li></ul></li><li><a href="#좋아요-기능">좋아요 기능</a><ul><li><a href="#참고">참고</a></li></ul></li></ul>
+
+            </nav>
+          </aside>
+        
+        <p><br /></p>
+
+<p>SNS 프로젝트는 현재 다음과 같은 서버 구조를 갖고 있다.</p>
+
+<p><img width="826" alt="스크린샷 2021-11-17 오후 3 23 18" src="https://user-images.githubusercontent.com/33855307/142145906-0e473d16-7969-4f26-89ea-c33a23ef4936.png" /></p>
+
+<p>메시지큐, 캐싱, 로드밸런싱 등 성능 개선을 위해 노력했고 실제로 성능이 개선되기는 했으나</p>
+
+<p>프리티어로 구성한 서버라 한계가 있었고 특히 좋아요, 타임라인 기능 개선이 쉽지 않았다.</p>
+
+<p>실제로 3억명 이상의 액티브 유저를 보유한 트위터의 타임라인 시스템을 알아보고</p>
+
+<p>현재 프로젝트에 적용해볼 수 있는 부분이 있다면 학습해보고 적용해보기로 했다.</p>
+
+<p><br />
+<br /></p>
+
+<h2 id="sns-특징">SNS 특징</h2>
+
+<p>트위터는 다음과 같은 통계를 내고 있다.</p>
+
+<ul>
+  <li>액티브 유저 3억명 이상</li>
+  <li>초당 600개 이상의 트윗 생성, 초당 60만건 이상의 조회 발생</li>
+</ul>
+
+<p><br /></p>
+
+<p>위 통계는 트위터 기준이지만 대부분 SNS는 다음과 같은 특징을 갖고 있다.</p>
+
+<ul>
+  <li>읽기 요청이 엄청나다.</li>
+  <li>Eventually Consistent(언젠가는 동기화됨을 보장) 특성이 있기 때문에 약간의 딜레이는 허용한다.</li>
+  <li>데이터 저장소 비용을 최적화해야 한다.</li>
+</ul>
+
+<p><br /></p>
+
+<p>쓰기 요청은 메시지큐를 적용했기 때문에 약간의 딜레이가 있을 수 있지만</p>
+
+<p>데이터가 유실되지 않고 많은 요청을 받을 수 있게 개선된 상태이다.</p>
+
+<p>문제는 읽기 요청이다. 캐싱을 적용하긴 했지만 읽기 요청이 엄청나기 때문이다.</p>
+
+<p><br />
+<br /></p>
+
+<h2 id="팔로워-수에-따른-타임라인-구현">팔로워 수에 따른 타임라인 구현</h2>
+
+<p>트위터는 새로운 트윗을 작성한 트위터의 팔로워 수에 따라 타임라인 캐시를 만드는 방식이 다르다고 한다.</p>
+
+<p><img width="826" src="https://user-images.githubusercontent.com/33855307/142159942-733c3fff-ef39-471f-b4e3-fa96b51f26c5.jpeg" /></p>
+
+<p>출처: <a href="https://medium.com/@narengowda/system-design-for-twitter-e737284afc95">https://medium.com/@narengowda/system-design-for-twitter-e737284afc95</a></p>
+
+<p><br /></p>
+
+<h3 id="1-팔로우-수가-많은-셀럽">1) 팔로우 수가 많은 셀럽</h3>
+
+<p><img width="826" src="https://user-images.githubusercontent.com/33855307/142160332-b5eefab8-0d34-44ef-9e0c-29ffcf9d56fe.jpeg" /></p>
+
+<p>유명 트윗터인 경우 팔로워가 8000만명이 넘는 경우도 있다고 한다.</p>
+
+<p>위 사진은 많은 팔로워 수로 유명한 배우의 SNS이다.</p>
+
+<p>2,361만명으로 이 경우, 팬아웃 방식을 사용하는 것은 시스템 부담이 있다.</p>
+
+<p>이 경우, 타임라인 조회 요청 시, 일반 타임라인 캐시에 유명 트윗터의 트윗을 합쳐주는 방식을 사용해야한다.</p>
+
+<p>현재 프로젝트에서도 사용하는 방식이다.</p>
+
+<p>쿼리는 다음과 같다.</p>
+
+<pre><code class="language-mysql">SELECT 
+        * 
+    
+FROM 
+        post
+        JOIN USER ON post.user_id = user.id 
+        JOIN follows ON follows.following_id = user.id 
+    
+WHERE 
+        follows.follower_id = user_id
+</code></pre>
+
+<p>RDB에서 데이터를 조회한다.</p>
+
+<p><br />
+<br /></p>
+
+<h3 id="2-일반-팔로워">2) 일반 팔로워</h3>
+
+<p>매번 Post 테이블을 search하기엔 부담되기 때문에 일반 사용자들의</p>
+
+<p>트위터 쓰기 요청이 들어오면, 팔로워의 타임라인 캐시에 새로운 트윗 아이디를 추가해주는 방식이다.</p>
+
+<p>이를 fan-out 방법이라고 한다.</p>
+
+<p><br /></p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1. 사용자가 게시글 작성을 요청한다. 
+2. 게시글 요청은 로드밸런싱을 통해 서버로 전달된다. 
+3. 서버는 DB와 Cache 저장소에 해당 데이터를 저장한다. 
+4. 서버는 cache 저장소에서 해당 유저를 팔로우 한 사람의 유저 정보들을 가져 온다.
+5. 해당(팔로우한 유저들) 유저들의 in-memory(Redis)에 해당 데이터를 저장한다.
+6. 트윗을 작성한 유저를 팔로우한 유저들은 타임라인에서 해당 트윗을 볼 수있다.
+
+
+* 모든 팔로우 유저의 in-memory에 데이터를 저장하지 않고 
+2주내로 접속한 액티브 유저들의 타임라인에만 저장한다. 
+</code></pre></div></div>
+
+<p>타임라인 조회 시 DB를 접근할 필요 없이 해당 유저의 in memory 데이터에서 타임라인 데이터를 가져오면 된다.</p>
+
+<p><br /></p>
+
+<p>대용량 트래픽을 감당하는 시스템에 대해 알아봤다.</p>
+
+<p>현재 개발중인 SNS 프로젝트에서 사용자를 이렇게 구분할 수 없어서 DB에서 조회한 데이터를</p>
+
+<p>캐싱처리해서 DB에 읽기 요청을 최대한 줄이는 방법으로 구현했다.</p>
+
+<p><br />
+<br /></p>
+
+<h2 id="좋아요-기능">좋아요 기능</h2>
+
+<p>현재 많은 SNS에서 좋아요 수를 보여주는 기능을 없애는 분위기지만 좋아요 기능은 아직 남아있다.</p>
+
+<p>좋아요를 요청하고 취소하는 작업은 자주 발생하기 때문에 개선할 부분이라고 생각하고 개선 방법을 찾아봤다.</p>
+
+<p><img width="826" src="https://user-images.githubusercontent.com/33855307/142199917-2773984e-7c14-4406-9c15-373e2bef2b70.png" /></p>
+
+<p>가장 유명한 방법은 Redis의 Set을 이용해 중복 검사를 따로 하지 않고</p>
+
+<p>RDB에는 Spring Batch를 이용하여 bulk insert로 데이터를 저장하는 것이다.</p>
+
+<p>redis와 spring batch를 학습해보고 적용해보면 좋을 것 같다.</p>
+
+<p><br />
+<br /></p>
+
+<h3 id="참고">참고</h3>
+
+<ul>
+  <li>
+    <p><a href="https://medium.com/garimoo/%EA%B0%9C%EB%B0%9C%EC%9E%90%EB%A5%BC-%EC%9C%84%ED%95%9C-%EB%A0%88%EB%94%94%EC%8A%A4-%ED%8A%9C%ED%86%A0%EB%A6%AC%EC%96%BC-02-f1029893e263">개발자를 위한 레디스 튜토리얼 02</a></p>
+  </li>
+  <li>
+    <p><a href="https://medium.com/garimoo/%EA%B0%9C%EB%B0%9C%EC%9E%90%EB%A5%BC-%EC%9C%84%ED%95%9C-%EB%A0%88%EB%94%94%EC%8A%A4-%ED%8A%9C%ED%86%A0%EB%A6%AC%EC%96%BC-04-17256c55493d">개발자를 위한 레디스 튜토리얼 04</a></p>
+  </li>
+  <li>
+    <p><a href="https://medium.com/@narengowda/system-design-for-twitter-e737284afc95">System design for Twitter</a></p>
+  </li>
+  <li>
+    <p><a href="https://www.slideshare.net/mariano/raffi-krikorian-twitter-timelines-at-scale/10-TimelineServiceWrite_APIFanoutRedisRedisTimelineCacheRedisTweetyPieGizmoduck">Timeline Service Write API Fanout</a></p>
+  </li>
+  <li>
+    <p><a href="https://www.youtube.com/watch?v=wYk0xPP_P_8">Twitter system design, twitter Software architecture, twitter interview questions</a></p>
+  </li>
+  <li>
+    <p><a href="https://medium.com/@Pinterest_Engineering/building-a-follower-model-from-scratch-b51a08c5b54e">Building a follower model from scratch</a></p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#spring" class="page__taxonomy-item p-category" rel="tag">spring</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#spring" class="page__taxonomy-item p-category" rel="tag">Spring</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2021-11-17T00:00:00+09:00">November 17, 2021</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=%EC%95%A1%ED%8B%B0%EB%B8%8C+%EC%9C%A0%EC%A0%80+3%EC%96%B5%EB%AA%85+%EC%9D%B4%EC%83%81%EC%9D%B8+SNS%EB%A5%BC+%EA%B0%9C%EB%B0%9C%ED%95%9C%EB%8B%A4%EB%A9%B4%3F%20http%3A%2F%2Flocalhost%3A4000%2F2021-11-17%2Fsns%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2F2021-11-17%2Fsns%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2F2021-11-17%2Fsns%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/2021-11-16/binary-search/" class="pagination--pager" title="이진탐색이란?
+">Previous</a>
+    
+    
+      <a href="/2021-11-18/divide-conquer/" class="pagination--pager" title="분할 정복이란?
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">You May Also Enjoy</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2022-01-05/blog/" rel="permalink">Jekyll - minimal mistakes 사용법
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> January 05 2022</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2021-12-28/lambda/" rel="permalink">lambda 와 effectively final
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 28 2021</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2021-12-23/request/" rel="permalink">HttpMessageNotReadableException 해결하기
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 23 2021</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2021-12-19/sort/" rel="permalink">Sort
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 19 2021</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="mailto:hyerinn6@email.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+        
+      
+        
+          <li><a href="https://github.com/hyerin6" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.instagram.com/___hyerin_/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+        
+          <li><a href="https://blog.naver.com/hyerin_0611" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Naver Blog</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2022 Hyerin Park. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'hyerin6/hyerin6.github.io');
+    script.setAttribute('issue-term', 'pathname');
+    
+    script.setAttribute('theme', 'github-light');
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+
+
+  </body>
+</html>

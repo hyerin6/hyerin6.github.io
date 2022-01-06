@@ -1,0 +1,876 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <style> 
+      ::-webkit-scrollbar{width: 12px; height: 5px;}
+      ::-webkit-scrollbar-track {background-color:#4b4f52; border-radius: 16px;}
+      ::-webkit-scrollbar-thumb {background-color:#5e6265; border-radius: 16px;}
+      ::-webkit-scrollbar-thumb:hover {background: #ffd24c;}
+      ::-webkit-scrollbar-button:start:decrement,::-webkit-scrollbar-button:end:increment 
+      {
+          width:12px;height:12px;background:transparent;
+      } 
+    </style>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>OAuth 2.0 란? - Hyerin Blog</title>
+<meta name="description" content="">
+
+
+  <meta name="author" content="Hyerin Park">
+  
+  <meta property="article:author" content="Hyerin Park">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Hyerin Blog">
+<meta property="og:title" content="OAuth 2.0 란?">
+<meta property="og:url" content="http://localhost:4000/2021-07-23/OAuth2/">
+
+
+  <meta property="og:description" content="">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-07-23T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/2021-07-23/OAuth2/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Hyerin Park",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hyerin Blog Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- start custom head snippets -->
+
+<link rel="apple-touch-icon" sizes="57x57" href="/assets/favicon.ico/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/assets/favicon.ico/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/assets/favicon.ico/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/assets/favicon.ico/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/assets/favicon.ico/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/assets/favicon.ico/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/assets/favicon.ico/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/assets/favicon.ico/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon.ico/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="/assets/favicon.ico/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon.ico/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/assets/favicon.ico/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon.ico/favicon-16x16.png">
+<link rel="manifest" href="/assets/favicon.ico/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/assets/favicon.ico/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+
+<!-- end custom head snippets -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Hyerin Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/categories/">Category</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/year-archive/">Year</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+<div class="sidebar sticky">
+
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/image/profile.png" alt="Hyerin Park" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Hyerin Park</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Backend Developer</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Republic of Korea</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:hyerinn6@email.com" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/hyerin6" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.instagram.com/___hyerin_/" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+          
+            <li><a href="https://blog.naver.com/hyerin_0611" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Naver Blog</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+
+
+
+</div>
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="OAuth 2.0 란?">
+    <meta itemprop="description" content="">
+    <meta itemprop="datePublished" content="2021-07-23T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="http://localhost:4000/2021-07-23/OAuth2/" class="u-url" itemprop="url">OAuth 2.0 란?
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          4 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#oauth-20">OAuth 2.0</a></li><li><a href="#인가-그랜트-절차">인가 그랜트 절차</a></li><li><a href="#과거의-자격-증명-공유-와-자격-증명-탈취">과거의 자격 증명 공유 (와 자격 증명 탈취)</a></li><li><a href="#oauth-20-장단점">OAuth 2.0 장단점</a><ul><li><a href="#장점">장점</a></li><li><a href="#단점">단점</a></li></ul></li></ul></li><li><a href="#oauth-20이-아닌-것">OAuth 2.0이 아닌 것</a></li><li><a href="#클라이언트에-대한-csrf-공격">클라이언트에 대한 CSRF 공격</a></li><li><a href="#oauth-토큰이-무엇인가">OAuth 토큰이 무엇인가?</a></li><li><a href="#구조화된-토큰-json-web-token">구조화된 토큰: JSON Web Token</a></li><li><a href="#oauth-20이-인증-프로토콜이-아닌-이유">OAuth 2.0이 인증 프로토콜이 아닌 이유</a></li><li><a href="#인증authentication-vs-인가authorization">인증(Authentication) vs. 인가(Authorization)</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <p><br /></p>
+
+<h1 id="oauth-20">OAuth 2.0</h1>
+<p>OAuth 2.0은 자신이 소유한 리소스에 소프트웨어 애플리케이션이 접근할 수 있도록 허용해줌으로써 접근 권한을 위임해주는 프로토콜이다.       <br />
+토큰을 이용해 애플리케이션이 해당 리소스에 접근할 수 있습니다.    <br />
+<br /></p>
+
+<ul>
+  <li>
+    <p>리소스 소유자 <br />
+일반적으로 리소스 소유자는 서비스 사용자, 웹 브라우저를 이용한다고 가정  <br />
+<br /></p>
+  </li>
+  <li>
+    <p>보호된 리소스
+리소스 소유자가 접근하는 구성 요소이다.    <br />
+대부분 웹 API의 형태를 띤다. API를 통해 읽고 쓰는 작업 <br />
+<br /></p>
+  </li>
+  <li>
+    <p>클라이언트 <br />
+리소스 소유자 대신 보호된 리소스에 접근하는 소프트웨어 요소</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<p><img width="624" alt="스크린샷 2021-07-23 오후 2 01 43" src="https://user-images.githubusercontent.com/33855307/126739238-64a8fbd8-999e-49eb-a32e-3e0d60a7ac46.png" /></p>
+
+<p><br />     <br />
+<br /></p>
+
+<h1 id="인가-그랜트-절차">인가 그랜트 절차</h1>
+<p>이전에도 OAuth 2.0 인가 그랜트 절차에 대해 학습한 적이 있는데 <br />
+페이코 개발자 센터 이미지를 참고하여 다시 기억해보자.</p>
+
+<p><img src="https://user-images.githubusercontent.com/33855307/126660618-2c3592b2-8d0f-4ccb-996b-ce55193d37ad.jpeg" alt="페이코_oauth2" /><br />
+참고: <a href="https://developers.payco.com/guide/development/start">https://developers.payco.com/guide/development/start</a></p>
+
+<p><br />     <br />
+<br /></p>
+
+<h1 id="과거의-자격-증명-공유-와-자격-증명-탈취">과거의 자격 증명 공유 (와 자격 증명 탈취)</h1>
+<p>기업 환경에서 많이 사용되는 한 가지 방법은 사용자의 자격 증명을 복사해 연결하고자 하는 다른 서비스에 전달하는 것이다. <br />
+이 경우 클라이언트가 마치 사용자인 것처럼 사용자가 입력한 id/password를 보호된 리소스에 전달한다.</p>
+
+<p>위 방법이 가능하기 위해서는 클라이언트 애플리케이션과 보호된 리소스에 대한   <br />
+사용자의 자격 증명이 동일해야 하며 다음과 같은 문제점이 생긴다.</p>
+
+<ul>
+  <li>자격 증명 탈취에 대한 보안성이 제한       <br />
+ex) 하나의 기업이 동일한 정책과 네트워크 통제 안에서 클라이언트와 인가 서버, 보호된 리소스를 운영하면    <br />
+사용자는 그 기업의 여러 서비스에 대해 동일한 자격 증명을 이용할 수 있다.  <br />
+<br /></li>
+  <li>사용자의 비밀번호가 클라이언트 애플리케이션에 노출   <br />
+<br /></li>
+  <li>보호된 리소스 입장에서 자신에게 접근하는 것이 실제 리소스 소유자인지 클라이언트인지 구분할 수 없다.</li>
+</ul>
+
+<p><br />    <br />
+<br /></p>
+
+<h1 id="oauth-20-장단점">OAuth 2.0 장단점</h1>
+<h3 id="장점">장점</h3>
+<ul>
+  <li>
+    <p>사용자의 권한 위임 결정은 캡처하고 네트워크상에 표현하는 데 매우 뛰어나다.</p>
+  </li>
+  <li>
+    <p>보안 결정 절차에 여러 당사자가 참여할 수 있으며, 특히 런타임 시 사용자가 보안 결정을 한다.</p>
+  </li>
+  <li>
+    <p>유사한 프로토콜에 비해 훨씬 간단하고 안전하다.</p>
+  </li>
+  <li>
+    <p>클라이언트 개발자가 이전의 보안 프로토콜처럼 더 이상 시그니처 정규화나 복잡한 보안 정책 문서를 분석하지 않아도 된다.</p>
+  </li>
+  <li>
+    <p>OAuth 토큰을 제대로 사용하면 보다 향상된 보안성을 제공한다.</p>
+  </li>
+  <li>
+    <p>만약 어떤 클라이언트가 침해된다면, 피해는 해당 클라이언트의 사용자로 국한된다.  <br />
+클라이언트가 침해되더라도 리소스 소유자의 자격 증명 데이터는 유출되지 않는다.</p>
+  </li>
+  <li>
+    <p>독립적인 개발자가 수천 개의 클라이언트를 안전하게 관리하는 것보다 하나의 인가 서버를 안전하게 관리하는 편이 훨씬 쉽다.</p>
+  </li>
+  <li>
+    <p>OAuth 2.0의 확장성과 모듈화 &gt; 다양한 환경에서도 적용해 사용할 수 있다.   <br />
+<br /></p>
+  </li>
+</ul>
+
+<h3 id="단점">단점</h3>
+<ul>
+  <li>
+    <p>유연성으로 OAuth 구현체 간의 기본적인 호환성에 문제가 발생할 수 있다.</p>
+  </li>
+  <li>
+    <p>OAuth의 스펙에는 많은 부분을 선택 사항으로 기술하고 있기 때문에 <br />
+두 시스템 간에 OAuth를 구현하고자 하는 개발자들을 혼란스럽게 만들 수 있다.</p>
+  </li>
+  <li>
+    <p>선택 사항 중 일부를 잘못 이해하거나 적절히 수행하지 않으면 안전하지 않은 OAuth 구현이 될 수 있다.</p>
+  </li>
+</ul>
+
+<p><br />  <br />
+<br /></p>
+
+<h1 id="oauth-20이-아닌-것">OAuth 2.0이 아닌 것</h1>
+<p>OAuth가 널리 쓰임에도 실제로 보면 OAuth가 아닌 것이 많다.   <br />
+프로토콜을 이해함에 있어서 차이점이 무엇인지 이해하는 것도 중요하다. <br />
+<br /></p>
+
+<ul>
+  <li>
+    <p>OAuth는 HTTP 프로토콜과 독집적으로 정의되지 않는다.  <br />
+OAuth 2.0 토큰은 메시지 시그니처를 제공하지 않기 때문에 HTTPS를 이용해야 한다.</p>
+  </li>
+  <li>
+    <p>OAuth는 인증 프로토콜이 아니다.  <br />
+OAuth 트랜잭션 자체만으로 사용자가 누구인지 알 수 없다. <br />
+또한, OAuth는 여러 곳에서 인증을 사용한다. <br />
+그렇다고 해서 내제된 인증 자체만으로 OAuth가 인증 프로토콜이 되지는 않는다.</p>
+  </li>
+  <li>
+    <p>사용자 간의 권한 위임 메커니즘은 정의하지 않는다. <br />
+리소스 소유자가 다른 사람을 인가할 수 있게 하려면 OAuth만으로는 힘들다.</p>
+  </li>
+  <li>
+    <p>OAuth는 인가 절차 메커니즘을 정의하지 않는다.  <br />
+권한 위임이 이뤄졌다는 사실을 전달하는 방법을 제공하지만, 권한 인가 자체의 내용을 정의하는 것은 아니다.</p>
+  </li>
+  <li>
+    <p>OAuth는 토큰의 포맷을 정의하지 않는다.  <br />
+OAuth 프로토콜은 토큰의 내용이 클라이언트 애플리케이션에게 완전히 불투명하다고 명확히 기술하고 있다.</p>
+  </li>
+  <li>
+    <p>OAuth 2.0은 1.0과 달리 암호화 방법을 정의하지 않는다.</p>
+  </li>
+  <li>
+    <p>OAuth 2.0은 단일 프로토콜이 아니다.   <br />
+OAuth 스펙은 사용 방법이 각기 다른 여러 가지 정의와 흐름으로 나뉜다.</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<p>참고 33p - 56p</p>
+
+<p><br />  <br />
+<br /></p>
+
+<h1 id="클라이언트에-대한-csrf-공격">클라이언트에 대한 CSRF 공격</h1>
+<p>인가 코드 그랜트 타입과 암시적 그랜트 타입에서 상태(state) 파라미터 사용을 권장하고 있다.  <br />
+클라이언트가 요청과 콜백 사이의 상태를 유지하기 위해 사용하는 구조가 정해지지 않은 값으로서 <br />
+인가 서버는 유저에이전트를 클라이언트로 다시 리다이렉트 시킬 때 이 값을 전달한다. <br />
+CSRF(Cross-Site Request Forgery) 공격을 방지하기 위해 이 값을 사용해야 한다.</p>
+
+<p>CSRF란 악의적인 애플리케이션이 현재 사용자가 인증된 웹 사이트로   <br />
+사용자의 웹 브라우저가 요청을 보내게 함으로써 원하지 않는 작업이 이뤄지도록 만드는 것이다.     <br />
+웹 브라우저가 요청을 만들고(쿠키를 이용해) 그로 인해 특정 작업이 수행된다는 것이다.</p>
+
+<p>CSRF 공격을 막기 위한 가장 일반적이고 효과적인 방법은 각각의 HTTP 요청에 예측할 수 없는 값을 추가하는 것이다.  <br />
+이는 OAuth 스펙에서도 설명하는 방법이다. <br />
+<br /></p>
+
+<p>참고 195p</p>
+
+<p><br />  <br />
+<br /></p>
+
+<h1 id="oauth-토큰이-무엇인가">OAuth 토큰이 무엇인가?</h1>
+<p>클라이언트는 인가 서버로부터 토큰을 발급받아 보호된 리소스에 전달한다.  <br />
+인가 서버는 토큰을 생성해 클라이언트에게 발급하고, <br />
+토큰을 리소스 소유자의 권한 위임과 클라이언트의 권한과 연결시켜 관리한다.<br />
+보호된 리소스는 클라이언트로부터 전달받은 토큰이 클라이언트가 요청한 작업을 수행할 수 있는 권한이 있는지 확인한다.
+토큰은 권한 위임 행위 결과를 나타낸다.</p>
+
+<p>이렇게 중요한데 OAuth에서 토큰에 대한 언급이 전혀 없다. <br />
+왜 구체적으로 정의하지 않을까?  <br />
+토큰을 구체적으로 정의하지 않는 이유는 OAuth 특성이나 위험 환경 그리고 요구 사항이 각기 다른 다양한 곳에서 적용해 사용할 수 있기 때문이다. <br />
+토큰의 유효 기간이 만료되거나 폐기될 수 있고, 무기한으로 지정해 사용하거나 다양한 조랍으로 사용할 수 있다. <br />
+또한 시스템의 특정 사용자나 모든 사용자를 나타내거나 아무런 사용자도 나타내지 않을 수 있다. <br />
+<br /></p>
+
+<p>참고 278p</p>
+
+<p><br />  <br />
+<br /></p>
+
+<h1 id="구조화된-토큰-json-web-token">구조화된 토큰: JSON Web Token</h1>
+<p>공유해 사용하는 데이터베이스에서 토큰을 찾는 것 대신 토큰 안에 필요한 정보를 담아 만들면 어떨까?    <br />
+그렇게 하면 인가 서버는 어떤 네트워크 API 호출 없이 도큰 자체 만으로 보호된 리소스와 간접적으로 통신할 수 있게 된다.</p>
+
+<p>인가 서버가 JWT를 지원하도록 수정한다고 가정해보자.    <br />
+토큰의 구조가 이전과 달라졌는데도 클라이언트 코드는 수정할 필요가 없다.   <br />
+이는 클라이언트에게 있어서 토큰의 구조는 명확하지 않다는 OAuth 2.0의 중요한 스펙 덕분이라고 할 수 있다.     <br />
+<br /></p>
+
+<p>참고 279p</p>
+
+<p><br />  <br />
+<br /></p>
+
+<h1 id="oauth-20이-인증-프로토콜이-아닌-이유">OAuth 2.0이 인증 프로토콜이 아닌 이유</h1>
+<p>먼저, 인증이란 무엇인가?  <br />
+인증은 현재 사용자가 누구인지 그리고 현재 사용자가 애플리케이션을 사용하고 있는지 여부를 애플리케이션에게 알려주는 것이다.</p>
+
+<p>일반적으로 자격 증명(id/password 같은)을 애플리케이션에 제공함으로써 <br />
+사용자가 현재 주장하는 자신임을 알리는 보안 아키텍처의 일부분이라고 할 수 있다.</p>
+
+<p>하지만 OAuth 2.0은 자체적으로 사용자에게 어떤 것도 알려주지 않을 뿐만 아니라 <br />
+사용자가 자신의 존재를 어떻게 증명했는지 또는 존재했는지에 대해서도 알려주지 않는다.</p>
+
+<p>토큰을 요청하고 획득, 그 토큰을 이용해 API에 접근하지만 <br />
+누가 해당 클라이언트를 인가했는지 또는 인가되는 과정에 사용자가 있었는지는 전혀 알지 못한다.</p>
+
+<p>클라이언트에게 권한을 인가하기 위한 강력한 패러다임이지만   <br />
+사용자가 현재 있고, 누군지를 알아내는 인증과는 상반된다고 할 수 있다.   <br />
+<br /></p>
+
+<p>참고 354p</p>
+
+<p><br />  <br />
+<br /></p>
+
+<h1 id="인증authentication-vs-인가authorization">인증(Authentication) vs. 인가(Authorization)</h1>
+<p>둘은 표면적으로는 유사하지만 기본적인 성격은 분명히 다르다.</p>
+
+<ul>
+  <li>
+    <p>인증(Authentication)   <br />
+클라이언트가 자신이 주장하는 사용자와 같은 사용자인지를 확인하는 과정  <br />
+ex) 방문자가 자신이 회사 건물에 들어 갈 수있는지 확인 받는 과정이다.</p>
+  </li>
+  <li>
+    <p>인가(Authorization)      <br />
+권한부여, 클라이언트가 하고자 하는 작업이 해당 클라이언트에게 허가된 작업인지를 확인<br />
+ex) 방문자가 회사 건물에 방문했을 때, 허가된 공간에만 접근 가능하다. <br />
+<br /></p>
+  </li>
+</ul>
+
+<p>인증을 거친 후 인증된 사용자에 대한 특정한 권한을 부여 한다.</p>
+
+<p><br />  <br />
+<br /></p>
+
+<p>이 게시글은 <a href="http://www.kyobobook.co.kr/product/detailViewKor.laf?mallGb=KOR&amp;ejkGb=KOR&amp;barcode=9791161751450">OAuth2 In Action</a> 를 참고하여 작성되었습니다.😇</p>
+
+<p><br /></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#spring" class="page__taxonomy-item p-category" rel="tag">spring</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#spring" class="page__taxonomy-item p-category" rel="tag">Spring</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2021-07-23T00:00:00+09:00">July 23, 2021</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=OAuth+2.0+%EB%9E%80%3F%20http%3A%2F%2Flocalhost%3A4000%2F2021-07-23%2FOAuth2%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2F2021-07-23%2FOAuth2%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2F2021-07-23%2FOAuth2%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/2021-07-17/%EC%9E%90%EB%B0%94%EC%9D%98%EC%8B%A0(2)/" class="pagination--pager" title="자바를 제대로 사용할 수 있는 방법
+">Previous</a>
+    
+    
+      <a href="/2021-07-23/msa/" class="pagination--pager" title="모놀리틱 서비스 vs. 마이크로 서비스
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">You May Also Enjoy</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2022-01-05/blog/" rel="permalink">Jekyll - minimal mistakes 사용법
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> January 05 2022</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2021-12-28/lambda/" rel="permalink">lambda 와 effectively final
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 28 2021</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2021-12-23/request/" rel="permalink">HttpMessageNotReadableException 해결하기
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 23 2021</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2021-12-19/sort/" rel="permalink">Sort
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 19 2021</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="mailto:hyerinn6@email.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+        
+      
+        
+          <li><a href="https://github.com/hyerin6" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.instagram.com/___hyerin_/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+        
+          <li><a href="https://blog.naver.com/hyerin_0611" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Naver Blog</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2022 Hyerin Park. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'hyerin6/hyerin6.github.io');
+    script.setAttribute('issue-term', 'pathname');
+    
+    script.setAttribute('theme', 'github-light');
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+
+
+  </body>
+</html>

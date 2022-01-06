@@ -1,0 +1,840 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <style> 
+      ::-webkit-scrollbar{width: 12px; height: 5px;}
+      ::-webkit-scrollbar-track {background-color:#4b4f52; border-radius: 16px;}
+      ::-webkit-scrollbar-thumb {background-color:#5e6265; border-radius: 16px;}
+      ::-webkit-scrollbar-thumb:hover {background: #ffd24c;}
+      ::-webkit-scrollbar-button:start:decrement,::-webkit-scrollbar-button:end:increment 
+      {
+          width:12px;height:12px;background:transparent;
+      } 
+    </style>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Spring Security + OAuth2.0 + Kakao - Hyerin Blog</title>
+<meta name="description" content="">
+
+
+  <meta name="author" content="Hyerin Park">
+  
+  <meta property="article:author" content="Hyerin Park">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Hyerin Blog">
+<meta property="og:title" content="Spring Security + OAuth2.0 + Kakao">
+<meta property="og:url" content="http://localhost:4000/2021-08-24/springsecurity(3)/">
+
+
+  <meta property="og:description" content="">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-08-24T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/2021-08-24/springsecurity(3)/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Hyerin Park",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hyerin Blog Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- start custom head snippets -->
+
+<link rel="apple-touch-icon" sizes="57x57" href="/assets/favicon.ico/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/assets/favicon.ico/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/assets/favicon.ico/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/assets/favicon.ico/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/assets/favicon.ico/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/assets/favicon.ico/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/assets/favicon.ico/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/assets/favicon.ico/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon.ico/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="/assets/favicon.ico/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon.ico/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/assets/favicon.ico/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon.ico/favicon-16x16.png">
+<link rel="manifest" href="/assets/favicon.ico/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/assets/favicon.ico/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+
+<!-- end custom head snippets -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Hyerin Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/categories/">Category</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/year-archive/">Year</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+<div class="sidebar sticky">
+
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/image/profile.png" alt="Hyerin Park" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Hyerin Park</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Backend Developer</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Republic of Korea</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:hyerinn6@email.com" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/hyerin6" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.instagram.com/___hyerin_/" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+          
+            <li><a href="https://blog.naver.com/hyerin_0611" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Naver Blog</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+
+
+
+</div>
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Spring Security + OAuth2.0 + Kakao">
+    <meta itemprop="description" content="">
+    <meta itemprop="datePublished" content="2021-08-24T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="http://localhost:4000/2021-08-24/springsecurity(3)/" class="u-url" itemprop="url">Spring Security + OAuth2.0 + Kakao
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          2 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#spring-security-configuration">Spring Security Configuration</a></li><li><a href="#oauth2-인증-과정">OAuth2 인증 과정</a></li><li><a href="#인증-코드-요청">인증 코드 요청</a></li><li><a href="#access-token-요청">Access Token 요청</a></li><li><a href="#로그인-상태-처리">로그인 상태 처리</a></li><li><a href="#저장된-인증-정보-사용">저장된 인증 정보 사용</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <p><br /></p>
+
+<p>Spring Security에 대한 포스팅은 다음 링크를 참고</p>
+
+<ul>
+  <li>
+    <p>Spring Security란?: <a href="https://hyerin6.github.io/2021-08-22/springsecurity(1)/">https://hyerin6.github.io/2021-08-22/springsecurity(1)/</a></p>
+  </li>
+  <li>
+    <p>Spring Security 로그인 절차: <a href="https://hyerin6.github.io/2021-08-22/springsecurity(2)/">https://hyerin6.github.io/2021-08-22/springsecurity(2)/</a></p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<p>OAuth2.0 로그인을 사용한다면 UsernamePasswordAuthenticationFilter 대신 OAuth2LoginAuthenticationFilter가 호출된다.</p>
+
+<p>두 필터의 상위 클래스는 AbstractAuthenticationProcessingFilter이고,
+스프링 시큐리티가 상위 클래스를 호출하면 로그인 방식에 따라 구현체인
+UsernamePasswordAuthenticationFilter와 OAuth2LoginAuthenticationFilter가 동작한다.</p>
+
+<p><br /></p>
+
+<p><br /></p>
+
+<h2 id="spring-security-configuration">Spring Security Configuration</h2>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">@EnableWebSecurity</code>는 스프링 시큐리티 설정들을 활성화 시켜준다.</p>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">oauth2Client()</code>로 OAuth2 클라이언트 구성 요소를 지정할 수 있다.
+    <ul>
+      <li><code class="language-plaintext highlighter-rouge">authorizedClientService(authorizedClientService())</code></li>
+    </ul>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">http.oauth2Login()</code>으로 OAuth2 로그인 관련 처리를 설정할 수 있다.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">userService()</code>는 OAuth2 인증 과정에서 Authentication을 생성에 필요한</p>
+
+    <p>OAuth2User를 반환하는 클래스를 지정한다.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">customUserType(KakaoOAuth2User.class, SOCIAL_TYPE)</code></p>
+
+    <p>OAuth2User 타입을 지정한다.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">successHandler()</code>는 인증을 성공적으로 마친 경우 처리할 클래스를 지정한다.</p>
+  </li>
+  <li><code class="language-plaintext highlighter-rouge">failureHandler()</code>는 인증을 실패한 경우 처리할 클래스를 지정한다.</li>
+</ul>
+
+<p><br /></p>
+
+<p><br /></p>
+
+<h2 id="oauth2-인증-과정">OAuth2 인증 과정</h2>
+
+<ol>
+  <li>
+    <p>사용자가 소셜 로그인 성공</p>
+  </li>
+  <li>
+    <p>AbstractAuthenticationProcessingFilter에서 OAuth2 로그인 과정을 호출</p>
+  </li>
+  <li>
+    <p>Resource Server에서 넘겨주는 정보대로</p>
+
+    <p>OAuth2LoginAuthentiationFilter의 <code class="language-plaintext highlighter-rouge">attemptAuthentication()</code>에서 인증 과정을 수행</p>
+  </li>
+  <li>
+    <p>attemptAuthentication() 처리 과정에서 OAuth2AuthenticationToken을 생성하기 위해</p>
+
+    <p>OAuth2LoginAuthenticationProvider의 <code class="language-plaintext highlighter-rouge">authenticate()</code> 호출</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">authenticate()</code> 처리 과정에서 OAuth2User를 생성하기 위해</p>
+
+    <p>OAuth2UserService의 <code class="language-plaintext highlighter-rouge">loadUser()</code> 호출</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">loadUser()</code> 처리 과정에서 OAuth2User를 반환</p>
+  </li>
+  <li>
+    <p>(6)번까지 끝내면 AbstractAuthenticationProcessingFilter에서 SuccessHandler의 <code class="language-plaintext highlighter-rouge">onAuthenticationSuccess()</code>을 호출한다.</p>
+
+    <p>기본적으로 리다이렉션하는 역할인데 커스텀해서 지정할 수 있다.</p>
+  </li>
+  <li>
+    <p>(6)번까지의 과정이 정상적으로 끝나지 않았다면 AbstractAuthenticationProcessingFilter에서 FailureHandler의 <code class="language-plaintext highlighter-rouge">onAuthenticationFailure()</code>을 호출한다.</p>
+  </li>
+</ol>
+
+<p><br /></p>
+
+<p>여기까지 올바른 요청일 경우의 처리 과정이고 이외의 경우는 다음과 같다.</p>
+
+<ol>
+  <li>인증되지 않은 사용자가 인증이 필요한 URL에 접근하려 한다면 authenticationEntityPoint에서 예외 처리</li>
+  <li>인증된 사용자가 권한이 부족한 URL에 접근하려 한다면 accessDeniedHandler에서 예외 처리</li>
+</ol>
+
+<p><br /></p>
+
+<p><br /></p>
+
+<h2 id="인증-코드-요청">인증 코드 요청</h2>
+
+<p>Spring Security와 OAuth2를 사용해서 자신이 등록한 kakao api의 인증 코드 api를 호출하려면 해당 역할을 하는 endpoint를 알아야 한다.</p>
+
+<p>여기서 endpointsms Filter이고 해당 역할을 하는 Filter는
+OAuth2AuthorizationRequestRedirectFilter이다.</p>
+
+<p>이 필터에서 this.authorizationRequestResolver가 registrationID인 kakao 값으로 설정 정보를  조회한다.</p>
+
+<p>인증 코드를 얻기 위해 호출할 API 주를 만들고 해당 주소로 리다이렉션한다.</p>
+
+<p><br /></p>
+
+<p>Spring Security OAuth2 설정을 끝내고 브라우저 주소창에</p>
+
+<p><code class="language-plaintext highlighter-rouge">http://localhost::8080/oauth2/authorization/kakao</code>을 입력하면 카카오톡 로그인 페이지가 뜬다.</p>
+
+<p>사용자가 로그인에 성공하면 카카오에 등록한 Callback URL인 <code class="language-plaintext highlighter-rouge">redirect_uri</code>가 호출된다.</p>
+
+<p><br /></p>
+
+<p><br /></p>
+
+<h2 id="access-token-요청">Access Token 요청</h2>
+
+<p>code를 요청할 때 <code class="language-plaintext highlighter-rouge">redirect_uri</code>을 보내는데 <code class="language-plaintext highlighter-rouge">redirect_uri</code>를 어떻게 처리해서 access token을 얻어올 수 있을까?</p>
+
+<p>직접 Controller에서 token을 얻는 API를 만드는 예제를 본 적이 있는데  프레임워크를 사용하고 있기 때문에 나는 프레임워크를 이용할 것이다.</p>
+
+<p><br /></p>
+
+<p>Access token을 획득하는 역할의 Filter는 OAuth2LoginAuthenticationFilter이다.</p>
+
+<p>OAuth2LoginAuthenticationToken 클래스 변수에 access token과 함께 kakao user 정보도 가지고 있다.</p>
+
+<p><br /></p>
+
+<p><br /></p>
+
+<h2 id="로그인-상태-처리">로그인 상태 처리</h2>
+
+<p>Spring Security는 기본적으로 세션 기반으로 동작한다.</p>
+
+<p>그러나 stateless로 만들고 싶은 경우 OAuth2 인증 처리 후 실행되는 successHandler를 커스텀하면 된다.</p>
+
+<p>이 방법은 현재 프로젝트에서 kakao라는 provider에 의존하는 문제가 있다.</p>
+
+<p>이 의존 문제는 OAuth2UserService의 <code class="language-plaintext highlighter-rouge">loadUser()</code> 메소드에서 <code class="language-plaintext highlighter-rouge">Map&lt;String, Object&gt;</code> 타입으로</p>
+
+<p>OAuth2 회원 정보 조회 API의 Response를 파싱하는 코드를 소셜에 맞게 변경해야 한다는 것이다.</p>
+
+<p><br /></p>
+
+<p>이 문제는 CustomUserTypesOAuth2UserService를 사용하여 해결할 수 있다.</p>
+
+<p>Custom User Type을 Map에 담아 파라미터로 넘겨서 사용하고
+Map의 Key는 Client의 Registration ID로 설정하는 것이다.</p>
+
+<p>설정은 다음과 같이 하면 된다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>@Override
+    protected void configure(HttpSecurity http) throws Exception {
+        http.authorizeRequests()
+            .anyRequest().authenticated()
+            .and()
+            .oauth2Client()
+            .authorizedClientService(authorizedClientService())
+            .and()
+            .oauth2Login()
+            .userInfoEndpoint()
+            .customUserType(KakaoOAuth2User.class, SOCIAL_TYPE)
+            .userService(oAuth2UserService())
+            .and()
+            .successHandler(authenticationSuccessHandler());
+    }
+}
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p><br /></p>
+
+<h2 id="저장된-인증-정보-사용">저장된 인증 정보 사용</h2>
+
+<p>Spring Security는 인증을 하면 인증 정보를 SecurityContextHolder 클래스를 통해 메모리에 저장한다.</p>
+
+<p>세션 키로 메모리에 저장된 인증 정보를 꺼내서 무언가 처리하고 싶다면 다음과 같이 사용하면 된다.</p>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p>controller에서 매개변수로 받는 방법
+<code class="language-plaintext highlighter-rouge">@AuthenticationPrincipal OAuth2User oauth2User</code></p>
+  </li>
+  <li>
+    <p>코드에서 얻는 방법
+<code class="language-plaintext highlighter-rouge">Authentication auth = SecurityContextHolder.getContext().getAuthentication();</code></p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<p>위 방법으로 JWT를 사용하지 않고 구현하려면 구현해야 하는 클래스도 많고 설정해야 하는 부분도 많으며, 문제점도 있다.
+그래서 JWT를 함께 사용하는 예제가 많은데 그 이유에 대해서는 다음 게시글에서 확인할 수 있다.</p>
+
+<p><a href="https://hyerin6.github.io/2021-08-24/springsecurity(4)/">https://hyerin6.github.io/2021-08-24/springsecurity(4)/</a></p>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#spring" class="page__taxonomy-item p-category" rel="tag">spring</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#spring" class="page__taxonomy-item p-category" rel="tag">Spring</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2021-08-24T00:00:00+09:00">August 24, 2021</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Spring+Security+%2B+OAuth2.0+%2B+Kakao%20http%3A%2F%2Flocalhost%3A4000%2F2021-08-24%2Fspringsecurity%283%29%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2F2021-08-24%2Fspringsecurity%283%29%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2F2021-08-24%2Fspringsecurity%283%29%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/2021-08-22/springsecurity(2)/" class="pagination--pager" title="Spring Security 로그인 절차
+">Previous</a>
+    
+    
+      <a href="/2021-08-26/springsecurity(4)/" class="pagination--pager" title="Spring Security OAuth2.0에서 JWT를 사용하는 이유
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">You May Also Enjoy</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2022-01-05/blog/" rel="permalink">Jekyll - minimal mistakes 사용법
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> January 05 2022</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2021-12-28/lambda/" rel="permalink">lambda 와 effectively final
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 28 2021</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2021-12-23/request/" rel="permalink">HttpMessageNotReadableException 해결하기
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 23 2021</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2021-12-19/sort/" rel="permalink">Sort
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 19 2021</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="mailto:hyerinn6@email.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+        
+      
+        
+          <li><a href="https://github.com/hyerin6" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.instagram.com/___hyerin_/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+        
+          <li><a href="https://blog.naver.com/hyerin_0611" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Naver Blog</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2022 Hyerin Park. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'hyerin6/hyerin6.github.io');
+    script.setAttribute('issue-term', 'pathname');
+    
+    script.setAttribute('theme', 'github-light');
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+
+
+  </body>
+</html>

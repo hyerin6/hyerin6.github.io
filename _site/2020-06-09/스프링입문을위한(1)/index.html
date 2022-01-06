@@ -1,0 +1,872 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <style> 
+      ::-webkit-scrollbar{width: 12px; height: 5px;}
+      ::-webkit-scrollbar-track {background-color:#4b4f52; border-radius: 16px;}
+      ::-webkit-scrollbar-thumb {background-color:#5e6265; border-radius: 16px;}
+      ::-webkit-scrollbar-thumb:hover {background: #ffd24c;}
+      ::-webkit-scrollbar-button:start:decrement,::-webkit-scrollbar-button:end:increment 
+      {
+          width:12px;height:12px;background:transparent;
+      } 
+    </style>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>자바 객체지향의 원리와 이해 (1) - Hyerin Blog</title>
+<meta name="description" content="OOP란?   Object Oriented Programming = 객체 지향 프로그래밍">
+
+
+  <meta name="author" content="Hyerin Park">
+  
+  <meta property="article:author" content="Hyerin Park">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Hyerin Blog">
+<meta property="og:title" content="자바 객체지향의 원리와 이해 (1)">
+<meta property="og:url" content="http://localhost:4000/2020-06-09/%EC%8A%A4%ED%94%84%EB%A7%81%EC%9E%85%EB%AC%B8%EC%9D%84%EC%9C%84%ED%95%9C(1)/">
+
+
+  <meta property="og:description" content="OOP란?   Object Oriented Programming = 객체 지향 프로그래밍">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2020-06-09T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/2020-06-09/%EC%8A%A4%ED%94%84%EB%A7%81%EC%9E%85%EB%AC%B8%EC%9D%84%EC%9C%84%ED%95%9C(1)/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Hyerin Park",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hyerin Blog Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- start custom head snippets -->
+
+<link rel="apple-touch-icon" sizes="57x57" href="/assets/favicon.ico/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/assets/favicon.ico/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/assets/favicon.ico/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/assets/favicon.ico/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/assets/favicon.ico/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/assets/favicon.ico/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/assets/favicon.ico/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/assets/favicon.ico/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon.ico/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="/assets/favicon.ico/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon.ico/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/assets/favicon.ico/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon.ico/favicon-16x16.png">
+<link rel="manifest" href="/assets/favicon.ico/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/assets/favicon.ico/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+
+<!-- end custom head snippets -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Hyerin Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/categories/">Category</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/year-archive/">Year</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+<div class="sidebar sticky">
+
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/image/profile.png" alt="Hyerin Park" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Hyerin Park</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Backend Developer</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Republic of Korea</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:hyerinn6@email.com" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/hyerin6" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.instagram.com/___hyerin_/" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+          
+            <li><a href="https://blog.naver.com/hyerin_0611" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Naver Blog</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+
+
+
+</div>
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="자바 객체지향의 원리와 이해 (1)">
+    <meta itemprop="description" content="OOP란?  Object Oriented Programming = 객체 지향 프로그래밍">
+    <meta itemprop="datePublished" content="2020-06-09T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="http://localhost:4000/2020-06-09/%EC%8A%A4%ED%94%84%EB%A7%81%EC%9E%85%EB%AC%B8%EC%9D%84%EC%9C%84%ED%95%9C(1)/" class="u-url" itemprop="url">자바 객체지향의 원리와 이해 (1)
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          5 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#자바와-절차적--구조적-프로그래밍">자바와 절차적 / 구조적 프로그래밍</a><ul><li><a href="#main-메서드--메서드-스택-프레임">main() 메서드 : 메서드 스택 프레임</a></li><li><a href="#지역-변수와-메모리--스택-프레임이-갇혔어요-">지역 변수와 메모리 : 스택 프레임이 갇혔어요 !</a></li><li><a href="#멀티-스레드--멀티-프로세스의-이해">멀티 스레드 / 멀티 프로세스의 이해</a></li></ul></li></ul></li><li><a href="#자바와-객체-지향">자바와 객체 지향</a><ul><li><a href="#객체-지향의-4대-특성---캡-상추다">객체 지향의 4대 특성 - 캡! 상추다</a></li><li><a href="#추상화는-모델링이다">추상화는 모델링이다.</a></li><li><a href="#상속--재상용--확장">상속 : 재상용 + 확장</a></li><li><a href="#다중-상속과-자바">다중 상속과 자바</a></li><li><a href="#상속과-인터페이스">상속과 인터페이스</a></li><li><a href="#캡슐화--정보-은닉">캡슐화 : 정보 은닉</a></li><li><a href="#참조-변수의-복사">참조 변수의 복사</a></li></ul></li></ul></li></ul>
+
+            </nav>
+          </aside>
+        
+        <p><strong>OOP란?</strong>  <br />
+Object Oriented Programming = 객체 지향 프로그래밍</p>
+
+<p>컴퓨터 프로그램을 “객체(Object)”들의 모임으로 파악하고자 하는 프로그래밍의 패러다임 중에 하나이다.   <br />
+각 “객체(Object)” 들은 서로 메시지를 주고 받을 수 있으며 데이터를 처리할 수 있다.</p>
+
+<p><strong>OOP 장점</strong></p>
+<ol>
+  <li>
+    <p>프로그램을 유연하고 변경이 용이하게 만든다.</p>
+  </li>
+  <li>
+    <p>프로그램의 개발과 보수를 간편하게 만든다.</p>
+  </li>
+  <li>
+    <p>직관적인 코드 분석을 가능하게 한다.</p>
+  </li>
+</ol>
+
+<h1 id="자바와-절차적--구조적-프로그래밍">자바와 절차적 / 구조적 프로그래밍</h1>
+
+<p>JVM의 존재와 역할을 아는 것이 자바 개발 환경을 이해하는 데 필수적이다. JVM은 이름 그대로 가상기계다.  <br />
+현실 세계에서 컴퓨터를 구동하기 위해서는 물리적 컴퓨터인 하드웨어와 운영체제, 그리고 그 위에서 구동될 소프트웨어가 필요하다. <br />
+거기에 더해 소프트웨어를 개발할 수 있는 개발 도구가 필요하다. 자바의 가상 세계는 다음과 같이 현실 세계를 모방하고 있다.</p>
+
+<p><strong>현실 세계 -&gt; 가상 세계(자바 월드)</strong>           <br />
+소프트웨어 개발 도구 -&gt; JDK : 자바 개발 도구   <br />
+운영체제 -&gt; JRE : 자바 실행 환경   <br />
+하드웨어(물리적 컴퓨터) -&gt; JVM : 자바 가상 기계</p>
+
+<p>현실 세계에서 소프트웨어, 즉 프로그램은 개발자가 개발 도구를 이용해 개발하고 운영체제를 통해 물리적 컴퓨터인 하드웨어 상에서 구동된다. <br />
+자바가 만들어 주는 가상 세계도 이와 마찬가지다. <br />
+자바 개발 도구인 JDK를 이용해 개발된 프로그램은 JRE에 의해 가상의 컴퓨터인 JVM 상에서 구동된다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/33855307/97141212-a88e3e80-17a1-11eb-8c3c-af6aeaffd489.png" alt="스크린샷 2020-10-26 오후 3 40 42" /></p>
+
+<p>JDK는 자바 소스 컴파일러인 java.exe를 포함하고 있고 JRE는 자바 프로그램 실행기인 java.exe를 포함하고 있다.        <br />
+자바 개발자는 본인이 사용 중인 플랫폼에 설치된 JVM용으로 프로그램을 작성하고 배포하면       <br />
+각 플랫폼에 맞는 JVM이 중재자로서 각 플랫폼에서 프로그램을 구동하는 데 아무 문제가 없게끔 만들어주는 것이다.</p>
+
+<p>JDK: Java Development Kit / 자바 개발 도구  <br />
+JRE: Java Runtime Environment / 자바 실행 환경   <br />
+JVM: Java Virtual Machine / 자바 가상 기계</p>
+
+<h3 id="main-메서드--메서드-스택-프레임">main() 메서드 : 메서드 스택 프레임</h3>
+<p>main() 메서드는 프로그램이 실행되는 시작점이다. <br />
+main() 메서드가 실행될 때 메모리, 특히 T 메모리에서 어떤 일이 일어날까?</p>
+
+<p>JRE는 먼저 프로그램 안에 main() 메서드가 있는지 확인한다. <br />
+main() 메서드가 확인되면, JRE는 프로그램 실행을 위한 사전 준비에 착수한다.</p>
+
+<p>JVM에 전원을 넣어 부팅하는 것이다. <br />
+JVM은 부팅되면 목적 파일을 받아 실행시킨다.</p>
+
+<p>JVM이 맨 먼저 하는 일을 전처리 과정이라고 하는데, <br />
+모든 자바에 반드시 포함되는 패키지가 있다. <strong>java.lang</strong></p>
+
+<p>JVM은 가장 먼저 java.lang 패키지를 T 메모리의 스태틱 영역에 가져다 놓는다.</p>
+
+<p>main() 메서드가 실행되기 전 JVM에서 수행하는 전처리 작업들은 다음과 같다.</p>
+
+<ul>
+  <li>
+    <p>java.lang 패키지 T 메모리의 스태틱 영역에 배치하기</p>
+  </li>
+  <li>
+    <p>import된 패키지를 T 메모리의 스태틱 영역에 배치하기</p>
+  </li>
+  <li>
+    <p>프로그램 상의 모든 클래스를 T 메모리의 스태틱 영역에 배치하기</p>
+  </li>
+</ul>
+
+<p>main() 메서드가 끝나면 JRE는 JVM을 종료하고 JRE 자체도 운영체제 상의 메모리에서 사라진다. <br />
+T 메모리도 사라지게 된다. <br />
+<strong>T 메모리 소멸, JVM 기동 중지, JRE가 사용했던 시스템 자원 운영체제에 반납</strong></p>
+
+<p>T 메모리의 힙 영역은 다음에 같이 공부하기로 하자.</p>
+
+<h3 id="지역-변수와-메모리--스택-프레임이-갇혔어요-">지역 변수와 메모리 : 스택 프레임이 갇혔어요 !</h3>
+
+<p>변수는 메모리에 있다. <br />
+지역 변수, 클래스 멤버 변수, 객체 멤버 변수로 다른 목적을 갖고 있는데 <br />
+스태틱 영역, 스택 영역, 힙 영역 각각 있는 곳도 다르다.</p>
+
+<p><strong>클래스 멤버 변수</strong>는 스태틱 영영에 한번 자리 잡으로 JVM이 종료될 때까지 고정된(static)<br />
+상태로 그 자리를 지킨다.</p>
+
+<p><strong>객체 멤버 변수</strong>는 힙에서 일생을 보낸다. <br />
+객체와 함께 가비지 컬렉터라고 불리는 메모리 회수기에 의해 일생을 마치게 된다.</p>
+
+<p>한 가지 기억할 결론은 <br />
+외부 스택 프레임에서 내부 스택 프레임의 변수에 접근하는 것은 불가능하지만 <br />
+그 역은 가능하다.</p>
+
+<h3 id="멀티-스레드--멀티-프로세스의-이해">멀티 스레드 / 멀티 프로세스의 이해</h3>
+
+<p>멀티 스레드의 T 메모리 모델은 스택 영역을 스레드 개수만큼 분할해서 쓰는 것이다.    <br />
+멀티 프로세스는 다수의 데이터 저장 영역, 즉 다수의 T 메모리를 갖는 구조이다.</p>
+
+<p>멀티 프로세스는 각 프로세스마다 각자의 T 메모리가 있어 <br />
+각자 고유의 공간이므로 서로 참조할 수 없다.   <br />
+멀티 스레드는 하나의 T 메모리만 사용하는데 스택 영역만 분할해서 사용하는 구조이다.   <br />
+그래서 하나의 스레드에서 다른 스레드의 스택 영역에는 접근할 수 없지만 스태틱 영역과 힙 영역은 공유해서 사용하는 구조다.</p>
+
+<p>따라서 멀티 프로세스 대비 멀티 스레드는 메모리를 적게 사용할 수 있는 구조이다.</p>
+
+<h1 id="자바와-객체-지향">자바와 객체 지향</h1>
+
+<h3 id="객체-지향의-4대-특성---캡-상추다">객체 지향의 4대 특성 - 캡! 상추다</h3>
+<ul>
+  <li>캡슐화(Encapsulation) : 정보 은닉 (information hiding)</li>
+  <li>상속 : 재사용</li>
+  <li>추상화(Abstraction) : 모델링</li>
+  <li>다형성(Polymorphism) : 사용 편의</li>
+</ul>
+
+<h3 id="추상화는-모델링이다">추상화는 모델링이다.</h3>
+<p>추상화란 구체적인 것을 분해해서 관찰자가 관심 있는 특성만 가지고 재조합하는 것이라고 정리할 수 있다.</p>
+
+<p>중요한 부분만 적어보자.</p>
+<ul>
+  <li>OOP의 추상화는 모델링이다.</li>
+  <li>클래스 : 객체 = 펭귄 : 뽀로로</li>
+  <li>클래스 설계에서 추상화가 사용된다.</li>
+  <li>클래스 설계를 위해서는 애플리케이션 경계부터 정해야 한다.</li>
+  <li>객체 지향에서 추상화의 결과는 클래스이다.</li>
+</ul>
+
+<p>추상화를 넓게 본다면 아래의 내용도 포함이다.</p>
+<ul>
+  <li>상속을 통한 추상화, 구체화</li>
+  <li>인터페이스를 통한 추상화</li>
+  <li>다형성을 통한 추상화</li>
+</ul>
+
+<h3 id="상속--재상용--확장">상속 : 재상용 + 확장</h3>
+<p>상속 관계에서 반드시 만족해야 할 문장이 있다.</p>
+<ul>
+  <li>하위 클래스는 상위 클래스다.</li>
+</ul>
+
+<p>예를들어, 조직도와 분류도로 나눠 생각해보자.</p>
+
+<p><strong>조직도</strong></p>
+<ul>
+  <li>아버지는 할아버지다??</li>
+  <li>아들은 아버지다??</li>
+</ul>
+
+<p>위 예시는 이상하다.</p>
+
+<p><strong>분류도</strong></p>
+<ul>
+  <li>포유류는 동물이다.</li>
+  <li>고래는 포유류다.</li>
+  <li>고래는 동물이다.</li>
+</ul>
+
+<p>자연스러운 예시이다.</p>
+
+<p>“하위 클래스는 상위 클래스다.” 라는 문장과 객체지향 설계 5원칙 중 LSP를 나타내는 말이다.</p>
+
+<p>마지막으로 정리해보자.</p>
+<ul>
+  <li>객체 지향의 상속은 상위 클래스의 특성을 재사용하는 것이다.</li>
+  <li>객체 지향의 상속은 상위 클래스의 특성을 확장하는 것이다.</li>
+  <li>객체 지향의 상속은 is a kind of 관계 (-는 -의 한 분류이다.)를 만족해야 한다.</li>
+</ul>
+
+<h3 id="다중-상속과-자바">다중 상속과 자바</h3>
+<p>왜 자바는 다중 상속을 지원하지 않을까?</p>
+
+<p>인어공주를 예로 들어보자. <br />
+인어는 사람과 물고기를 상속한다고 생각해보자.</p>
+
+<p><img width="545" alt="스크린샷 2020-06-09 오후 5 30 12" src="https://user-images.githubusercontent.com/33855307/84125009-eb5fac00-aa76-11ea-9d1d-6648c1598e7d.png" /></p>
+
+<p>물고기와 사람은 수영을 할 수 있다.   <br />
+그런데 인어에게 “수영해!” 라고 했을 때, 인어는 팔과 다리로 헤엄칠까 아니면 지느러미로 헤엄칠까..?      <br />
+어떤 부모의 헤엄 방법을 사용해야 하는지 충돌이 일어났다.</p>
+
+<p>이와 같은 문제를 다중 상속의 다이아몬드 문제라고 한다.        <br />
+결국 자바는 인터페이스를 도입해 다중 상속의 득은 취하고 실은 과감히 버렸다.</p>
+
+<h3 id="상속과-인터페이스">상속과 인터페이스</h3>
+<p>그럼 인터페이스는 왜 다중 상속이 가능할까?        <br />
+인터페이스는 ‘무엇을 할 수 있는’ 이라는 표현의 형태로 만들어져 <br />
+기능에 대한 선언만 있기 때문에 다중 상속에서 전혀 문제될게 없다.</p>
+
+<p>그렇가면 아래의 문제들에는 어떤게 정답일까?</p>
+<ul>
+  <li>상위 클래스는 하위 클래스에게 물려줄 특성이 많을수록 좋을까? 적을수록 좋을까?</li>
+  <li>인터페이스는 구현을 강제할 메서드가 많을수록 좋을까? 적을수록 좋을까?</li>
+</ul>
+
+<p>정답은,  <br />
+상위 클래스는 물려줄 특성이 많으면 많을수록 좋고 <br />
+인터페이스는 구현을 강제할 메서드의 수가 적은게 좋다.</p>
+
+<p>상위 클래스가 풍성할수록 좋은 이유는 LSP 에 따른 이유이고,  <br />
+인터페이스 메서드가 적을수록 좋은 이유는 ISP에 따른 이유라고 할 수 있다.</p>
+
+<p><a href="https://hyerin6.github.io/2020-01-08/solid/">객체 지향 설계 5원칙 보러가기</a></p>
+
+<h3 id="캡슐화--정보-은닉">캡슐화 : 정보 은닉</h3>
+<p>자바에서 정보 은닉이라고 하면 접근 제어자들이 생각난다.</p>
+
+<ul>
+  <li>private : 본인만 접근 가능</li>
+  <li>default : 같은 패키지 내의 클래스에서 접근 가능</li>
+  <li>protected : 상속, 같은 패키지 내의 클래스에서 접근 가능</li>
+  <li>public : 모두가 접근 가능</li>
+</ul>
+
+<p>단순하게 마무리 해보자면,</p>
+
+<ul>
+  <li>
+    <p>객체 멤버의 접근 제어자 <br />
+자신의 멤버가 아닌 다른 객체의 멤버에 접근하는 경우에 다른 객체를 생성한 후 접근해야 한다.</p>
+  </li>
+  <li>
+    <p>정적 멤버는 <code class="language-plaintext highlighter-rouge">클래스명.정적멤버</code> 형식으로 접근하는 것을 권장한다.</p>
+  </li>
+</ul>
+
+<h3 id="참조-변수의-복사">참조 변수의 복사</h3>
+
+<p>기본 자료형 변수를 복사하는 경우 Call By Value (값에 의한 호출)에 의해 그 값이 복사되며 <br />
+두 개의 변수는 서로에게 영향을 주지 않는다.</p>
+
+<p>그렇다면 기본 자료형이 아닌 객체를 저장하고 있는 객체 참조 변수를 복사하는 경우는 어떨까?</p>
+
+<p>기본 자료형 변수는 저장하고 있는 값을 그 값 자체로 해석하는 반면, <br />
+객체 참조 변수는 저장하고 있는 값을 주소로 해석한다는 차이가 있다.</p>
+
+<p>마지막으로 정리해보면,</p>
+<ul>
+  <li>기본 자료형 변수는 값을 값 자체로 판단한다.</li>
+  <li>참조 자료형 변수는 값을 주소로 판단한다.</li>
+  <li>기본 자료형 변수를 복사할 때, 참조 자료형 변수를 복사할 때 일어나는 일은 같다. <br />
+즉, 가지고 있는 값을 그대로 복사해서 넘겨 준다.</li>
+</ul>
+
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#java" class="page__taxonomy-item p-category" rel="tag">java</a><span class="sep">, </span>
+    
+      <a href="/tags/#spring" class="page__taxonomy-item p-category" rel="tag">spring</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#java" class="page__taxonomy-item p-category" rel="tag">Java</a><span class="sep">, </span>
+    
+      <a href="/categories/#spring" class="page__taxonomy-item p-category" rel="tag">Spring</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2020-06-09T00:00:00+09:00">June 9, 2020</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=%EC%9E%90%EB%B0%94+%EA%B0%9D%EC%B2%B4%EC%A7%80%ED%96%A5%EC%9D%98+%EC%9B%90%EB%A6%AC%EC%99%80+%EC%9D%B4%ED%95%B4+%281%29%20http%3A%2F%2Flocalhost%3A4000%2F2020-06-09%2F%25EC%258A%25A4%25ED%2594%2584%25EB%25A7%2581%25EC%259E%2585%25EB%25AC%25B8%25EC%259D%2584%25EC%259C%2584%25ED%2595%259C%281%29%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2F2020-06-09%2F%25EC%258A%25A4%25ED%2594%2584%25EB%25A7%2581%25EC%259E%2585%25EB%25AC%25B8%25EC%259D%2584%25EC%259C%2584%25ED%2595%259C%281%29%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2F2020-06-09%2F%25EC%258A%25A4%25ED%2594%2584%25EB%25A7%2581%25EC%259E%2585%25EB%25AC%25B8%25EC%259D%2584%25EC%259C%2584%25ED%2595%259C%281%29%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/2020-06-08/%EC%9E%90%EB%B0%94%EC%84%B1%EB%8A%A5%ED%8A%9C%EB%8B%9D-GC/" class="pagination--pager" title="GC는 언제 발생할까?
+">Previous</a>
+    
+    
+      <a href="/2020-06-09/%EC%8A%A4%ED%94%84%EB%A7%81%EC%9E%85%EB%AC%B8%EC%9D%84%EC%9C%84%ED%95%9C(2)/" class="pagination--pager" title="자바 객체지향의 원리와 이해 (2)
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">You May Also Enjoy</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2022-01-05/blog/" rel="permalink">Jekyll - minimal mistakes 사용법
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> January 05 2022</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2021-12-28/lambda/" rel="permalink">lambda 와 effectively final
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 28 2021</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2021-12-23/request/" rel="permalink">HttpMessageNotReadableException 해결하기
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 23 2021</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2021-12-19/sort/" rel="permalink">Sort
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 19 2021</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="mailto:hyerinn6@email.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+        
+      
+        
+          <li><a href="https://github.com/hyerin6" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.instagram.com/___hyerin_/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+        
+          <li><a href="https://blog.naver.com/hyerin_0611" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Naver Blog</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2022 Hyerin Park. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'hyerin6/hyerin6.github.io');
+    script.setAttribute('issue-term', 'pathname');
+    
+    script.setAttribute('theme', 'github-light');
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+
+
+  </body>
+</html>

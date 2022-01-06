@@ -1,0 +1,874 @@
+<!doctype html>
+<!--
+  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
+  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
+  Free for personal and commercial use under the MIT license
+  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
+-->
+<html lang="en" class="no-js">
+  <head>
+    <style> 
+      ::-webkit-scrollbar{width: 12px; height: 5px;}
+      ::-webkit-scrollbar-track {background-color:#4b4f52; border-radius: 16px;}
+      ::-webkit-scrollbar-thumb {background-color:#5e6265; border-radius: 16px;}
+      ::-webkit-scrollbar-thumb:hover {background: #ffd24c;}
+      ::-webkit-scrollbar-button:start:decrement,::-webkit-scrollbar-button:end:increment 
+      {
+          width:12px;height:12px;background:transparent;
+      } 
+    </style>
+    <meta charset="utf-8">
+
+<!-- begin _includes/seo.html --><title>Baekjoon 기초 수학 알고리즘 풀이 - Hyerin Blog</title>
+<meta name="description" content="">
+
+
+  <meta name="author" content="Hyerin Park">
+  
+  <meta property="article:author" content="Hyerin Park">
+  
+
+
+<meta property="og:type" content="article">
+<meta property="og:locale" content="en_US">
+<meta property="og:site_name" content="Hyerin Blog">
+<meta property="og:title" content="Baekjoon 기초 수학 알고리즘 풀이">
+<meta property="og:url" content="http://localhost:4000/2021-07-11/codeplus-%EA%B8%B0%EC%B4%88-%EC%88%98%ED%95%99/">
+
+
+  <meta property="og:description" content="">
+
+
+
+
+
+
+
+  <meta property="article:published_time" content="2021-07-11T00:00:00+09:00">
+
+
+
+
+
+  
+
+  
+
+
+<link rel="canonical" href="http://localhost:4000/2021-07-11/codeplus-%EA%B8%B0%EC%B4%88-%EC%88%98%ED%95%99/">
+
+
+
+
+<script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    
+      "@type": "Person",
+      "name": "Hyerin Park",
+      "url": "http://localhost:4000/"
+    
+  }
+</script>
+
+
+
+
+
+
+
+<!-- end _includes/seo.html -->
+
+
+
+  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hyerin Blog Feed">
+
+
+<!-- https://t.co/dKP3o1e -->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<script>
+  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+</script>
+
+<!-- For all browsers -->
+<link rel="stylesheet" href="/assets/css/main.css">
+<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
+<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
+
+
+
+    <!-- start custom head snippets -->
+
+<!-- insert favicons. use https://realfavicongenerator.net/ -->
+
+<!-- start custom head snippets -->
+
+<link rel="apple-touch-icon" sizes="57x57" href="/assets/favicon.ico/apple-icon-57x57.png">
+<link rel="apple-touch-icon" sizes="60x60" href="/assets/favicon.ico/apple-icon-60x60.png">
+<link rel="apple-touch-icon" sizes="72x72" href="/assets/favicon.ico/apple-icon-72x72.png">
+<link rel="apple-touch-icon" sizes="76x76" href="/assets/favicon.ico/apple-icon-76x76.png">
+<link rel="apple-touch-icon" sizes="114x114" href="/assets/favicon.ico/apple-icon-114x114.png">
+<link rel="apple-touch-icon" sizes="120x120" href="/assets/favicon.ico/apple-icon-120x120.png">
+<link rel="apple-touch-icon" sizes="144x144" href="/assets/favicon.ico/apple-icon-144x144.png">
+<link rel="apple-touch-icon" sizes="152x152" href="/assets/favicon.ico/apple-icon-152x152.png">
+<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon.ico/apple-icon-180x180.png">
+<link rel="icon" type="image/png" sizes="192x192"  href="/assets/favicon.ico/android-icon-192x192.png">
+<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon.ico/favicon-32x32.png">
+<link rel="icon" type="image/png" sizes="96x96" href="/assets/favicon.ico/favicon-96x96.png">
+<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon.ico/favicon-16x16.png">
+<link rel="manifest" href="/assets/favicon.ico/manifest.json">
+<meta name="msapplication-TileColor" content="#ffffff">
+<meta name="msapplication-TileImage" content="/assets/favicon.ico/ms-icon-144x144.png">
+<meta name="theme-color" content="#ffffff">
+
+<!-- end custom head snippets -->
+
+<!-- end custom head snippets -->
+
+  </head>
+
+  <body class="layout--single">
+    <nav class="skip-links">
+  <ul>
+    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
+    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
+    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
+  </ul>
+</nav>
+
+    <!--[if lt IE 9]>
+<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
+<![endif]-->
+
+    
+
+<div class="masthead">
+  <div class="masthead__inner-wrap">
+    <div class="masthead__menu">
+      <nav id="site-nav" class="greedy-nav">
+        
+        <a class="site-title" href="/">
+          Hyerin Blog
+          
+        </a>
+        <ul class="visible-links"><li class="masthead__menu-item">
+              <a href="/categories/">Category</a>
+            </li><li class="masthead__menu-item">
+              <a href="/tags/">Tags</a>
+            </li><li class="masthead__menu-item">
+              <a href="/year-archive/">Year</a>
+            </li></ul>
+        
+        <button class="search__toggle" type="button">
+          <span class="visually-hidden">Toggle search</span>
+          <i class="fas fa-search"></i>
+        </button>
+        
+        <button class="greedy-nav__toggle hidden" type="button">
+          <span class="visually-hidden">Toggle menu</span>
+          <div class="navicon"></div>
+        </button>
+        <ul class="hidden-links hidden"></ul>
+      </nav>
+    </div>
+  </div>
+</div>
+
+
+    <div class="initial-content">
+      
+
+
+
+<div id="main" role="main">
+  
+<div class="sidebar sticky">
+
+
+
+<div itemscope itemtype="https://schema.org/Person" class="h-card">
+
+  
+    <div class="author__avatar">
+      <a href="http://localhost:4000/">
+        <img src="/image/profile.png" alt="Hyerin Park" itemprop="image" class="u-photo">
+      </a>
+    </div>
+  
+
+  <div class="author__content">
+    <h3 class="author__name p-name" itemprop="name">
+      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Hyerin Park</a>
+    </h3>
+    
+      <div class="author__bio p-note" itemprop="description">
+        <p>Backend Developer</p>
+
+      </div>
+    
+  </div>
+
+  <div class="author__urls-wrapper">
+    <button class="btn btn--inverse">Follow</button>
+    <ul class="author__urls social-icons">
+      
+        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
+          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Republic of Korea</span>
+        </li>
+      
+
+      
+        
+          
+            <li><a href="mailto:hyerinn6@email.com" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
+          
+        
+          
+            <li><a href="https://github.com/hyerin6" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
+          
+        
+          
+            <li><a href="https://www.instagram.com/___hyerin_/" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
+          
+        
+          
+            <li><a href="https://blog.naver.com/hyerin_0611" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Naver Blog</span></a></li>
+          
+        
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      
+
+      <!--
+  <li>
+    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
+      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
+    </a>
+  </li>
+-->
+    </ul>
+  </div>
+</div>
+
+
+
+
+</div>
+
+
+  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
+    <meta itemprop="headline" content="Baekjoon 기초 수학 알고리즘 풀이">
+    <meta itemprop="description" content="">
+    <meta itemprop="datePublished" content="2021-07-11T00:00:00+09:00">
+    
+
+    <div class="page__inner-wrap">
+      
+        <header>
+          <h1 id="page-title" class="page__title p-name" itemprop="headline">
+            <a href="http://localhost:4000/2021-07-11/codeplus-%EA%B8%B0%EC%B4%88-%EC%88%98%ED%95%99/" class="u-url" itemprop="url">Baekjoon 기초 수학 알고리즘 풀이
+</a>
+          </h1>
+          
+
+  <p class="page__meta">
+    
+
+    
+
+    
+      
+      
+
+      <span class="page__meta-readtime">
+        <i class="far fa-clock" aria-hidden="true"></i>
+        
+          2 minute read
+        
+      </span>
+    
+  </p>
+
+
+        </header>
+      
+
+      <section class="page__content e-content" itemprop="text">
+        
+          <aside class="sidebar__right sticky">
+            <nav class="toc">
+              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
+              <ul class="toc__menu"><li><a href="#10430">10430</a></li><li><a href="#4375">4375</a></li><li><a href="#1037">1037</a></li><li><a href="#17427">17427</a></li><li><a href="#17425">17425</a></li><li><a href="#2609">2609</a></li><li><a href="#1978">1978</a></li><li><a href="#1929">1929</a></li><li><a href="#6588">6588</a></li></ul>
+
+            </nav>
+          </aside>
+        
+        <p><br /></p>
+
+<h1 id="10430">10430</h1>
+<ul>
+  <li>문제</li>
+</ul>
+
+<p><a href="https://www.acmicpc.net/problem/10430">https://www.acmicpc.net/problem/10430</a></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>(A+B)%C는 ((A%C) + (B%C))%C 와 같을까?
+(A×B)%C는 ((A%C) × (B%C))%C 와 같을까?
+</code></pre></div></div>
+
+<p><br /></p>
+
+<ul>
+  <li>풀이</li>
+</ul>
+
+<p>주어진 식대로 <code class="language-plaintext highlighter-rouge">System.out.println()</code> 해주면 된다.</p>
+
+<p><br />   <br />
+<br /></p>
+
+<h1 id="4375">4375</h1>
+<ul>
+  <li>문제</li>
+</ul>
+
+<p><a href="https://www.acmicpc.net/problem/4375">https://www.acmicpc.net/problem/4375</a></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1로만 이루어진 n의 배수를 찾아, 그 중 가장 작은 수의 자리수를 출력하라.
+</code></pre></div></div>
+
+<p><br /></p>
+
+<ul>
+  <li>풀이</li>
+</ul>
+
+<p>input = n</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>num = num * 10 + 1; // 1, 11, 111, ... 1로만 이뤄진 수를 구한다. 
+num = num % n; // n의 배수인지 확인하기 위해 나머지를 구한다.   
+</code></pre></div></div>
+
+<p><br />     <br />
+<br /></p>
+
+<h1 id="1037">1037</h1>
+<ul>
+  <li>문제</li>
+</ul>
+
+<p><a href="https://www.acmicpc.net/problem/1037">https://www.acmicpc.net/problem/1037</a></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>양수 A가 N의 진짜 약수가 되려면, N이 A의 배수이고, A가 1과 N이 아니어야 한다. 
+어떤 수 N의 진짜 약수가 모두 주어질 때, N을 구하는 프로그램을 작성하시오.
+</code></pre></div></div>
+
+<p><br /></p>
+
+<ul>
+  <li>풀이</li>
+</ul>
+
+<p>약수가 전부 주어지기 때문에 <code class="language-plaintext highlighter-rouge">가장 작은 수 * 가장 큰 수</code> 가 N이 된다.</p>
+
+<p><br />   <br />
+<br /></p>
+
+<h1 id="17427">17427</h1>
+<ul>
+  <li>문제</li>
+</ul>
+
+<p><a href="https://www.acmicpc.net/problem/17427">https://www.acmicpc.net/problem/17427</a></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>두 자연수 A와 B가 있을 때, A = BC를 만족하는 자연수 C를 A의 약수라고 한다. 
+예를 들어, 2의 약수는 1, 2가 있고, 24의 약수는 1, 2, 3, 4, 6, 8, 12, 24가 있다. 
+자연수 A의 약수의 합은 A의 모든 약수를 더한 값이고, f(A)로 표현한다. 
+x보다 작거나 같은 모든 자연수 y의 f(y)값을 더한 값은 g(x)로 표현한다.
+자연수 N이 주어졌을 때, g(N)을 구해보자.
+</code></pre></div></div>
+
+<p><br /></p>
+
+<ul>
+  <li>풀이</li>
+</ul>
+
+<p>n 이하인 수들 중에서 i를 약수로 갖는 수<br />
+=&gt; n 이하의 i의 배수<br />
+=&gt; 개수를 구하려면 n/i 이다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>answer += i * (n / i)
+</code></pre></div></div>
+
+<p>입력이 최대 1,000,000 이므로 long 타입으로 선언해야 한다.</p>
+
+<p><br />  <br />
+<br /></p>
+
+<h1 id="17425">17425</h1>
+<ul>
+  <li>문제</li>
+</ul>
+
+<p><a href="https://www.acmicpc.net/problem/17425">https://www.acmicpc.net/problem/17425</a></p>
+
+<p>문제는 위 17427번과 같지만 입력 방법이 다르다.</p>
+
+<p><br /></p>
+
+<ul>
+  <li>풀이</li>
+</ul>
+
+<p>해당 자연수의 약수의 합을 저장하는 코드: N logN    <br />
+이전 약수의 합을 저장하는 코드(dp): N   <br />
+테스트 케이스 만큼 실행되는 코드: T</p>
+
+<p>총 시간 복잡도는 <code class="language-plaintext highlighter-rouge">N logN + T</code> 이므로 위 계획으로 문제를 풀 시간은 충분하다.    <br />
+그러나 테스트 케이스마다 약수의 합을 구하는 코드를 실행하면 시간 초과가 뜬다.  <br />
+미리 문제를 해결해놓고 테스트 케이스에 따라 답을 꺼내와야 한다.</p>
+
+<p><br /></p>
+
+<p><img src="https://user-images.githubusercontent.com/33855307/125189363-afe37280-e272-11eb-942e-c083673e9359.jpeg" alt="KakaoTalk_Photo_2021-07-11-18-05-41" /></p>
+
+<p><br />     <br />
+<br /></p>
+
+<h1 id="2609">2609</h1>
+<ul>
+  <li>문제</li>
+</ul>
+
+<p><a href="https://www.acmicpc.net/problem/2609">https://www.acmicpc.net/problem/2609</a></p>
+
+<p><br /></p>
+
+<ul>
+  <li>풀이</li>
+</ul>
+
+<p>최소 공배수는 <code class="language-plaintext highlighter-rouge">N * M /최대 공약수</code> 로 구할 수 있다.</p>
+
+<p><br />     <br />
+<br /></p>
+
+<h1 id="1978">1978</h1>
+<ul>
+  <li>문제</li>
+</ul>
+
+<p><a href="https://www.acmicpc.net/problem/1978">https://www.acmicpc.net/problem/1978</a></p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>주어진 수 N개 중에서 소수가 몇 개인지 찾아서 출력하는 프로그램을 작성하시오.
+</code></pre></div></div>
+
+<p><br /></p>
+
+<ul>
+  <li>풀이</li>
+</ul>
+
+<p>에라토스테네스의 체를 이용하여 소수를 찾는다.    <br />
+2의 배수 제거, 3의 배수 제거, … 를 반복하는 개념이다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>boolean[] prime = new boolean[n + 1];
+Arrays.fill(prime, true);
+
+// 0 과 1 은 소수가 아니므로 false
+prime[0] = false;
+prime[1] = false;
+
+for (int i = 2; i * i &lt;= n; ++i) {
+    if (prime[i]) {
+        // 이미 2의 배수가 걸러졌기 때문에 i 의 제곱수부터 시작해도 된다.
+        for (int j = i * i; j &lt;= n; j += i) { 
+            prime[j] = false;
+        }
+    }
+}
+</code></pre></div></div>
+
+<p><br />     <br />
+<br /></p>
+
+<h1 id="1929">1929</h1>
+<ul>
+  <li>문제</li>
+</ul>
+
+<p><a href="https://www.acmicpc.net/problem/1929">https://www.acmicpc.net/problem/1929</a></p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>M이상 N이하의 소수를 모두 출력하는 프로그램을 작성하시오.
+</code></pre></div></div>
+
+<p><br /></p>
+
+<ul>
+  <li>풀이</li>
+</ul>
+
+<p>에라토스테네스의 체를 이용하여 소수를 찾는다.  <br />
+코드는 위와 동일하다.</p>
+
+<p><br />     <br />
+<br /></p>
+
+<h1 id="6588">6588</h1>
+<ul>
+  <li>문제</li>
+</ul>
+
+<p><a href="https://www.acmicpc.net/problem/6588">https://www.acmicpc.net/problem/6588</a></p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>4보다 큰 모든 짝수는 두 홀수 소수의 합으로 나타낼 수 있다.  
+예를 들어 8은 3 + 5로 나타낼 수 있고, 3과 5는 모두 홀수인 소수이다.  
+</code></pre></div></div>
+
+<p><br /></p>
+
+<ul>
+  <li>풀이</li>
+</ul>
+
+<p>이것도 에라토스테네스의 체를 이용하여 소수를 찾은 후 시작한다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>while (true) {
+    int num = Integer.parseInt(br.readLine());
+    boolean ok = false;
+    if (num == 0) {
+        break;
+    }
+    for (int i = 2; i &lt;= num / 2; i++) {
+        if (prime[i] &amp;&amp; prime[num - i]) {
+            sb.append(num + " = " + i + " + " + (num - i) + "\n");
+            ok = true;
+            break;
+        }
+    }
+    if (!ok) {
+        sb.append("Goldbach's conjecture is wrong.\n");
+    }
+}
+</code></pre></div></div>
+
+<p><br /></p>
+
+        
+      </section>
+
+      <footer class="page__meta">
+        
+        
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/tags/#algorithm" class="page__taxonomy-item p-category" rel="tag">algorithm</a>
+    
+    </span>
+  </p>
+
+
+
+
+  
+
+
+  
+
+  <p class="page__taxonomy">
+    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
+    <span itemprop="keywords">
+    
+      <a href="/categories/#algorithm" class="page__taxonomy-item p-category" rel="tag">Algorithm</a>
+    
+    </span>
+  </p>
+
+
+        
+
+  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2021-07-11T00:00:00+09:00">July 11, 2021</time></p>
+
+      </footer>
+
+      <section class="page__share">
+  
+
+  <a href="https://twitter.com/intent/tweet?text=Baekjoon+%EA%B8%B0%EC%B4%88+%EC%88%98%ED%95%99+%EC%95%8C%EA%B3%A0%EB%A6%AC%EC%A6%98+%ED%92%80%EC%9D%B4%20http%3A%2F%2Flocalhost%3A4000%2F2021-07-11%2Fcodeplus-%25EA%25B8%25B0%25EC%25B4%2588-%25EC%2588%2598%25ED%2595%2599%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
+
+  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2F2021-07-11%2Fcodeplus-%25EA%25B8%25B0%25EC%25B4%2588-%25EC%2588%2598%25ED%2595%2599%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
+
+  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2F2021-07-11%2Fcodeplus-%25EA%25B8%25B0%25EC%25B4%2588-%25EC%2588%2598%25ED%2595%2599%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
+</section>
+
+
+      
+  <nav class="pagination">
+    
+      <a href="/2021-07-06/chap5/" class="pagination--pager" title="[Effective Java] 제네릭
+">Previous</a>
+    
+    
+      <a href="/2021-07-17/%EC%9E%90%EB%B0%94%EC%9D%98%EC%8B%A0(1)/" class="pagination--pager" title="자바의 완전 기본 문법부터 정리
+">Next</a>
+    
+  </nav>
+
+    </div>
+
+    
+  </article>
+
+  
+  
+    <div class="page__related">
+      <h2 class="page__related-title">You May Also Enjoy</h2>
+      <div class="grid__wrapper">
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2022-01-05/blog/" rel="permalink">Jekyll - minimal mistakes 사용법
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> January 05 2022</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2021-12-28/lambda/" rel="permalink">lambda 와 effectively final
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 28 2021</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2021-12-23/request/" rel="permalink">HttpMessageNotReadableException 해결하기
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 23 2021</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+          
+
+
+
+<div class="grid__item">
+  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
+    
+    <h2 class="archive__item-title" itemprop="headline">
+      
+        <a href="/2021-12-19/sort/" rel="permalink">Sort
+</a>
+      
+    </h2>
+    
+      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 19 2021</p>
+    
+    <p class="archive__item-excerpt" itemprop="description">
+
+</p>
+  </article>
+</div>
+        
+      </div>
+    </div>
+  
+  
+</div>
+    </div>
+
+    
+      <div class="search-content">
+        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
+    <label class="sr-only" for="search">
+      Enter your search term...
+    </label>
+    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
+  </form>
+  <div id="results" class="results"></div></div>
+
+      </div>
+    
+
+    <div id="footer" class="page__footer">
+      <footer>
+        <!-- start custom footer snippets -->
+
+<!-- end custom footer snippets -->
+        <div class="page__footer-follow">
+  <ul class="social-icons">
+    
+
+    
+      
+        
+          <li><a href="mailto:hyerinn6@email.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
+        
+      
+        
+          <li><a href="https://github.com/hyerin6" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
+        
+      
+        
+          <li><a href="https://www.instagram.com/___hyerin_/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
+        
+      
+        
+          <li><a href="https://blog.naver.com/hyerin_0611" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Naver Blog</a></li>
+        
+      
+    
+
+    
+      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
+    
+  </ul>
+</div>
+
+
+<div class="page__footer-copyright">&copy; 2022 Hyerin Park. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
+
+      </footer>
+    </div>
+
+    
+  <script src="/assets/js/main.min.js"></script>
+
+
+
+
+<script src="/assets/js/lunr/lunr.min.js"></script>
+<script src="/assets/js/lunr/lunr-store.js"></script>
+<script src="/assets/js/lunr/lunr-en.js"></script>
+
+
+
+
+    <script>
+  'use strict';
+
+  (function() {
+    var commentContainer = document.querySelector('#utterances-comments');
+
+    if (!commentContainer) {
+      return;
+    }
+
+    var script = document.createElement('script');
+    script.setAttribute('src', 'https://utteranc.es/client.js');
+    script.setAttribute('repo', 'hyerin6/hyerin6.github.io');
+    script.setAttribute('issue-term', 'pathname');
+    
+    script.setAttribute('theme', 'github-light');
+    script.setAttribute('crossorigin', 'anonymous');
+
+    commentContainer.appendChild(script);
+  })();
+</script>
+
+  
+
+
+
+
+
+  </body>
+</html>
