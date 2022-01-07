@@ -18,7 +18,7 @@ copyright:
 analytics:
   provider               : "google-gtag"
   google:
-    tracking_id          : "G-DM9DYTS3XB"
+    tracking_id          : "G-8RJ9ZZ1LSQ"
     anonymize_ip         : # true, false (default)
 
 # Disqus
