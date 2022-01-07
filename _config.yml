@@ -14,9 +14,13 @@ copyright:
   year:             2017
   name:             Kiko
 
-# Google-analytics
-google-analytics:
-  id:               ""
+# Analytics
+analytics:
+  provider               : "google-gtag"
+                          # false (default), "google", "google-universal", "google-gtag", "custom"
+  google:
+    tracking_id          : "G-DM9DYTS3XB"
+    anonymize_ip         : # true, false (default)
 
 # Disqus
 disqus:
