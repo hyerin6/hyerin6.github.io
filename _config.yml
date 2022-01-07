@@ -3,7 +3,7 @@
 # # # # # # # # # # # # #
 
 # Basic
-name:               "hyerin"
+name:               "Park Hyerin"
 
 author:
   github:           hyerin6
@@ -11,13 +11,12 @@ author:
   email:            hyerinn6@gmail.com
 
 copyright:
-  year:             2017
-  name:             Kiko
+  year:             2022
+  name:             Hyerin
 
 # Analytics
 analytics:
   provider               : "google-gtag"
-                          # false (default), "google", "google-universal", "google-gtag", "custom"
   google:
     tracking_id          : "G-DM9DYTS3XB"
     anonymize_ip         : # true, false (default)
@@ -41,7 +40,7 @@ paginate:           5
 paginate_path:      /page:num/
 
 # Markdown
-markdown:           kramdown
+markdown:           kramdownf
 kramdown:
   input:            GFM
 
