@@ -1,356 +1,86 @@
-<!doctype html>
-<!--
-  Minimal Mistakes Jekyll Theme 4.24.0 by Michael Rose
-  Copyright 2013-2020 Michael Rose - mademistakes.com | @mmistakes
-  Free for personal and commercial use under the MIT license
-  https://github.com/mmistakes/minimal-mistakes/blob/master/LICENSE
--->
-<html lang="en" class="no-js">
-  <head>
-    <style> 
-      ::-webkit-scrollbar{width: 12px; height: 5px;}
-      ::-webkit-scrollbar-track {background-color:#4b4f52; border-radius: 16px;}
-      ::-webkit-scrollbar-thumb {background-color:#5e6265; border-radius: 16px;}
-      ::-webkit-scrollbar-thumb:hover {background: #ffd24c;}
-      ::-webkit-scrollbar-button:start:decrement,::-webkit-scrollbar-button:end:increment 
-      {
-          width:12px;height:12px;background:transparent;
-      } 
-    </style>
-    <meta charset="utf-8">
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>자바의 완전 기본 문법부터 정리</title>
 
-<!-- begin _includes/seo.html --><title>자바의 완전 기본 문법부터 정리 - Hyerin Blog</title>
-<meta name="description" content="">
+  <!-- CSS -->
+  <link rel="stylesheet" href="/assets/css/main.css" type="text/css">
 
+  <!-- Font -->
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+  <link href='//spoqa.github.io/spoqa-han-sans/css/SpoqaHanSans-kr.css' rel='stylesheet' type='text/css'>
+  <link href="https://fonts.googleapis.com/css?family=Ubuntu+Mono" rel="stylesheet">
 
-  <meta name="author" content="Hyerin Park">
-  
-  <meta property="article:author" content="Hyerin Park">
-  
-
-
-<meta property="og:type" content="article">
-<meta property="og:locale" content="en_US">
-<meta property="og:site_name" content="Hyerin Blog">
-<meta property="og:title" content="자바의 완전 기본 문법부터 정리">
-<meta property="og:url" content="http://localhost:4000/2021-07-17/%EC%9E%90%EB%B0%94%EC%9D%98%EC%8B%A0(1)/">
-
-
-  <meta property="og:description" content="">
-
-
-
-
-
-
-
-  <meta property="article:published_time" content="2021-07-17T00:00:00+09:00">
-
-
-
-
-
-  
-
-  
-
-
-<link rel="canonical" href="http://localhost:4000/2021-07-17/%EC%9E%90%EB%B0%94%EC%9D%98%EC%8B%A0(1)/">
-
-
-
-
+  <link rel="alternate" type="application/rss+xml" title="RSS Feed for Hyerin Blog" href="/feed.xml" />
+  <!-- Begin Jekyll SEO tag v2.7.1 -->
+<title>자바의 완전 기본 문법부터 정리 | Hyerin Blog</title>
+<meta name="generator" content="Jekyll v3.9.0" />
+<meta property="og:title" content="자바의 완전 기본 문법부터 정리" />
+<meta property="og:locale" content="en_US" />
+<meta name="description" content="Java Programming" />
+<meta property="og:description" content="Java Programming" />
+<link rel="canonical" href="http://localhost:4000/2021-07-17/%EC%9E%90%EB%B0%94%EC%9D%98%EC%8B%A0(1)/" />
+<meta property="og:url" content="http://localhost:4000/2021-07-17/%EC%9E%90%EB%B0%94%EC%9D%98%EC%8B%A0(1)/" />
+<meta property="og:site_name" content="Hyerin Blog" />
+<meta property="og:type" content="article" />
+<meta property="article:published_time" content="2021-07-17T00:00:00+09:00" />
+<meta name="twitter:card" content="summary" />
+<meta property="twitter:title" content="자바의 완전 기본 문법부터 정리" />
 <script type="application/ld+json">
-  {
-    "@context": "https://schema.org",
-    
-      "@type": "Person",
-      "name": "Hyerin Park",
-      "url": "http://localhost:4000/"
-    
-  }
-</script>
+{"url":"http://localhost:4000/2021-07-17/%EC%9E%90%EB%B0%94%EC%9D%98%EC%8B%A0(1)/","headline":"자바의 완전 기본 문법부터 정리","dateModified":"2021-07-17T00:00:00+09:00","datePublished":"2021-07-17T00:00:00+09:00","mainEntityOfPage":{"@type":"WebPage","@id":"http://localhost:4000/2021-07-17/%EC%9E%90%EB%B0%94%EC%9D%98%EC%8B%A0(1)/"},"@type":"BlogPosting","description":"Java Programming","@context":"https://schema.org"}</script>
+<!-- End Jekyll SEO tag -->
 
 
-
-
-
-
-
-<!-- end _includes/seo.html -->
-
-
-
-  <link href="/feed.xml" type="application/atom+xml" rel="alternate" title="Hyerin Blog Feed">
-
-
-<!-- https://t.co/dKP3o1e -->
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-8RJ9ZZ1LSQ"></script>
 <script>
-  document.documentElement.className = document.documentElement.className.replace(/\bno-js\b/g, '') + ' js ';
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-8RJ9ZZ1LSQ', { 'anonymize_ip': false});
 </script>
 
-<!-- For all browsers -->
-<link rel="stylesheet" href="/assets/css/main.css">
-<link rel="preload" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css" as="style" onload="this.onload=null;this.rel='stylesheet'">
-<noscript><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5/css/all.min.css"></noscript>
 
+</head>
 
+<body>
+  <div class="content-container">
+    <header>
+  <div class="header-small">
+    <a href="http://localhost:4000">Hyerin Blog</a>
+  </div>
+</header>
+<div class="post">
+  <div class="post-title">자바의 완전 기본 문법부터 정리</div>
+  <br />
+  <span class="post-date">
+    <time>17 Jul 2021</time>
+  </span>
 
-    <!-- start custom head snippets -->
-
-<!-- insert favicons. use https://realfavicongenerator.net/ -->
-
-<!-- start custom head snippets -->
-
-<link rel="apple-touch-icon" sizes="57x57" href="/assets/favicon.ico/apple-icon-57x57.png">
-<link rel="apple-touch-icon" sizes="60x60" href="/assets/favicon.ico/apple-icon-60x60.png">
-<link rel="apple-touch-icon" sizes="72x72" href="/assets/favicon.ico/apple-icon-72x72.png">
-<link rel="apple-touch-icon" sizes="76x76" href="/assets/favicon.ico/apple-icon-76x76.png">
-<link rel="apple-touch-icon" sizes="114x114" href="/assets/favicon.ico/apple-icon-114x114.png">
-<link rel="apple-touch-icon" sizes="120x120" href="/assets/favicon.ico/apple-icon-120x120.png">
-<link rel="apple-touch-icon" sizes="144x144" href="/assets/favicon.ico/apple-icon-144x144.png">
-<link rel="apple-touch-icon" sizes="152x152" href="/assets/favicon.ico/apple-icon-152x152.png">
-<link rel="apple-touch-icon" sizes="180x180" href="/assets/favicon.ico/apple-icon-180x180.png">
-<link rel="icon" type="image/png" sizes="192x192"  href="/assets/favicon.ico/android-icon-192x192.png">
-<link rel="icon" type="image/png" sizes="32x32" href="/assets/favicon.ico/favicon-32x32.png">
-<link rel="icon" type="image/png" sizes="96x96" href="/assets/favicon.ico/favicon-96x96.png">
-<link rel="icon" type="image/png" sizes="16x16" href="/assets/favicon.ico/favicon-16x16.png">
-<link rel="manifest" href="/assets/favicon.ico/manifest.json">
-<meta name="msapplication-TileColor" content="#ffffff">
-<meta name="msapplication-TileImage" content="/assets/favicon.ico/ms-icon-144x144.png">
-<meta name="theme-color" content="#ffffff">
-
-<!-- end custom head snippets -->
-
-<!-- end custom head snippets -->
-
-  </head>
-
-  <body class="layout--single">
-    <nav class="skip-links">
-  <ul>
-    <li><a href="#site-nav" class="screen-reader-shortcut">Skip to primary navigation</a></li>
-    <li><a href="#main" class="screen-reader-shortcut">Skip to content</a></li>
-    <li><a href="#footer" class="screen-reader-shortcut">Skip to footer</a></li>
-  </ul>
-</nav>
-
-    <!--[if lt IE 9]>
-<div class="notice--danger align-center" style="margin: 0;">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience.</div>
-<![endif]-->
-
-    
-
-<div class="masthead">
-  <div class="masthead__inner-wrap">
-    <div class="masthead__menu">
-      <nav id="site-nav" class="greedy-nav">
-        
-        <a class="site-title" href="/">
-          Hyerin Blog
-          
+  <div class="post-tag">
+    <ul>
+      
+      <li>
+        <a href="http://localhost:4000/tags#java">
+          <span>java</span>
         </a>
-        <ul class="visible-links"><li class="masthead__menu-item">
-              <a href="/categories/">Category</a>
-            </li><li class="masthead__menu-item">
-              <a href="/tags/">Tags</a>
-            </li><li class="masthead__menu-item">
-              <a href="/year-archive/">Year</a>
-            </li></ul>
-        
-        <button class="search__toggle" type="button">
-          <span class="visually-hidden">Toggle search</span>
-          <i class="fas fa-search"></i>
-        </button>
-        
-        <button class="greedy-nav__toggle hidden" type="button">
-          <span class="visually-hidden">Toggle menu</span>
-          <div class="navicon"></div>
-        </button>
-        <ul class="hidden-links hidden"></ul>
-      </nav>
-    </div>
-  </div>
-</div>
-
-
-    <div class="initial-content">
+      </li>
       
-
-
-
-<div id="main" role="main">
-  
-<div class="sidebar sticky">
-
-
-
-<div itemscope itemtype="https://schema.org/Person" class="h-card">
-
-  
-    <div class="author__avatar">
-      <a href="http://localhost:4000/">
-        <img src="/image/profile.png" alt="Hyerin Park" itemprop="image" class="u-photo">
-      </a>
-    </div>
-  
-
-  <div class="author__content">
-    <h3 class="author__name p-name" itemprop="name">
-      <a class="u-url" rel="me" href="http://localhost:4000/" itemprop="url">Hyerin Park</a>
-    </h3>
-    
-      <div class="author__bio p-note" itemprop="description">
-        <p>Backend Developer</p>
-
-      </div>
-    
-  </div>
-
-  <div class="author__urls-wrapper">
-    <button class="btn btn--inverse">Follow</button>
-    <ul class="author__urls social-icons">
       
-        <li itemprop="homeLocation" itemscope itemtype="https://schema.org/Place">
-          <i class="fas fa-fw fa-map-marker-alt" aria-hidden="true"></i> <span itemprop="name" class="p-locality">Republic of Korea</span>
-        </li>
+      <li>
+        <a href="http://localhost:4000/tags#자바의신">
+          <span>자바의신</span>
+        </a>
+      </li>
       
-
       
-        
-          
-            <li><a href="mailto:hyerinn6@email.com" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i><span class="label">Email</span></a></li>
-          
-        
-          
-            <li><a href="https://github.com/hyerin6" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-github" aria-hidden="true"></i><span class="label">GitHub</span></a></li>
-          
-        
-          
-            <li><a href="https://www.instagram.com/___hyerin_/" rel="nofollow noopener noreferrer me"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i><span class="label">Instagram</span></a></li>
-          
-        
-          
-            <li><a href="https://blog.naver.com/hyerin_0611" rel="nofollow noopener noreferrer me"><i class="fas fa-fw fa-link" aria-hidden="true"></i><span class="label">Naver Blog</span></a></li>
-          
-        
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      
-
-      <!--
-  <li>
-    <a href="http://link-to-whatever-social-network.com/user/" itemprop="sameAs" rel="nofollow noopener noreferrer me">
-      <i class="fas fa-fw" aria-hidden="true"></i> Custom Social Profile Link
-    </a>
-  </li>
--->
     </ul>
   </div>
-</div>
 
-
-
-
-</div>
-
-
-  <article class="page h-entry" itemscope itemtype="https://schema.org/CreativeWork">
-    <meta itemprop="headline" content="자바의 완전 기본 문법부터 정리">
-    <meta itemprop="description" content="">
-    <meta itemprop="datePublished" content="2021-07-17T00:00:00+09:00">
-    
-
-    <div class="page__inner-wrap">
-      
-        <header>
-          <h1 id="page-title" class="page__title p-name" itemprop="headline">
-            <a href="http://localhost:4000/2021-07-17/%EC%9E%90%EB%B0%94%EC%9D%98%EC%8B%A0(1)/" class="u-url" itemprop="url">자바의 완전 기본 문법부터 정리
-</a>
-          </h1>
-          
-
-  <p class="page__meta">
-    
-
-    
-
-    
-      
-      
-
-      <span class="page__meta-readtime">
-        <i class="far fa-clock" aria-hidden="true"></i>
-        
-          16 minute read
-        
-      </span>
-    
-  </p>
-
-
-        </header>
-      
-
-      <section class="page__content e-content" itemprop="text">
-        
-          <aside class="sidebar__right sticky">
-            <nav class="toc">
-              <header><h4 class="nav__title"><i class="fas fa-file-alt"></i> On this page</h4></header>
-              <ul class="toc__menu"><li><a href="#컴파일--실행">컴파일 &amp; 실행</a></li><li><a href="#jit-컴파일러">JIT 컴파일러</a></li><li><a href="#hotspot">HotSpot</a></li><li><a href="#osr">OSR</a></li><li><a href="#참조-자료형">참조 자료형</a></li><li><a href="#접근-제어자">접근 제어자</a></li><li><a href="#상속">상속</a></li><li><a href="#상속과-생성자">상속과 생성자</a></li><li><a href="#메서드-overriding">메서드 Overriding</a></li><li><a href="#overloading">Overloading</a></li><li><a href="#형변환">형변환</a></li><li><a href="#polymorphism">Polymorphism</a></li><li><a href="#자식-클래스에서-할-수-있는-일들">자식 클래스에서 할 수 있는 일들</a><ul><li><a href="#생성자-관련">생성자 관련</a></li><li><a href="#변수-관련">변수 관련</a></li><li><a href="#메서드-관련">메서드 관련</a></li></ul></li></ul></li><li><a href="#인터페이스와-추상클래스-enum">인터페이스와 추상클래스, enum</a><ul><li><a href="#interface-abstract">interface, abstract</a></li><li><a href="#final">final</a></li><li><a href="#final-클래스">final 클래스</a></li><li><a href="#final-메서드">final 메서드</a></li><li><a href="#final-변수">final 변수</a></li></ul></li></ul></li><li><a href="#참조-자료형-변수">참조 자료형 변수</a></li><li><a href="#enum">enum</a></li><li><a href="#enum-클래스의-부모">enum 클래스의 부모</a></li><li><a href="#예외">예외</a><ul><li><a href="#error">Error</a></li><li><a href="#런타임-예외">런타임 예외</a></li></ul></li></ul></li><li><a href="#throwable-javalangthrowable">Throwable: java.lang.Throwable</a><ul><li><a href="#throwable-생성자">Throwable 생성자</a></li><li><a href="#throwable-오버라이딩-메서드">Throwable 오버라이딩 메서드</a></li></ul></li></ul></li><li><a href="#예외를-만들어보자">예외를 만들어보자.</a></li><li><a href="#자바-예외-처리-전략">자바 예외 처리 전략</a><ul><li><a href="#1-예외가-항상-발생하지-않고-실행시에-발생할-확률이-매우-높은-경우-런타임-예외로-만드는-것이-나을-수도-있다">(1) 예외가 항상 발생하지 않고, 실행시에 발생할 확률이 매우 높은 경우 런타임 예외로 만드는 것이 나을 수도 있다.</a></li><li><a href="#2-임의의-예외-클래스를-만들-때에는-반드시-try-catch로-묶어줄-필요가-있을-경우에만-exception-클래스로-확장한다">(2) 임의의 예외 클래스를 만들 때에는 반드시 try-catch로 묶어줄 필요가 있을 경우에만 Exception 클래스로 확장한다.</a></li><li><a href="#3-catch문-내에서-아무런-작업-없이-공백으로-놔두면-예외-분석이-어려워지므로-꼭-로그-처리와-같은-예외-처리를-해줘야만-한다">(3) catch문 내에서 아무런 작업 없이 공백으로 놔두면 예외 분석이 어려워지므로 꼭 로그 처리와 같은 예외 처리를 해줘야만 한다.</a></li></ul></li></ul></li><li><a href="#예외-관련-qa">예외 관련 Q&amp;A</a></li><li><a href="#string">String</a></li><li><a href="#null-체크">Null 체크</a></li><li><a href="#비교-equals-vs-compareto">비교 equals vs. compareTo</a></li><li><a href="#immutable-string">immutable String</a></li><li><a href="#charsequence">CharSequence</a></li><li><a href="#클래스-안의-클래스">클래스 안의 클래스</a></li><li><a href="#왜-nested-클래스를-만드는-걸까">왜 Nested 클래스를 만드는 걸까?</a></li><li><a href="#static-nested">static nested</a><ul><li><a href="#그러면-이-static-nested-클래스의-객체는-어떻게-생성할까">그러면 이 static nested 클래스의 객체는 어떻게 생성할까?</a></li><li><a href="#그렇다면-왜-static-nested-클래스를-만들까">그렇다면 왜 static nested 클래스를 만들까?</a></li></ul></li></ul></li><li><a href="#내부-클래스">내부 클래스</a><ul><li><a href="#이와-같이-복잡한-inner-클래스-객체를-왜-사용하는걸까">이와 같이 복잡한 Inner 클래스 객체를 왜 사용하는걸까?</a></li></ul></li></ul></li><li><a href="#익명-클래스">익명 클래스</a><ul><li><a href="#왜-익명-클래스라는-것을-제공하는-것일까">왜 익명 클래스라는 것을 제공하는 것일까?</a></li></ul></li></ul></li><li><a href="#내부-클래스-특징">내부 클래스 특징</a></li><li><a href="#어노테이션이란">어노테이션이란?</a><ul><li><a href="#자바에서-사용하기-위해서-정해져-있는-어노테이션은-3개">자바에서 사용하기 위해서 정해져 있는 어노테이션은 3개</a></li><li><a href="#메타-어노테이션이라는-것은-개발자가-어노테이션을-선언할-때-사용한다">메타 어노테이션이라는 것은 개발자가 어노테이션을 선언할 때 사용한다.</a></li><li><a href="#어노테이션-선언-방법">어노테이션 선언 방법</a></li><li><a href="#상속을-지원하지-않는다">상속을 지원하지 않는다.</a></li></ul></li></ul></li></ul>
-
-            </nav>
-          </aside>
-        
-        <p><br /></p>
+  <p><br /></p>
 
 <h1 id="컴파일--실행">컴파일 &amp; 실행</h1>
 <p>자바의 경우 다음과 같은 과정으로 진행된다.</p>
@@ -1405,273 +1135,36 @@ enum 클래스와 마찬가지로 미리 만들어 놓은 어노테이션을 확
 
 <p><br /></p>
 
-        
-      </section>
 
-      <footer class="page__meta">
-        
-        
-  
+  <br />
+  <script src="https://utteranc.es/client.js"
+        repo="hyerin6/hyerin6.github.io"
+        issue-term="pathname"
+        theme="github-light"
+        crossorigin="anonymous"
+        async>
+  </script>
 
-
-  
-
-  <p class="page__taxonomy">
-    <strong><i class="fas fa-fw fa-tags" aria-hidden="true"></i> Tags: </strong>
-    <span itemprop="keywords">
-    
-      <a href="/tags/#java" class="page__taxonomy-item p-category" rel="tag">java</a>
-    
-    </span>
-  </p>
-
-
-
-
-  
-
-
-  
-
-  <p class="page__taxonomy">
-    <strong><i class="fas fa-fw fa-folder-open" aria-hidden="true"></i> Categories: </strong>
-    <span itemprop="keywords">
-    
-      <a href="/categories/#java" class="page__taxonomy-item p-category" rel="tag">Java</a>
-    
-    </span>
-  </p>
-
-
-        
-
-  <p class="page__date"><strong><i class="fas fa-fw fa-calendar-alt" aria-hidden="true"></i> Updated:</strong> <time class="dt-published" datetime="2021-07-17T00:00:00+09:00">July 17, 2021</time></p>
-
-      </footer>
-
-      <section class="page__share">
-  
-
-  <a href="https://twitter.com/intent/tweet?text=%EC%9E%90%EB%B0%94%EC%9D%98+%EC%99%84%EC%A0%84+%EA%B8%B0%EB%B3%B8+%EB%AC%B8%EB%B2%95%EB%B6%80%ED%84%B0+%EC%A0%95%EB%A6%AC%20http%3A%2F%2Flocalhost%3A4000%2F2021-07-17%2F%25EC%259E%2590%25EB%25B0%2594%25EC%259D%2598%25EC%258B%25A0%281%29%2F" class="btn btn--twitter" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Twitter"><i class="fab fa-fw fa-twitter" aria-hidden="true"></i><span> Twitter</span></a>
-
-  <a href="https://www.facebook.com/sharer/sharer.php?u=http%3A%2F%2Flocalhost%3A4000%2F2021-07-17%2F%25EC%259E%2590%25EB%25B0%2594%25EC%259D%2598%25EC%258B%25A0%281%29%2F" class="btn btn--facebook" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on Facebook"><i class="fab fa-fw fa-facebook" aria-hidden="true"></i><span> Facebook</span></a>
-
-  <a href="https://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Flocalhost%3A4000%2F2021-07-17%2F%25EC%259E%2590%25EB%25B0%2594%25EC%259D%2598%25EC%258B%25A0%281%29%2F" class="btn btn--linkedin" onclick="window.open(this.href, 'window', 'left=20,top=20,width=500,height=500,toolbar=1,resizable=0'); return false;" title="Share on LinkedIn"><i class="fab fa-fw fa-linkedin" aria-hidden="true"></i><span> LinkedIn</span></a>
-</section>
-
-
-      
-  <nav class="pagination">
-    
-      <a href="/2021-07-11/codeplus-%EA%B8%B0%EC%B4%88-%EC%88%98%ED%95%99/" class="pagination--pager" title="Baekjoon 기초 수학 알고리즘 풀이
-">Previous</a>
-    
-    
-      <a href="/2021-07-17/%EC%9E%90%EB%B0%94%EC%9D%98%EC%8B%A0(2)/" class="pagination--pager" title="자바를 제대로 사용할 수 있는 방법
-">Next</a>
-    
-  </nav>
-
-    </div>
-
-    
-  </article>
-
-  
-  
-    <div class="page__related">
-      <h2 class="page__related-title">You May Also Enjoy</h2>
-      <div class="grid__wrapper">
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/2022-01-05/blog/" rel="permalink">Jekyll - minimal mistakes 사용법
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> January 05 2022</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">
-
-</p>
-  </article>
-</div>
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/2021-12-28/lambda/" rel="permalink">lambda 와 effectively final
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 28 2021</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">
-
-</p>
-  </article>
-</div>
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/2021-12-23/request/" rel="permalink">HttpMessageNotReadableException 해결하기
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 23 2021</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">
-
-</p>
-  </article>
-</div>
-        
-          
-
-
-
-<div class="grid__item">
-  <article class="archive__item" itemscope itemtype="https://schema.org/CreativeWork">
-    
-    <h2 class="archive__item-title" itemprop="headline">
-      
-        <a href="/2021-12-19/sort/" rel="permalink">Sort
-</a>
-      
-    </h2>
-    
-      <p class="page__meta"><i class="far fa-fw fa-calendar-alt" aria-hidden="true"></i> December 19 2021</p>
-    
-    <p class="archive__item-excerpt" itemprop="description">
-
-</p>
-  </article>
-</div>
-        
-      </div>
-    </div>
-  
-  
-</div>
-    </div>
-
-    
-      <div class="search-content">
-        <div class="search-content__inner-wrap"><form class="search-content__form" onkeydown="return event.key != 'Enter';" role="search">
-    <label class="sr-only" for="search">
-      Enter your search term...
-    </label>
-    <input type="search" id="search" class="search-input" tabindex="-1" placeholder="Enter your search term..." />
-  </form>
-  <div id="results" class="results"></div></div>
-
-      </div>
-    
-
-    <div id="footer" class="page__footer">
-      <footer>
-        <!-- start custom footer snippets -->
-
-<!-- end custom footer snippets -->
-        <div class="page__footer-follow">
-  <ul class="social-icons">
-    
-
-    
-      
-        
-          <li><a href="mailto:hyerinn6@email.com" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-envelope-square" aria-hidden="true"></i> Email</a></li>
-        
-      
-        
-          <li><a href="https://github.com/hyerin6" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-github" aria-hidden="true"></i> GitHub</a></li>
-        
-      
-        
-          <li><a href="https://www.instagram.com/___hyerin_/" rel="nofollow noopener noreferrer"><i class="fab fa-fw fa-instagram" aria-hidden="true"></i> Instagram</a></li>
-        
-      
-        
-          <li><a href="https://blog.naver.com/hyerin_0611" rel="nofollow noopener noreferrer"><i class="fas fa-fw fa-link" aria-hidden="true"></i> Naver Blog</a></li>
-        
-      
-    
-
-    
-      <li><a href="/feed.xml"><i class="fas fa-fw fa-rss-square" aria-hidden="true"></i> Feed</a></li>
-    
-  </ul>
 </div>
 
 
-<div class="page__footer-copyright">&copy; 2022 Hyerin Park. Powered by <a href="https://jekyllrb.com" rel="nofollow">Jekyll</a> &amp; <a href="https://mademistakes.com/work/minimal-mistakes-jekyll-theme/" rel="nofollow">Minimal Mistakes</a>.</div>
-
-      </footer>
-    </div>
-
+    <!-- Documents about icons are here: http://fontawesome.io/icons/ -->
+<div class="footer">
+  <hr />
+  <div class="footer-link">
+	
     
-  <script src="/assets/js/main.min.js"></script>
-
-
-
-
-<script src="/assets/js/lunr/lunr.min.js"></script>
-<script src="/assets/js/lunr/lunr-store.js"></script>
-<script src="/assets/js/lunr/lunr-en.js"></script>
-
-
-
-
-    <script>
-  'use strict';
-
-  (function() {
-    var commentContainer = document.querySelector('#utterances-comments');
-
-    if (!commentContainer) {
-      return;
-    }
-
-    var script = document.createElement('script');
-    script.setAttribute('src', 'https://utteranc.es/client.js');
-    script.setAttribute('repo', 'hyerin6/hyerin6.github.io');
-    script.setAttribute('issue-term', 'pathname');
+    <a href="https://github.com/hyerin6"><i class="fa fa-github" aria-hidden="true"></i></a>
     
-    script.setAttribute('theme', 'github-light');
-    script.setAttribute('crossorigin', 'anonymous');
+	
+    
+    <a href="mailto:hyerinn6@gmail.com"><i class="fa fa-envelope" aria-hidden="true"></i></a>
+    
 
-    commentContainer.appendChild(script);
-  })();
-</script>
+  </div>
+  © 2022 Hyerin. All rights reserved.
+</div>
 
-  
-
-
-
-
-
-  </body>
+  </div>
+</body>
 </html>
