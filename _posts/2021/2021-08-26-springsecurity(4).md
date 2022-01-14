@@ -90,10 +90,7 @@ AccessToken은 `ResourceServer`를 구현해 `Introspection`으로 **토큰에 �
 <br />
 
 
-![security1](https://user-images.githubusercontent.com/33855307/131086187-9dc4aff6-2559-43e8-8151-2e973f0368a6.jpeg)
-
-
-
+![스크린샷 2022-01-14 오후 3 04 57](https://user-images.githubusercontent.com/33855307/149459750-3bfae638-d5b2-4eff-b221-795865293926.png)
 
 
 
@@ -121,8 +118,7 @@ JWT는 JSON String이 암호화된 문자열로 토큰 자체에 특정한 정�
 JWT를 사용하면 다음과 같은 인증 과정을 갖는다.
 
 
-![security2](https://user-images.githubusercontent.com/33855307/131086194-6e1bad4c-3c78-434f-a343-c1d701ca1264.jpeg)
-
+![스크린샷 2022-01-14 오후 3 01 22](https://user-images.githubusercontent.com/33855307/149459420-9b86d907-0b2d-4221-85f4-9e7940b3c152.png)
 
 
 
