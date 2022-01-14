@@ -1,7 +1,7 @@
 ---
 layout: post  
 title: "Spring Boot Redis Sub/Pub "  
-description: "구독 기능 구현이 가능할까?"  
+description: "Messaging Pub/Sub VS. Messaging Queuing"  
 date: 2022-01-14  
 tags: [spring, redis]  
 categories: [Spring, Redis]  
