@@ -154,7 +154,13 @@ Spring은 propagation이 `REQUIRES_NEW` 일 경우 비록 동일 DataSource에�
 하지만 propagation이 `REQUIRED` 일 경우에는 새로운 트랜잭션을 생성하지도 않고 새로운 설정을 적용하지도 않으므로 주의해야 한다.    
 
 
+<br />
+<br />
 
+## 참고 
 
+* <http://egloos.zum.com/kwon37xi/v/5364167>
+* 실제 프로젝트 적용된 코드: <https://github.com/hyerin6/HACKDAY/blob/dev_pk/src/main/java/com/hackday/timeline/config/database/DataSourceConfig.java>  
+* 프로젝트 진행 정리: <https://www.notion.so/Mysql-Replication-Master-Slave-eb8e807df5474702a3c4c7aa1031d503>  
 
 
