@@ -3,12 +3,15 @@
 # # # # # # # # # # # # #
 
 # Basic
-name:               "Hyerin Blog"
+name:               "Hyerin Tech Blog"
 
 author:
-  github:           hyerin6
-  linkedin: 	    No	
-  email:            hyerinn6@gmail.com
+  youtubeUser:      your-id
+  youtubeChannel:   your-id
+  twitter:          your-id
+  github:           https://github.com/hyerin6
+  instagram:        https://www.instagram.com/photobyhyerin/
+  email:            dev.hyerin@gmail
 
 copyright:
   year:             2022
@@ -30,7 +33,6 @@ url:                "https://hyerin6.github.io" # the base hostname & protocol f
 # url:                "http://localhost:4000" # use this url when you develop
 baseurl:             # the subpath of your site, e.g. /blog
 
-
 # http://en.wikipedia.org/wiki/List_of_tz_database_time_zones
 timezone:           Asia/Seoul
 permalink:          /:year-:month-:day/:title/
@@ -40,21 +42,20 @@ paginate:           5
 paginate_path:      /page:num/
 
 # Markdown
-markdown:            kramdown
+markdown:           kramdown
 kramdown:
   input:            GFM
 
 # Navigation
 nav:
-  - name:           "Category"
-    url:            "/category"
+  - name:           "About"
+    url:            "/about"
   - name:           "Archive"
     url:            "/archive"
   - name:           "Tags"
     url:            "/tags"
   - name:           "Github"
     url:            "https://github.com/hyerin6"
-
 
 # Sass
 sass:
