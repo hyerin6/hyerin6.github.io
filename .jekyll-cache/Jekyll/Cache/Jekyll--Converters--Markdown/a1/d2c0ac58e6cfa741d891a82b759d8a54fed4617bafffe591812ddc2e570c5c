@@ -1,0 +1,30 @@
+I"�<p><br /></p>
+
+<h2 id="로깅-기능-개발">로깅 기능 개발</h2>
+<p><a href="https://hyerin6.github.io/2021-09-22/log-slack/">로깅 기능 개발</a> 과정을 포스팅한 적이 있다.   <br />
+로그를 남기기 위해 request를 읽어야 했는데         <br />
+왜 <code class="language-plaintext highlighter-rouge">ContentCachingRequestWrapper</code>, <code class="language-plaintext highlighter-rouge">ContentCachingResponseWrapper</code>를 사용해서 읽었을까?</p>
+
+<p>request를 <code class="language-plaintext highlighter-rouge">getInputStream()</code>이나 <code class="language-plaintext highlighter-rouge">getReader()</code>로 두번 읽으면 다음과 같은 exception이 발생한다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>[org.springframework.http.converter.HttpMessageNotReadableException: Required request body is missing
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p>코드를 보면 <code class="language-plaintext highlighter-rouge">getInputStream()</code>이나 <code class="language-plaintext highlighter-rouge">getReader()</code>는 두 번 읽어서 처리할 수 없게 되어 있다.</p>
+
+<p><img width="800" src="https://user-images.githubusercontent.com/33855307/147201425-be3fbd60-22d0-4bbe-ad6f-7c662b83dc93.png" /></p>
+
+<p>스프링의 유틸 클래스인 ContentCachingRequestWrapper 를 사용한 이유이다.   <br />
+ContentCachingRequestWrapper는 입력 스트림 과 리더 에서 읽은 모든 내용을 캐싱한다.</p>
+
+<p><br /></p>
+
+<h2 id="참고">참고</h2>
+<ul>
+  <li><a href="https://meetup.toast.com/posts/44">https://meetup.toast.com/posts/44</a></li>
+</ul>
+
+<p><br /></p>
+:ET

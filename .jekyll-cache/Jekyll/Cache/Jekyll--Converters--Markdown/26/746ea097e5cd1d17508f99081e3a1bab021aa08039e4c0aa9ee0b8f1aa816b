@@ -1,0 +1,42 @@
+I"�<h2 id="git-rebase">Git Rebase</h2>
+
+<p>두개의 브랜치에서 작업할 때 하나의 브랜치를 다른 브랜치로 합치기 위해서 <br />
+git에서 두 가지 방법을 주로 사용한다.</p>
+
+<ul>
+  <li>merge</li>
+  <li>rebase</li>
+</ul>
+
+<p>merge만 사용했었는데 이번 프로젝트에서 rebase에 대해 알아보고 사용해보기로 했다!</p>
+
+<p><br /></p>
+
+<h2 id="rebase">Rebase</h2>
+
+<p>브랜치의 공통 조상이 되는 base를 다른 브랜치의 커밋 지점으로 바꾸는 것이라고 할 수 있다.</p>
+
+<p>기본 전략은 다음과 같다.    <br />
+먼저 rebase하려는 브랜치 커밋들의 변경사항을 patch라는 것으로 만든 다음에    <br />
+어딘가에 저장해 두고 이를 master 브랜치에 하나씩 적용하여 새로운 커밋을 만든다.</p>
+
+<p>feature를 master 브랜치로 rebase하는 명령어를 살펴보자.</p>
+
+<p><br /></p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>git checkout feature                      
+git rebase master                   
+       
+git merge feature             
+</code></pre></div></div>
+
+<ol>
+  <li>feature 브랜치로 checkout</li>
+  <li>master 브랜치로 rebase</li>
+  <li>feature 브랜치를 master로 fast-forward merge</li>
+</ol>
+
+<p><br /></p>
+
+<p>참고 : <a href="https://velog.io/@godori/Git-Rebase">https://velog.io/@godori/Git-Rebase</a></p>
+:ET

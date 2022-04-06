@@ -1,0 +1,89 @@
+I"�<h2 id="2차원-지도-탐색">2차원 지도 탐색</h2>
+
+<h4 id="백준-2178-미로-탐색-문제"><a href="https://www.acmicpc.net/problem/2178">백준 2178 미로 탐색 문제</a></h4>
+
+<p>미로의 각 칸이 탐색 대상 노드이기 때문에 BFS로 풀어야 한다.</p>
+
+<ul>
+  <li>
+    <p><a href="https://github.com/hyerin6/Algorithm/blob/master/Baekjoon/src/training/B2178_v1.java">구현1</a>          <br />
+Location 객체를 HashSet에 보관하려면 hashCode, equals 메소드를 재정의해야 한다.</p>
+  </li>
+  <li>
+    <p><a href="https://github.com/hyerin6/Algorithm/blob/master/Baekjoon/src/training/B2178_v2.java">구현2</a>         <br />
+Node 객체를 만들어 Queue에 저장하며 조건에 맞는지 검사</p>
+  </li>
+  <li>
+    <p><a href="https://github.com/hyerin6/Algorithm/blob/master/Baekjoon/src/training/B2178_v3.java">구현3</a>             <br />
+모든 칸을 Node로 생성하여 Queue에 저장하지 않고 탐색해야 하는 칸만 Node 객체로 생성</p>
+  </li>
+</ul>
+
+<p><br />   <br />
+<br /></p>
+
+<h2 id="최장거리를-구현해보자">최장거리를 구현해보자.</h2>
+
+<ul>
+  <li><a href="https://github.com/hyerin6/Algorithm/blob/master/Baekjoon/src/training/B2178_v4.java">구현4</a></li>
+</ul>
+
+<p>촤장거리 탐색도 BFS로 구현해야 한다.</p>
+
+<p>목적지에 도착하자마자 distance를 리턴하는게 아니다. 도착하자마자 리턴하면 최단 거리가 된다.         <br />
+마지막 distance 값이 최대거리이기 때문에 queue가 empty가 될 때까지 탐색을 계속한 후    <br />
+max 값을 리턴해야 한다.</p>
+
+<p><br />    <br />
+<br /></p>
+
+<h2 id="반복문으로-dfs-구현">반복문으로 DFS 구현</h2>
+
+<ul>
+  <li><a href="https://github.com/hyerin6/Algorithm/blob/master/Baekjoon/src/training/B2178_v5.java">구현5</a></li>
+</ul>
+
+<p>반복문으로 깊이 우선 탐색을 구현하라.<br />
+last in, first out =&gt; BFS<br />
+last in, last out =&gt; DFS<br />
+깊이 우선 탐색의 리턴값 distance는 최단거리가 아니다.</p>
+
+<p><br />    <br />
+<br /></p>
+
+<h2 id="비숫한-문제--프로그래머스-카카오프렌즈-컬러링북">비숫한 문제 : <a href="https://programmers.co.kr/learn/courses/30/lessons/1829">프로그래머스 카카오프렌즈 컬러링북</a></h2>
+
+<ul>
+  <li><a href="https://github.com/hyerin6/Algorithm/blob/master/programmers/src/programmers/lv2/%EC%B9%B4%EC%B9%B4%EC%98%A4%ED%94%84%EB%A0%8C%EC%A6%88_%EC%BB%AC%EB%9F%AC%EB%A7%81%EB%B6%81.java">BFS 구현 코드</a></li>
+</ul>
+
+<p><img src="https://user-images.githubusercontent.com/33855307/98902271-b7daef00-24f8-11eb-9ad4-42512256f43c.png" alt="스크린샷 2020-11-11 오후 2 01 01" /></p>
+
+<p>입력 예제를 직접 그려보면 영역은 이렇게 나타난다.</p>
+
+<p>백준 문제를 풀고 이 문제를 풀어보니 쉽게 이해할 수 있었다.   <br />
+목적지 없이 전부 탐색해야 한다는 점과 색이 같으면 Node를 생성해 Queue에 넣어준다는 점만 다르고 풀이 방식은 똑같다.</p>
+
+<p><br />      <br />
+<br /></p>
+
+<h2 id="풀어볼-문제-목록">풀어볼 문제 목록</h2>
+
+<ul>
+  <li><a href="https://www.acmicpc.net/problem/7562">https://www.acmicpc.net/problem/7562</a></li>
+  <li><a href="https://www.acmicpc.net/problem/6593">https://www.acmicpc.net/problem/6593</a></li>
+  <li><a href="https://www.acmicpc.net/problem/2589">https://www.acmicpc.net/problem/2589</a></li>
+  <li><a href="https://www.acmicpc.net/problem/7576">https://www.acmicpc.net/problem/7576</a></li>
+  <li><a href="https://www.acmicpc.net/problem/7569">https://www.acmicpc.net/problem/7569</a></li>
+  <li><a href="https://www.acmicpc.net/problem/3055">https://www.acmicpc.net/problem/3055</a></li>
+  <li><a href="https://www.acmicpc.net/problem/4179">https://www.acmicpc.net/problem/4179</a></li>
+  <li><a href="https://www.acmicpc.net/problem/2206">https://www.acmicpc.net/problem/2206</a></li>
+  <li><a href="https://www.acmicpc.net/problem/10026">https://www.acmicpc.net/problem/10026</a></li>
+  <li><a href="https://www.acmicpc.net/problem/2468">https://www.acmicpc.net/problem/2468</a></li>
+  <li><a href="https://www.acmicpc.net/problem/2667">https://www.acmicpc.net/problem/2667</a></li>
+  <li><a href="https://www.acmicpc.net/problem/2583">https://www.acmicpc.net/problem/2583</a></li>
+  <li><a href="https://www.acmicpc.net/problem/2146">https://www.acmicpc.net/problem/2146</a></li>
+  <li><a href="https://www.acmicpc.net/problem/2573">https://www.acmicpc.net/problem/2573</a></li>
+</ul>
+
+:ET

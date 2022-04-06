@@ -1,0 +1,54 @@
+I"�<h3 id="jpa-usertype-변경하려면">JPA userType 변경하려면?</h3>
+
+<ul>
+  <li>처음 구현했을 때</li>
+</ul>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">userRepository</span><span class="o">.</span><span class="na">deleteByEmail</span><span class="o">(</span><span class="n">user</span><span class="o">.</span><span class="na">getEmail</span><span class="o">());</span>
+<span class="n">userRepository</span><span class="o">.</span><span class="na">flush</span><span class="o">();</span>
+<span class="n">userRepository</span><span class="o">.</span><span class="na">save</span><span class="o">(</span><span class="n">user</span><span class="o">);</span>
+</code></pre></div></div>
+
+<p>save() 메소드에서 unique로 설정한 email 때문에 오류가 발생했기 때문에  <br />
+처음에 userType 변경을 위 코드로 구현했다.</p>
+
+<p>하지만 위 코드는 delete와 insert 쿼리가 필요하다. <br />
+jpa update를 하고 싶으면 그냥 Entity 클래스의 setter을 사용해 원하는 값을 넣어주면 된다.</p>
+
+<p>DB 변경하는 부분에서 <code class="language-plaintext highlighter-rouge">@Transactional</code> 어노테이션이 필요하다는 것도 잊지말자..</p>
+
+<ul>
+  <li>수정 후</li>
+</ul>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Override</span>
+<span class="nd">@Transactional</span>  
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">updateUserType</span><span class="o">(</span><span class="nc">String</span> <span class="n">email</span><span class="o">){</span>
+    <span class="nc">User</span> <span class="n">user</span> <span class="o">=</span> <span class="n">userRepository</span><span class="o">.</span><span class="na">findOneByEmail</span><span class="o">(</span><span class="n">email</span><span class="o">);</span>
+    <span class="n">user</span><span class="o">.</span><span class="na">setUserType</span><span class="o">(</span><span class="no">IS_AUTHENTICATED_FULLY</span><span class="o">);</span>
+    <span class="n">user</span><span class="o">.</span><span class="na">setEnabled</span><span class="o">(</span><span class="kc">true</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>이렇게 엔티티의 변경사항을 데이터베이스에 자동으로 반영하는 기능을 변경 감지(dirty checking)라 한다.</p>
+
+<p>JPA는 엔티티를 영속성 컨텍스트에 보관할 때, 최초 상태를 복사해서 저장해두는데 이것을 스냅샷이라고 한다.<br />
+그리고 플러시 시점에 스냅샷과 엔터티를 비교해 변경된 엔티티를 찾는다.</p>
+
+<p><strong>변경 감지는 영속성 컨텍스트가 관리하는 영속 상태의 엔티티에만 적용된다.</strong></p>
+
+<p>JPA이ㅡ 기본 전략은 모든 필드를 업데이트 하는 것인데   <br />
+데이터베이스에 보내는 데이터 전송량이 증가하는 단점이 있지만, 다음과 같은 장점이 있기 때문에 <br />
+모든 필드를 업데이트한다.</p>
+
+<ol>
+  <li>
+    <p>모든 필드를 사용하면 수정 쿼리가 항상 같다.  <br />
+따라서 애플리케이션 로딩 시점에 수정 쿼리를 미리 생성해두고 사용할 수 있다.</p>
+  </li>
+  <li>
+    <p>데이터베이스에 동일한 쿼리를 보내면 데이터베이스는 이전에 한 번 파싱된 쿼리를 재사용할 수 있다.</p>
+  </li>
+</ol>
+
+:ET

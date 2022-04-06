@@ -1,0 +1,137 @@
+I">.<h2 id="q-optional에서-orelse-와-orelseget의-차이점은">Q. Optional에서 <code class="language-plaintext highlighter-rouge">orElse</code> 와 <code class="language-plaintext highlighter-rouge">orElseGet</code>의 차이점은?</h2>
+<p><code class="language-plaintext highlighter-rouge">orElse</code>와 <code class="language-plaintext highlighter-rouge">orElseGet</code> 메서드 역할은 Optional 클래스 객체가 가지고 있는 실제 값이  <br />
+Null인 경우 어떤 값으로 대체해서 return 해줘야 하는지 정의하는 것이다.</p>
+
+<ul>
+  <li>orElse</li>
+</ul>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="no">T</span> <span class="nf">orElse</span><span class="o">(</span><span class="no">T</span> <span class="n">other</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">value</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">?</span> <span class="n">value</span> <span class="o">:</span> <span class="n">other</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>Optional 클래스 사용 시 지정했던 제네릭 타입 클래스 객체를 받아서 그 객체를 return 한다. <br />
+<br /></p>
+
+<ul>
+  <li>orElseGet</li>
+</ul>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="no">T</span> <span class="nf">orElseGet</span><span class="o">(</span><span class="nc">Supplier</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="no">T</span><span class="o">&gt;</span> <span class="n">other</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="n">value</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">?</span> <span class="n">value</span> <span class="o">:</span> <span class="n">other</span><span class="o">.</span><span class="na">get</span><span class="o">();</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<details>
+<summary>Supplier Interface</summary>
+<div>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@FunctionalInterface</span>
+<span class="kd">public</span> <span class="kd">interface</span> <span class="nc">Supplier</span><span class="o">&lt;</span><span class="no">T</span><span class="o">&gt;</span> <span class="o">{</span>
+
+    <span class="cm">/**
+     * Gets a result.
+     *
+     * @return a result
+     */</span>
+    <span class="no">T</span> <span class="nf">get</span><span class="o">();</span>
+<span class="o">}</span>
+</code></pre></div>    </div>
+
+    <p>Supplier는 넘겨준 <code class="language-plaintext highlighter-rouge">Type T</code>를 그대로 반환하는 함수형 인터페이스이다. <br />
+함수형 인터페이스이기 때문에 람다형식으로도 많이 쓰인다.</p>
+
+    <h4 id="string-type--supplier-interface--">String Type으로 변환하는 Supplier Interface를 구현 예시)</h4>
+
+    <div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Test</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">testSupplierInterface</span><span class="o">(){</span>
+
+	<span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"============ 인터페이스 Override ============"</span><span class="o">);</span>
+	<span class="nc">Supplier</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">supplierInterface</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Supplier</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;()</span> <span class="o">{</span>
+          <span class="nd">@Override</span>
+          <span class="kd">public</span> <span class="nc">String</span> <span class="nf">get</span><span class="o">()</span> <span class="o">{</span>
+          <span class="k">return</span> <span class="s">"Supplier Interface !!"</span><span class="o">;</span>
+        <span class="o">}</span>
+     <span class="o">};</span>
+
+  <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">supplierInterface</span><span class="o">.</span><span class="na">get</span><span class="o">());</span>
+
+  <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="s">"============ 람다 표현식 사용하기 ============"</span><span class="o">);</span>
+  <span class="nc">Supplier</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">supplierLambda</span> <span class="o">=</span> <span class="o">()-&gt;</span> <span class="s">"supplier Interface with lambda !! "</span><span class="o">;</span>
+  <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">supplierLambda</span><span class="o">.</span><span class="na">get</span><span class="o">());</span>
+
+<span class="o">}</span>
+</code></pre></div>    </div>
+
+    <hr />
+
+  </div>
+</details>
+
+<p>T 클래스를 상속받은 하위 클래스를 return 해주는 supplier 메소드를 받아서 T 객체를 return 하는 메소드이다. <br />
+<br /></p>
+
+<p>orElse는 반환할 값을 그대로 받지만 orElseGet은 Supplier로 랩핑한 값을 인자로 받는다.        <br />
+즉 orElseGet은 함수를 전달받아 바로 값을 가져오지 않고(lazy) 필요할 때 값을 가져온다.    <br />
+즉, orElseGet은 null일 경우에만 함수가 실행되면서 인스턴스화되지만, orElse는 무조건 인스턴스화 된다.</p>
+
+<p><br /><br />
+<br /></p>
+
+<h2 id="예제-코드">예제 코드</h2>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">class</span> <span class="nc">LocalTest</span> <span class="o">{</span>
+    <span class="nd">@Test</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">test1</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">Optional</span><span class="o">.</span><span class="na">ofNullable</span><span class="o">(</span><span class="kc">null</span><span class="o">).</span><span class="na">orElse</span><span class="o">(</span><span class="k">new</span> <span class="nc">TestObject</span><span class="o">(</span><span class="s">"1 "</span><span class="o">));</span>  <span class="c1">// (1)</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+        <span class="nc">Optional</span><span class="o">.</span><span class="na">ofNullable</span><span class="o">(</span><span class="k">new</span> <span class="nc">TestObject</span><span class="o">(</span><span class="s">"2-1 "</span><span class="o">)).</span><span class="na">orElse</span><span class="o">(</span><span class="k">new</span> <span class="nc">TestObject</span><span class="o">(</span><span class="s">"2-2 "</span><span class="o">));</span> <span class="c1">// (2)</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+        <span class="nc">Optional</span><span class="o">.</span><span class="na">ofNullable</span><span class="o">(</span><span class="kc">null</span><span class="o">).</span><span class="na">orElseGet</span><span class="o">(</span><span class="nl">TestObject:</span><span class="o">:</span><span class="k">new</span><span class="o">);</span> <span class="c1">// (1)</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">();</span>
+        <span class="nc">Optional</span><span class="o">.</span><span class="na">ofNullable</span><span class="o">(</span><span class="k">new</span> <span class="nc">TestObject</span><span class="o">(</span><span class="s">"4-1 "</span><span class="o">)).</span><span class="na">orElseGet</span><span class="o">(</span><span class="nl">TestObject:</span><span class="o">:</span><span class="k">new</span><span class="o">);</span> <span class="c1">// (3) </span>
+    <span class="o">}</span>
+
+    <span class="kd">class</span> <span class="nc">TestObject</span> <span class="o">{</span>
+        <span class="nc">TestObject</span><span class="o">()</span> <span class="o">{</span> <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="s">"new"</span><span class="o">);</span> <span class="o">}</span>
+        <span class="nc">TestObject</span><span class="o">(</span><span class="nc">String</span> <span class="n">s</span><span class="o">)</span> <span class="o">{</span> <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">print</span><span class="o">(</span><span class="n">s</span> <span class="o">==</span> <span class="kc">null</span> <span class="o">?</span> <span class="s">"new"</span> <span class="o">:</span> <span class="n">s</span><span class="o">);</span> <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1
+2-1 2-2
+new
+4-1
+</code></pre></div></div>
+
+<p>(1) ofNullable 의 인자값으로 null 이기 때문에 인스턴스 생성<br />
+(2) ofNullable 의 인자값이 null 이 아니지만 <code class="language-plaintext highlighter-rouge">new TestObject("2-2 ")</code> 가 실행된다.<br />
+(3) ofNullable 의 인자값이 null 이 아니므로 <code class="language-plaintext highlighter-rouge">TestObject::new</code> 는 동작하지 않는다.</p>
+
+<p><br /><br />
+<br /></p>
+
+<h2 id="고려해야-할-것">고려해야 할 것</h2>
+<p><strong>예)</strong> JPA를 사용하면서 Entity 객체가 null인 경우 대체되는 값을 return 하는 작업을 orElse에 전달했다.  <br />
+대체되는 Entity를 먼저 만들긴 하지만 최종적으로 null이 아니기 때문에  <br />
+기존 Entity를 그대로 사용할 것이다.</p>
+
+<p>JPA의 영속성 컨텍스트에서는 대체되는 Entity 객체가 이미 생성되어 있는 상태이기 때문에   <br />
+이 상태에서 작업을 마치게 되면 자동으로 flush되어 Entity 객체와 관련된 테이블에 레코드가 만들어지게 된다.</p>
+
+<p>null일 경우 대체되는 값을 구하기 위해 다른 자원을 따로 만들어야 하거나 수정/삭제 해야 한다면  <br />
+orElseGet을 사용하여 먼저 null인지 아닌지 판단하는 과정을 거친 뒤에 관련 메소드를 실행하게끔 구현해야 한다.</p>
+
+<p><br /><br />
+<br /></p>
+
+<h3 id="참고">참고</h3>
+<ul>
+  <li><a href="https://zgundam.tistory.com/174">https://zgundam.tistory.com/174</a></li>
+  <li><a href="https://wickso.me/java/difference-between-orelse-and-orelseget-in-optional/">https://wickso.me/java/difference-between-orelse-and-orelseget-in-optional/</a></li>
+</ul>
+
+<p><br /></p>
+:ET

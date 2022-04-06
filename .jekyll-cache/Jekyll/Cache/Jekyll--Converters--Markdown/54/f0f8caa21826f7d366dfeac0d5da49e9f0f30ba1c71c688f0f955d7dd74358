@@ -1,0 +1,216 @@
+I"�Y<p><br /></p>
+
+<h2 id="트라이trie란">트라이(Trie)란?</h2>
+
+<p>트라이는 효율적인 문자열 저장 및 탐색이 가능한 자료구조의 형태이다. <br />
+내가 저장한 구조에 포함된 문자열인지 알 수 있는 방법은 다음과 같다. <br />
+<br /></p>
+
+<h4 id="단순비교">단순비교</h4>
+<ul>
+  <li>전체 문자열의 맨 처음부터 끝까지 문자 하나하나를 비교하는 방식</li>
+  <li>최대 문자열 길이 m, 전체 문자 개수 n개 시간 복잡도: 최악의 경우 O(nm)<br />
+<br /></li>
+</ul>
+
+<h4 id="이진-탐색-기법">이진 탐색 기법</h4>
+<ul>
+  <li>전체 문자열을 사전순으로 배열 저장 후, 중간 값과 비교해 사전적으로 이전이면 좌측의 반을 비교하는 방식</li>
+  <li>최대 문자열 길이 m, 전체 문자 개수 n개 시간 복잡도: 정렬 O(n mlogn) / 탐색 O(mlogn) → O(nmlogn)<br />
+<br /></li>
+</ul>
+
+<h4 id="트라이trie">트라이(Trie)</h4>
+<ul>
+  <li>k-진 트리 구조를 통해 문자열 저장하는 방식</li>
+  <li>영어 사전 방식, - game 이면 사전에 g를 찾고, 순서대로 a, m, e를 찾는 방식을 트리 형식으로 구현한 것</li>
+  <li>맨 앞의 접두어부터 시작하여 단어 전체를 찾아가는 과정으로 접두사 트리라고도 한다.</li>
+  <li>트라이는 문자열 저장을 위해 공간을 많이 쓰지만 탐색에 매우 효율적이라는 특성을 갖고 있다.</li>
+  <li>최대 문자열 길이 m일 때 문자의 개수와 무관하게 시간 복잡도 O(m)
+    <ul>
+      <li>각 문자 하나를 배열의 위치로 지정하여 문자열 하나 찾을 때 O(1) 이므로 길이 만큼의 시간만 소요</li>
+      <li>만약 문자열 길이가 너무 길어 Map을 이용해 동적 할당을 해야 하는 경우 O(m logn) 만큼 소요될 수 있다. <br />
+<br /></li>
+    </ul>
+  </li>
+</ul>
+
+<p><img width="600" src="https://mblogthumb-phinf.pstatic.net/MjAxNzAyMTdfMjU5/MDAxNDg3MzI4ODkyODc5.I6IH0qyOA5spM1KE_PmXdXOjOMp1xIBShYc9gfNxXP8g._ZZkD8AwQ9gog5Bud8OEstm4a-_KzDc7QhyEq0OkgB0g.PNG.kks227/1.png?type=w2" /></p>
+
+<p><br /> 
+<br /></p>
+
+<h2 id="trie-구현">Trie 구현</h2>
+<p>트라이 구조의 각 노드에는 각 문자열의 일부를 포함하며 자신과 연결되는 문자열의 일부를 가지고 있어야 한다.</p>
+
+<h4 id="1-생성자-클래스-정의">(1) 생성자, 클래스 정의</h4>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">Trie</span> <span class="o">{</span>
+
+    <span class="nc">Node</span> <span class="n">root</span><span class="o">;</span>
+    <span class="kd">static</span> <span class="kd">final</span> <span class="kt">int</span> <span class="no">ALPHABET_SIZE</span> <span class="o">=</span> <span class="mi">26</span><span class="o">;</span> <span class="c1">// a-z는 26개</span>
+    <span class="kd">public</span> <span class="nf">Trie</span><span class="o">(){</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">root</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Node</span><span class="o">();</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">root</span><span class="o">.</span><span class="na">val</span> <span class="o">=</span> <span class="sc">' '</span><span class="o">;</span>
+    <span class="o">}</span>
+    
+    <span class="kd">private</span> <span class="kd">static</span> <span class="kd">class</span> <span class="nc">Node</span><span class="o">{</span>
+        <span class="nc">Node</span><span class="o">[]</span> <span class="n">child</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Node</span><span class="o">[</span><span class="no">ALPHABET_SIZE</span><span class="o">];</span>  <span class="c1">// 뒤로 연결되는 문자열 a-z 소문자를 index화하여 저장하는 배열(26개)</span>
+        <span class="kt">boolean</span> <span class="n">isTerminal</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>             <span class="c1">// 현재 노드가 문자 완성이 되는 노드인지 여부</span>
+        <span class="kt">int</span> <span class="n">childNum</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>                      <span class="c1">// 현재 노드에 연결된 문자열의 개수</span>
+        <span class="kt">char</span> <span class="n">val</span><span class="o">;</span>                             <span class="c1">// 현재 노드의 값</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h4 id="2-문자열-삽입하기">(2) 문자열 삽입하기</h4>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">private</span> <span class="kt">int</span> <span class="nf">charToInt</span><span class="o">(</span><span class="kt">char</span> <span class="n">c</span><span class="o">){</span>
+  <span class="k">return</span> <span class="n">c</span> <span class="o">-</span> <span class="sc">'a'</span><span class="o">;</span> <span class="c1">// 여기서는 소문자만 있으므로 'a'를 빼면 된다.</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">insert</span><span class="o">(</span><span class="nc">String</span> <span class="n">str</span><span class="o">){</span>
+    <span class="kt">int</span> <span class="n">length</span> <span class="o">=</span> <span class="n">str</span><span class="o">.</span><span class="na">length</span><span class="o">();</span>
+    <span class="nc">Node</span> <span class="n">current</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">root</span><span class="o">;</span>       <span class="c1">// 루트 부터 시작해서 내려감</span>
+    
+    <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">=</span><span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">length</span><span class="o">;</span> <span class="o">++</span><span class="n">i</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">char</span> <span class="n">c</span> <span class="o">=</span> <span class="n">str</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>       <span class="c1">// 전체 문자열의 일부 단어 추출</span>
+        <span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">charToInt</span><span class="o">(</span><span class="n">c</span><span class="o">);</span> <span class="c1">// 추출한 단어를 숫자로 변환</span>
+
+        <span class="k">if</span><span class="o">(</span><span class="n">current</span><span class="o">.</span><span class="na">child</span><span class="o">[</span><span class="n">num</span><span class="o">]</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span> <span class="c1">// 기존에 null이면 연결 문자열로 처음 추가되는 것</span>
+            <span class="n">current</span><span class="o">.</span><span class="na">child</span><span class="o">[</span><span class="n">num</span><span class="o">]</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Node</span><span class="o">();</span>
+            <span class="n">current</span><span class="o">.</span><span class="na">child</span><span class="o">[</span><span class="n">num</span><span class="o">].</span><span class="na">val</span> <span class="o">=</span> <span class="n">c</span><span class="o">;</span>
+            <span class="n">current</span><span class="o">.</span><span class="na">childNum</span><span class="o">++;</span>
+        <span class="o">}</span>
+
+        <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">child</span><span class="o">[</span><span class="n">num</span><span class="o">];</span> <span class="c1">// 자식 노드로 넘어감</span>
+    <span class="o">}</span>
+    <span class="n">current</span><span class="o">.</span><span class="na">isTerminal</span> <span class="o">=</span> <span class="kc">true</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h4 id="3-find">(3) find</h4>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 반복문으로 노드를 순환하여 문자열 존재 여부 판단</span>
+<span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">find</span><span class="o">(</span><span class="nc">String</span> <span class="n">str</span><span class="o">){</span>
+    <span class="kt">int</span> <span class="n">length</span> <span class="o">=</span> <span class="n">str</span><span class="o">.</span><span class="na">length</span><span class="o">();</span>
+    <span class="nc">Node</span> <span class="n">current</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">root</span><span class="o">;</span> <span class="c1">// 현재 노드 설정</span>
+        
+    <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="n">length</span><span class="o">;</span> <span class="o">++</span><span class="n">i</span><span class="o">){</span>
+        <span class="kt">char</span> <span class="n">c</span> <span class="o">=</span> <span class="n">str</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">i</span><span class="o">);</span>
+        <span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="k">this</span><span class="o">.</span><span class="na">charToInt</span><span class="o">(</span><span class="n">c</span><span class="o">);</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">current</span><span class="o">.</span><span class="na">child</span><span class="o">[</span><span class="n">num</span><span class="o">]</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span> <span class="c1">// 문자열의 일부를 추출했는데 null 이라면 false 반환</span>
+            <span class="k">return</span> <span class="kc">false</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="n">current</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">child</span><span class="o">[</span><span class="n">num</span><span class="o">];</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">current</span> <span class="o">!=</span> <span class="kc">null</span> <span class="o">&amp;&amp;</span> <span class="n">current</span><span class="o">.</span><span class="na">isTerminal</span><span class="o">;</span> <span class="c1">// 문자열의 마지막이라면 true</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h4 id="4-print">(4) print</h4>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">private</span> <span class="kt">char</span> <span class="nf">intToChar</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span><span class="o">){</span>
+    <span class="k">return</span> <span class="o">(</span><span class="kt">char</span><span class="o">)(</span><span class="n">i</span> <span class="o">+</span> <span class="o">(</span><span class="kt">int</span><span class="o">)</span><span class="sc">'a'</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">printTrie</span><span class="o">(){</span> <span class="c1">// 사용자가 간편히 호출만 하면 되는 메소드</span>
+    <span class="k">this</span><span class="o">.</span><span class="na">printTrie</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">root</span><span class="o">,</span> <span class="mi">0</span><span class="o">,</span> <span class="k">new</span> <span class="nc">StringBuilder</span><span class="o">());</span>
+<span class="o">}</span>
+
+<span class="c1">// 내부에서 재귀적으로 순환하여 노드에 저장된 값들 추출해 프린트</span>
+<span class="kd">private</span> <span class="kt">void</span> <span class="nf">printTrie</span><span class="o">(</span><span class="nc">Node</span> <span class="n">node</span><span class="o">,</span> <span class="kt">int</span> <span class="n">idx</span><span class="o">,</span> <span class="nc">StringBuilder</span> <span class="n">sb</span><span class="o">){</span>
+    <span class="nc">Node</span> <span class="n">current</span> <span class="o">=</span> <span class="n">node</span><span class="o">;</span>
+    <span class="nc">Node</span><span class="o">[]</span> <span class="n">child</span> <span class="o">=</span> <span class="n">current</span><span class="o">.</span><span class="na">child</span><span class="o">;</span>
+    <span class="nc">StringBuilder</span> <span class="n">builder</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">StringBuilder</span><span class="o">(</span><span class="n">sb</span><span class="o">);</span>
+
+    <span class="c1">// 루트 노드에는 저장된 것이 없으므로 그 외의 경우에만 append</span>
+    <span class="k">if</span><span class="o">(!</span><span class="n">current</span><span class="o">.</span><span class="na">equals</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">root</span><span class="o">)){</span>
+        <span class="n">builder</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="n">intToChar</span><span class="o">(</span><span class="n">idx</span><span class="o">));</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 완성 노드라면 프린팅하면 된다.</span>
+    <span class="k">if</span><span class="o">(</span><span class="n">current</span><span class="o">.</span><span class="na">isTerminal</span><span class="o">){</span>
+        <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">builder</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 연결된 노드들을 순환하기 위해 반복문 사용</span>
+    <span class="k">for</span><span class="o">(</span><span class="kt">int</span> <span class="n">i</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span> <span class="n">i</span> <span class="o">&lt;</span> <span class="no">ALPHABET_SIZE</span><span class="o">;</span> <span class="o">++</span><span class="n">i</span><span class="o">){</span>
+        <span class="c1">// null 이라면 거기에는 저장된 것이 없다는 의미이므로 건너 뜀</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">current</span><span class="o">.</span><span class="na">child</span><span class="o">[</span><span class="n">i</span><span class="o">]</span> <span class="o">==</span> <span class="kc">null</span><span class="o">){</span>
+            <span class="k">continue</span><span class="o">;</span>
+        <span class="o">}</span>
+        <span class="n">printTrie</span><span class="o">(</span><span class="n">child</span><span class="o">[</span><span class="n">i</span><span class="o">],</span> <span class="n">i</span><span class="o">,</span> <span class="n">builder</span><span class="o">);</span> <span class="c1">// 재귀적으로 순환</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h4 id="5-삭제">(5) 삭제</h4>
+<p>삭제는 재귀 bottom-up 방식으로 진행된다.</p>
+
+<ol>
+  <li>삭제할 문자가 다른 문자의 접두사인 경우 <code class="language-plaintext highlighter-rouge">-isTerminal</code>을 <code class="language-plaintext highlighter-rouge">false</code>로 변경</li>
+  <li>삭제할 문자가 유니크하여 다른 문자와 연관이 없는 경우, 관련 모든 노드 삭제</li>
+  <li>삭제할 문자의 일부가 전체 삭제 문자의 접두사인 경우, 다른 문자에 영향가지 않는 곳까지만 삭제<br />
+<br /></li>
+</ol>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// 사용자가 호출 시 사용하는 메소드</span>
+<span class="kd">public</span> <span class="kt">void</span> <span class="nf">delete</span><span class="o">(</span><span class="nc">String</span> <span class="n">str</span><span class="o">){</span>
+    <span class="n">delete</span><span class="o">(</span><span class="k">this</span><span class="o">.</span><span class="na">root</span><span class="o">,</span> <span class="n">str</span><span class="o">,</span> <span class="mi">0</span><span class="o">);</span>
+<span class="o">}</span>
+
+<span class="c1">// 내부적으로 재귀를 통해 삭제를 진행하는 메소드</span>
+<span class="kd">private</span> <span class="kt">void</span> <span class="nf">delete</span><span class="o">(</span><span class="nc">Node</span> <span class="n">current</span><span class="o">,</span> <span class="nc">String</span> <span class="n">str</span><span class="o">,</span> <span class="kt">int</span> <span class="n">idx</span><span class="o">){</span>
+    <span class="kt">int</span> <span class="n">leng</span> <span class="o">=</span> <span class="n">str</span><span class="o">.</span><span class="na">length</span><span class="o">();</span>
+
+    <span class="c1">// 자식이 없는데 string의 length의 끝까지 오지 않았다면 예외 발생</span>
+    <span class="c1">// 끝까지 갔는데 해당 노드가 terminal가 아니었다면 해당 단어를 저장하지 않은 것이므로 예외 발생</span>
+    <span class="k">if</span><span class="o">((</span><span class="n">current</span><span class="o">.</span><span class="na">childNum</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="n">idx</span> <span class="o">!=</span> <span class="n">leng</span><span class="o">)</span> <span class="o">||</span> <span class="o">(</span><span class="n">idx</span> <span class="o">==</span> <span class="n">leng</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">current</span><span class="o">.</span><span class="na">isTerminal</span><span class="o">))</span> <span class="o">{</span>
+        <span class="k">throw</span> <span class="k">new</span> <span class="nf">NoSuchElementException</span><span class="o">(</span><span class="s">"Value "</span> <span class="o">+</span> <span class="n">str</span> <span class="o">+</span> <span class="s">" does not exist in Trie!"</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="c1">// 문자열의 마지막에 다다른 경우</span>
+    <span class="k">if</span><span class="o">(</span><span class="n">idx</span> <span class="o">==</span> <span class="n">leng</span><span class="o">){</span>
+        <span class="n">current</span><span class="o">.</span><span class="na">isTerminal</span> <span class="o">=</span> <span class="kc">false</span><span class="o">;</span>
+
+    <span class="c1">// 자식이 없는데 문자의 마지막이었다면 해당 문자만 저장된 것이므로 null 처리</span>
+    <span class="k">if</span><span class="o">(</span><span class="n">current</span><span class="o">.</span><span class="na">childNum</span> <span class="o">==</span> <span class="mi">0</span><span class="o">){</span>
+        <span class="n">current</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+    <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+        <span class="kt">char</span> <span class="n">c</span> <span class="o">=</span> <span class="n">str</span><span class="o">.</span><span class="na">charAt</span><span class="o">(</span><span class="n">idx</span><span class="o">);</span>
+        <span class="kt">int</span> <span class="n">num</span> <span class="o">=</span> <span class="n">charToInt</span><span class="o">(</span><span class="n">c</span><span class="o">);</span>
+
+        <span class="c1">// 삭제 후 돌아오는 부분</span>
+        <span class="n">delete</span><span class="o">(</span><span class="n">current</span><span class="o">.</span><span class="na">child</span><span class="o">[</span><span class="n">num</span><span class="o">],</span> <span class="n">str</span><span class="o">,</span><span class="n">idx</span><span class="o">+</span><span class="mi">1</span><span class="o">);</span>
+
+        <span class="c1">// child가 null처리 되었다면 자식 노드의 수가 하나 줄어든 것이므로 -- 처리</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">current</span><span class="o">.</span><span class="na">child</span><span class="o">[</span><span class="n">num</span><span class="o">]</span> <span class="o">==</span> <span class="kc">null</span><span class="o">)</span> <span class="n">current</span><span class="o">.</span><span class="na">childNum</span><span class="o">--;</span>
+
+        <span class="c1">// 현재 노드의 자식이 없고, 단어의 마지막도 아니라면 삭제해야 한다.</span>
+        <span class="k">if</span><span class="o">(</span><span class="n">current</span><span class="o">.</span><span class="na">childNum</span> <span class="o">==</span> <span class="mi">0</span> <span class="o">&amp;&amp;</span> <span class="o">!</span><span class="n">current</span><span class="o">.</span><span class="na">isTerminal</span><span class="o">){</span>
+            <span class="n">current</span> <span class="o">=</span> <span class="kc">null</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p><br />
+<br /></p>
+
+<h2 id="문제">문제</h2>
+
+<ul>
+  <li><a href="https://www.acmicpc.net/problem/5670">https://www.acmicpc.net/problem/5670</a></li>
+  <li><a href="https://programmers.co.kr/learn/courses/30/lessons/60060">https://programmers.co.kr/learn/courses/30/lessons/60060</a></li>
+</ul>
+
+:ET

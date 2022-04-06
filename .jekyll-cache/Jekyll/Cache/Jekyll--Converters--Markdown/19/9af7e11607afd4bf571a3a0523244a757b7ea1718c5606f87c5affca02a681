@@ -1,0 +1,112 @@
+I"�<p><br /></p>
+
+<p>우선 <code class="language-plaintext highlighter-rouge">@RequestParam</code>, <code class="language-plaintext highlighter-rouge">@RequestBody</code>, <code class="language-plaintext highlighter-rouge">@ModelAttribute</code>의 차이를 정확히 알아야 한다.</p>
+
+<p><br /></p>
+
+<h2 id="requestparam"><code class="language-plaintext highlighter-rouge">@RequestParam</code></h2>
+<p><code class="language-plaintext highlighter-rouge">@RequestParam</code>은 1개의 HTTP 요청 파라미터를 받기 위해서 사용한다.  <br />
+<code class="language-plaintext highlighter-rouge">@RequestParam</code>은 필수 여부가 true 이기 때문에 기본적으로 반드시 해당 파라미터가 전송되어야 한다. <br />
+해당 파라미터가 전송되지 않으면 400 error가 발생한다.  <br />
+반드시 필요한 변수가 아니라면 옵션을 통해 설정해야 한다.</p>
+
+<p><br />
+<br /></p>
+
+<h2 id="requestbody"><code class="language-plaintext highlighter-rouge">@RequestBody</code></h2>
+<p>클라이언트가 전송하는 Json(application/json) 형태의 HTTP Body 내용을 Java Object로 변환시켜주는 역할이다.
+그래서 Body가 존재하지 않는 Get 메서드에서 <code class="language-plaintext highlighter-rouge">@RequestBody</code>를 사용하려고 하면 에러가 발생하게 된다.  <br />
+<code class="language-plaintext highlighter-rouge">@RequestBody</code>로 받는 데이터는 Spring에서 관리하는 MessageConverter 중 하나인 <br />
+MappingJackson2HttpMessageConverter를 통해 Java 객체로 변환한다.</p>
+
+<p><br />
+<br /></p>
+
+<h2 id="modelattribute"><code class="language-plaintext highlighter-rouge">@ModelAttribute</code></h2>
+<p>클라이언트가 전송하는 multipart/form-data 형태의 HTTP Body 내용과 HTTP 파라미터들을 <br />
+Setter을 통해 1 대 1로 객체에 바인딩하기 위해 사용된다.     <br />
+JSON이나 XML과 같은 형태의 데이터를 변환시키는 <code class="language-plaintext highlighter-rouge">@RequestBody</code>와 달리        <br />
+<code class="language-plaintext highlighter-rouge">@ModelAttribute</code>는 multipart/form-data 형태의 HTTP Body와 HTTP 파라미터들을 매핑시킨다는 차이가 있다.</p>
+
+<p><br />  <br />
+<br /></p>
+
+<h1 id="create-post">Create Post</h1>
+<p>SNS 개발을 위해 <code class="language-plaintext highlighter-rouge">content(String)</code>와 <code class="language-plaintext highlighter-rouge">image(MultipartFile)</code>를 List 형태로 받아야 하는 상황이다.       <br />
+이미지는 AWS S3에 저장하며, 파일 이름과 URL을 DB에 저장한다.</p>
+
+<p><br /></p>
+
+<h3 id="방법-1-사진을-base64로-인코딩하여-json으로-전달">방법 1: 사진을 Base64로 인코딩하여 JSON으로 전달</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// DTO
+public class CreatePostRequest {
+	private String content;
+	private List&lt;String&gt; images;
+}
+
+// Controller
+@PostMapping("/posts")
+public ResponseEntity&lt;Void&gt; create(@ModelAttribute CreatePostRequest request) {
+    ...
+}
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>Base64로 이미지를 변환하는 경우 최대 33% 까지 파일의 크기가 증대된다.   <br />
+따라서 네트워크 대역 낭비가 심하다.</p>
+  </li>
+  <li>
+    <p>Spring에서 특정 크기 이상의 데이터가 Body에 담기는 경우 요청을 해석하지 못하는 상황이 발생한다.</p>
+  </li>
+</ul>
+
+<p><br />  <br />
+<br /></p>
+
+<h3 id="방법-2-각각의-데이터를-별도로-form으로-전달">방법 2: 각각의 데이터를 별도로 form으로 전달</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// Controller 
+@PostMapping("/posts")
+public ResponseEntity&lt;Void&gt; create(@RequestParam String content, 
+                                   @RequestParam List&lt;MultipartFile&gt; images) {
+    ...
+}
+</code></pre></div></div>
+
+<ul>
+  <li>
+    <p>객체를 form을 이용해 데이터를 전달받고 데이터들을 객체로 매핑하기 위해  <br />
+Spring type convertion을 이용해야 한다.</p>
+  </li>
+  <li>
+    <p>List를 받는 경우 데이터의 논리적인 연관을 파악하기 어렵다.</p>
+  </li>
+</ul>
+
+<p><br />    <br />
+<br /></p>
+
+<h3 id="방법-3-form-데이터를-하나의-객체로-전달">방법 3: form 데이터를 하나의 객체로 전달</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// DTO 
+public class CreatePostRequest {
+	private String content;
+	private List&lt;MultipartFile&gt; images;
+}
+
+// Controller 
+@PostMapping("/posts")
+public ResponseEntity&lt;Void&gt; create(@ModelAttribute CreatePostRequest request) {
+    ...
+}
+</code></pre></div></div>
+
+<p><code class="language-plaintext highlighter-rouge">@ModelAttribute</code>를 사용하여 form data를 객체로 바로 매핑하는 방법이다.     <br />
+데이터 간의 논리적인 연관관계를 표현할 수 있고,   <br />
+Base64와 같이 인코딩 하지 않기 때문에 파일 사이즈가 증대되는 현상도 발생하지 않는다.</p>
+
+<p><br /></p>
+
+:ET

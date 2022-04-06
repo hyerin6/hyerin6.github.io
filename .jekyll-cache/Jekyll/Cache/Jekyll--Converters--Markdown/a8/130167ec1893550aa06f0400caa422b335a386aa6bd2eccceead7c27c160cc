@@ -1,0 +1,70 @@
+I"�<h2 id="시간-복잡도">시간 복잡도</h2>
+<p>실제 코딩 테스트 문제의 시간 제한은 1~5초 가량이며,    <br />
+보통 연산 횟수가 10억을 넘어가도록 작성하면 오답 판정 받을 수 있음에 주의해야 한다.</p>
+
+<h4 id="시간-제한이-1초인-문제의-경우">시간 제한이 1초인 문제의 경우</h4>
+
+<ul>
+  <li>
+    <p>N의 범위가 500: 시간 복잡도가 O(N³) 알고리즘을 설계하면 문제를 풀 수 있다.</p>
+  </li>
+  <li>
+    <p>N의 범위가 2,000: 시간 복잡도가 O(N²) 알고리즘을 설계하면 문제를 풀 수 있다.</p>
+  </li>
+  <li>
+    <p>N의 범위가 100,000: 시간 복잡도가 O(NlogN) 알고리즘을 설계하면 문제를 풀 수 있다.</p>
+  </li>
+  <li>
+    <p>N의 범위가 10,000,000: 시간 복잡도가 O(N) 알고리즘을 설계하면 문제를 풀 수 있다.</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="공간-복잡도">공간 복잡도</h2>
+<p>공간 복잡도를 표기할 때도 빅오 표기법을 이용한다. 일반적으로 메모리 사용량 기준은 MB 단위로 제시된다.</p>
+
+<p>정수형 자료형인 int를 기준으로 배열 크기에 따른 메모리 사용량은 다음과 같다.</p>
+
+<ul>
+  <li>
+    <p>int a[1000]: 4KB</p>
+  </li>
+  <li>
+    <p>int a[1000000]: 4MB</p>
+  </li>
+  <li>
+    <p>int a[2000][2000]: 16MB</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h2 id="java-int-long-범위">Java int, long 범위</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: center">종류</th>
+      <th style="text-align: center">설명</th>
+      <th style="text-align: center">저장 공간</th>
+      <th style="text-align: center">값의 범위 (최소값~최대값)</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: center">int</td>
+      <td style="text-align: center">부호 있는 정수</td>
+      <td style="text-align: center">32 bits</td>
+      <td style="text-align: center">-2147483648 ~ 2147483647</td>
+    </tr>
+    <tr>
+      <td style="text-align: center">long</td>
+      <td style="text-align: center">부호 있는 정수</td>
+      <td style="text-align: center">64 bits</td>
+      <td style="text-align: center">-9223372036854775808 ~ 9223372036854775807</td>
+    </tr>
+  </tbody>
+</table>
+
+:ET

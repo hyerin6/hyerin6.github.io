@@ -1,0 +1,224 @@
+I"�M<h2 id="1-spring-security의-구조">1. Spring Security의 구조</h2>
+
+<p><img width="967" alt="스크린샷 2020-04-18 오전 12 28 42" src="https://user-images.githubusercontent.com/33855307/79586183-bfc1e480-810b-11ea-8ad5-3ddee1094e4b.png" /></p>
+
+<p><br /> <br /></p>
+
+<p>1.1 유저가 로그인을 시도한다.      <br />
+1.2 <code class="language-plaintext highlighter-rouge">AuthenticationFilter</code> 에서 <code class="language-plaintext highlighter-rouge">UserDetails</code>로 User DB에 접근한다.   <br />
+1.3 DB에 있는 user라면 <code class="language-plaintext highlighter-rouge">UserDetails</code>에서 꺼내 session을 생성한다.   <br />
+1.4 spring security의 인메모리 세션저장소인 <code class="language-plaintext highlighter-rouge">SecurityContextHolder</code>에 저장한다.    <br />
+1.5 user에게 session ID와 함께 응답한다.     <br />
+1.6 이후 사용자의 요청에서는 요청 쿠키에서 JSESSIONID를 검증해 유효하면 <code class="language-plaintext highlighter-rouge">Authentication</code>을 준다.</p>
+
+<h2 id="2-spring-security---인증-절차-인터페이스">2. Spring Security - 인증 절차 인터페이스</h2>
+<h3 id="2-1-userdetails">2-1. UserDetails</h3>
+<p>각기 다른 어플리케이션의 User에 해당하는 Model에 <code class="language-plaintext highlighter-rouge">UserDetails</code>를 implements하여 <br />
+spring security가 이애할 수 있는 형태의 User로 만들어줘야 한다.</p>
+
+<p>로그인 로직에서 사용자가 입력한 정보와 DB에 저장된 사용자의 정보를 비교해야 하는데 <br />
+<code class="language-plaintext highlighter-rouge">UserDetails</code> 인터페이스는 사용자의 정보를 담아두는 VO 역할을 한다고 할 수 있다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">UserDetails</code> 인터페이스를 구현하려면 오러바이드해야 하는 메소드들이 있다. <br />
+사용자 정보에 관한 다른 정보를 추가해도 된다. <br />
+(다른 멤버변수들은 getter, setter를 만들어서 사용하면 된다.)</p>
+
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">Collection&lt;? extends GrantedAuthority&gt; getAuthorities()</code>     <br />
+계정이 갖고있는 권한 목록을 리턴한다.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">String getPassword()</code><br />
+계정의 비밀번호를 리턴한다.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">String getUsername()</code> <br />
+계정의 이름을 리턴한다.</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">boolean isAccountNonExpired()</code>  <br />
+계정이 만료되지 않았는지 리턴한다. (true : 만료되지 않음)</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">boolean isAccountNonLocked()</code><br />
+계정이 잠겨있지 않았는지 리턴한다. (true : 잠기지 않음)</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">boolean isCredentialNonExpired()</code>    <br />
+비밀번호가 만료되지 않았는지 리턴한다. (true : 만료되지 않음)</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">boolean isEnabled()</code>   <br />
+계정이 활성화(사용가능)인지 리턴한다. (true: 활성화)</p>
+  </li>
+</ul>
+
+<p><code class="language-plaintext highlighter-rouge">UserDetails</code> 인터페이스는 User Entity 클래스에 구현하지 않고, <br />
+<code class="language-plaintext highlighter-rouge">CustomUserDetails</code> 클래스에 implements한다.</p>
+
+<p>CustomUserDetails.java</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">CustomUserDetails</span> <span class="kd">implements</span> <span class="nc">UserDetails</span> <span class="o">{</span>
+    <span class="kd">private</span> <span class="nc">Long</span> <span class="n">id</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">email</span><span class="o">;</span>
+    <span class="kd">private</span> <span class="nc">String</span> <span class="n">password</span><span class="o">;</span> 
+    
+    <span class="nd">@Enumerated</span><span class="o">(</span><span class="nc">EnumType</span><span class="o">.</span><span class="na">STRING</span><span class="o">)</span>
+    <span class="kd">private</span> <span class="nc">Role</span> <span class="n">userType</span><span class="o">;</span>
+     
+    <span class="kd">private</span> <span class="kt">boolean</span> <span class="n">enabled</span><span class="o">;</span>
+    
+    <span class="nd">@ElementCollection</span><span class="o">(</span><span class="n">fetch</span> <span class="o">=</span> <span class="nc">FetchType</span><span class="o">.</span><span class="na">EAGER</span><span class="o">)</span>
+    <span class="nd">@Builder</span><span class="o">.</span><span class="na">Default</span>
+    <span class="kd">private</span> <span class="nc">List</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">roles</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">ArrayList</span><span class="o">&lt;&gt;();</span>
+    
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="nc">Collection</span><span class="o">&lt;?</span> <span class="kd">extends</span> <span class="nc">GrantedAuthority</span><span class="o">&gt;</span> <span class="nf">getAuthorities</span><span class="o">()</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="k">this</span><span class="o">.</span><span class="na">roles</span><span class="o">.</span><span class="na">stream</span><span class="o">()</span>
+               <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="nl">SimpleGrantedAuthority:</span><span class="o">:</span><span class="k">new</span><span class="o">)</span>
+               <span class="o">.</span><span class="na">collect</span><span class="o">(</span><span class="nc">Collectors</span><span class="o">.</span><span class="na">toList</span><span class="o">());</span>
+    <span class="o">}</span>
+    
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="nc">String</span> <span class="nf">getUsername</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="kc">null</span><span class="o">;</span> <span class="o">}</span>
+    
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isAccountNonExpired</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="kc">false</span><span class="o">;</span> <span class="o">}</span>
+    
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isAccountNonLocked</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="kc">false</span><span class="o">;</span> <span class="o">}</span>
+    
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">boolean</span> <span class="nf">isCredentialsNonExpired</span><span class="o">()</span> <span class="o">{</span> <span class="k">return</span> <span class="kc">false</span><span class="o">;</span> <span class="o">}</span>
+
+<span class="o">}</span>   
+</code></pre></div></div>
+
+<p>위 코드는 이번 프로젝트에서 사용한 <code class="language-plaintext highlighter-rouge">UserDetails</code> 인터페이스의 일부이다.</p>
+
+<h3 id="2-2-userdetailsservice">2-2. UserDetailsService</h3>
+<p><code class="language-plaintext highlighter-rouge">UserDetailsService</code> 인터페이스에는   <br />
+DB에서 사용자 정보를 불러오는 메소드를 오버라이드 해야 한다.      <br />
+<code class="language-plaintext highlighter-rouge">loadUserByUsername()</code> 메소드이다.   <br />
+이 메소드에서 사용자 정보를 불러오는 작업을 하면 된다.   <br />
+<code class="language-plaintext highlighter-rouge">CustomUserDetails</code> 타입으로 사용자의 정보를 가져오면 된다.</p>
+
+<p>사용자 정보 유/무에 따라 예외, 사용자 정보를 리턴하면 된다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@RequiredArgsConstructor</span>
+<span class="nd">@Service</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">CustomUserDetailsService</span> <span class="kd">implements</span> <span class="nc">UserDetailsService</span> <span class="o">{</span>
+
+    <span class="nd">@Autowired</span>
+    <span class="kd">private</span> <span class="nc">UserRepository</span> <span class="n">userRepository</span><span class="o">;</span>
+
+    <span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="nc">UserDetails</span> <span class="nf">loadUserByUsername</span><span class="o">(</span><span class="nc">String</span> <span class="n">email</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">UsernameNotFoundException</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="o">(</span><span class="nc">UserDetails</span><span class="o">)</span> <span class="n">userRepository</span><span class="o">.</span><span class="na">findByEmail</span><span class="o">(</span><span class="n">email</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">orElseThrow</span><span class="o">(()</span> <span class="o">-&gt;</span> <span class="k">new</span> <span class="nc">UsernameNotFoundException</span><span class="o">(</span><span class="s">"사용자를 찾을 수 없습니다."</span><span class="o">));</span>
+    <span class="o">}</span>
+<span class="o">}</span> 
+</code></pre></div></div>
+
+<p>위 코드는 이번 프로젝트에서 사용한 <code class="language-plaintext highlighter-rouge">UserDetailsService</code> 인터페이스의 일부이다.</p>
+
+<h3 id="2-3-authenticationprovider">2-3. AuthenticationProvider</h3>
+<p><code class="language-plaintext highlighter-rouge">AuthenticationProvider</code> 인터페이스는      <br />
+사용자가 입력한 로그인 정보와 DB에서 가져온 사용자의 정보를 비교해주는 인터페이스이다.</p>
+
+<p>해당 인터페이스에 오버라이드되는 <code class="language-plaintext highlighter-rouge">authenticate()</code> 메소드는 
+화면에 사용자가 입력한 로그인 정보를 담고있는 <code class="language-plaintext highlighter-rouge">Authentication</code> 객체를 갖고 있다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">authenticate()</code> 메소드에서 로그인 인증을  <br />
+성공하면 <code class="language-plaintext highlighter-rouge">Authentication</code> 객체를 리턴하고   <br />
+실패하면 그에 맞는 Exception을 던진다.</p>
+
+<h3 id="2-4-authenticationfailurehandler">2-4. AuthenticationFailureHandler</h3>
+<p>spring security에서 로그인 실패를 담당하는 인터페이스아다.   <br />
+<code class="language-plaintext highlighter-rouge">SecurityConfig</code>에서 <code class="language-plaintext highlighter-rouge">formLogin()</code>에 설정하면 로그인이 실패했을 떄 호출되며 이에 대한 처리를 수행한다.</p>
+
+<p>사용자가 왜 로그인할 수 없는지 자세한 에러 메시지를 출력해주고 싶어서       <br />
+<code class="language-plaintext highlighter-rouge">AuthenticationFailureHandler</code>를 구현했다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Override</span>
+    <span class="kd">public</span> <span class="kt">void</span> <span class="nf">onAuthenticationFailure</span><span class="o">(</span><span class="nc">HttpServletRequest</span> <span class="n">httpServletRequest</span><span class="o">,</span>
+                                        <span class="nc">HttpServletResponse</span> <span class="n">httpServletResponse</span><span class="o">,</span>
+                                        <span class="nc">AuthenticationException</span> <span class="n">e</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">IOException</span><span class="o">,</span> <span class="nc">ServletException</span> <span class="o">{</span>
+
+        <span class="k">if</span><span class="o">(</span><span class="n">e</span> <span class="k">instanceof</span> <span class="nc">ValidationFailedException</span><span class="o">){</span>
+            <span class="n">httpServletResponse</span><span class="o">.</span><span class="na">sendRedirect</span><span class="o">(</span><span class="s">"/users/signin?error=0"</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">else</span> <span class="nf">if</span><span class="o">(</span><span class="n">e</span> <span class="k">instanceof</span> <span class="nc">UsernameNotFoundException</span><span class="o">){</span>
+            <span class="n">httpServletResponse</span><span class="o">.</span><span class="na">sendRedirect</span><span class="o">(</span><span class="s">"/users/signin?error=1"</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">else</span> <span class="nf">if</span><span class="o">(</span><span class="n">e</span> <span class="k">instanceof</span> <span class="nc">DisabledException</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">httpServletResponse</span><span class="o">.</span><span class="na">sendRedirect</span><span class="o">(</span><span class="s">"/users/signin?error=2"</span><span class="o">);</span>
+        <span class="o">}</span>
+        <span class="k">else</span> <span class="o">{</span>
+            <span class="n">httpServletResponse</span><span class="o">.</span><span class="na">sendRedirect</span><span class="o">(</span><span class="s">"/users/signin?error=3"</span><span class="o">);</span>
+        <span class="o">}</span>
+
+    <span class="o">}</span> 
+</code></pre></div></div>
+
+<p>위 코드는 이번 프로젝트에서 사용한 <code class="language-plaintext highlighter-rouge">AuthenticationFailureHandler</code> 인터페이스의 일부이다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">Validation</code>으로 에러를 출력해주고 싶은데<br />
+spring security로 로그인 로직을 처리하려고 하니까 <br />
+spring boot가 접근을 못해서 에러 메시지가 출력되지 않았다.</p>
+
+<p>그래도 사용자에게 자세히 에러 메시지를 출력해주고 싶어서 <br />
+<code class="language-plaintext highlighter-rouge">ValidationFailedException</code>을 생성해 <code class="language-plaintext highlighter-rouge">sendRedirect</code>로 파라미터에 에러 코드를 전달했다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="nc">Authentication</span> <span class="nf">authenticate</span><span class="o">(</span><span class="nc">String</span> <span class="n">email</span><span class="o">,</span> <span class="nc">String</span> <span class="n">password</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">AuthenticationException</span> <span class="o">{</span>
+        <span class="nc">UserSigninDto</span> <span class="n">userSigninDto</span> <span class="o">=</span> <span class="nc">UserSigninDto</span><span class="o">.</span><span class="na">builder</span><span class="o">()</span>
+                <span class="o">.</span><span class="na">email</span><span class="o">(</span><span class="n">email</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">password</span><span class="o">(</span><span class="n">password</span><span class="o">)</span>
+                <span class="o">.</span><span class="na">build</span><span class="o">();</span>
+
+        <span class="c1">// 사용자가 입력한 form data 형식이 맞는지 검사</span>
+        <span class="nc">ValidatorFactory</span> <span class="n">factory</span> <span class="o">=</span> <span class="nc">Validation</span><span class="o">.</span><span class="na">buildDefaultValidatorFactory</span><span class="o">();</span>
+        <span class="nc">Validator</span> <span class="n">validator</span> <span class="o">=</span> <span class="n">factory</span><span class="o">.</span><span class="na">getValidator</span><span class="o">();</span>
+
+        <span class="n">validator</span><span class="o">.</span><span class="na">validate</span><span class="o">(</span><span class="n">userSigninDto</span><span class="o">).</span><span class="na">stream</span><span class="o">().</span><span class="na">forEach</span><span class="o">(</span><span class="n">x</span> <span class="o">-&gt;</span> <span class="o">{</span>
+            <span class="k">throw</span> <span class="k">new</span> <span class="nf">ValidationFailedException</span><span class="o">(</span><span class="n">x</span><span class="o">.</span><span class="na">getMessage</span><span class="o">());</span>
+        <span class="o">});</span>
+
+        <span class="nc">CustomUserDetails</span> <span class="n">user</span> <span class="o">=</span> <span class="o">(</span><span class="nc">CustomUserDetails</span><span class="o">)</span> <span class="n">userDetailsService</span><span class="o">.</span><span class="na">loadUserByUsername</span><span class="o">(</span><span class="n">email</span><span class="o">);</span>
+</code></pre></div></div>
+
+<p>위 코드는 <code class="language-plaintext highlighter-rouge">Validation</code> 을 위한 <code class="language-plaintext highlighter-rouge">authenticate</code> 메소드의 일부이다.</p>
+
+<p><code class="language-plaintext highlighter-rouge">userSigninDto).stream().forEach(x -&gt; {</code> <br />
+이 부분에서 어떤 <code class="language-plaintext highlighter-rouge">Validation</code> 에러 인지 전달하고 싶었는데      <br />
+여러 에러가 발생하는 경우, 여러 메시지를 전달하는건     <br />
+이 메소드 안에서 해결할 수 없어서 일단 사용자에게 입력 형식이 잘못되었다는    <br />
+메시지만 전달하려고 한다.</p>
+
+<h2 id="3-spring-security-예외">3. Spring Security 예외</h2>
+<ul>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">BadCredentialException</code> - 비밀번호가 일치하지 않을 때 던지는 예외</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">InternalAuthenticationServiceException</code> - 존재하지 않는 아이디일 때 던지는 예외</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">AuthenticationCredentialNotFoundException</code> - 인증 요구가 거부됐을 때 던지는 예외</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">LockedException</code> - 인증 거부 (잠긴 계정)</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">DisabledException</code> - 인증 거부 (계정 비활성화)</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">AccountExpiredException</code> - 인증 거부 (계정 유효기간 만료)</p>
+  </li>
+  <li>
+    <p><code class="language-plaintext highlighter-rouge">CredentialExpiredException</code> - 인증 거부 (비밀번호 유효기간 만료)</p>
+  </li>
+</ul>
+
+:ET

@@ -1,0 +1,207 @@
+I"�<h1 id="mixin">Mixin</h1>
+
+<p>이펙티브의 클래스와 인터페이스 부분을 읽다가 mixin이란 개념이 나왔는데</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>믹스인이란 클래스가 구현할 수 있는 타입으로 믹스인을 구현한 클래스에         
+원래의 '주된 타입' 외에도 특정 선택적 행위를 제공한다고 선언하는 효과를 준다.           
+예) Comparable은 자신을 구현한 클래스의 인스턴스들끼리는 순서를 정할 수 있다고 선언하는 믹스인 인터페이스이다.       
+이처럼 대상 타입의 주된 기능에 선택적 기능을 '혼합(mixed-in)'한다고 해서 믹스인이라고 부릅니다. 
+</code></pre></div></div>
+
+<p>위 설명만으로 부족해 mixin에 대해 찾아봤는데  <br />
+스택 오버플로에 나와 같은 고민으로 글을 작성한 사람도 있었다.<br />
+<a href="https://stackoverflow.com/questions/17987704/an-example-of-a-mixin-in-java">https://stackoverflow.com/questions/17987704/an-example-of-a-mixin-in-java</a> <br />
+<br /></p>
+
+<h1 id="using-mixins-in-java">Using mixins in Java</h1>
+<p>클래스에 기능을 덧붙여야 할 때가 있는데 대부분 Mixin보다는 Delegator로 구현한다.    <br />
+이번에는 일급 컬렉션(first class collections)을 사용하여 Java에서 Mixin을 구현하는 방법을 알아보자.</p>
+
+<blockquote>
+  <p>일급 컬렉션에 대해<br />
+<a href="https://woowacourse.github.io/javable/post/2020-05-08-First-Class-Collection/">https://woowacourse.github.io/javable/post/2020-05-08-First-Class-Collection/</a><br />
+<a href="https://jojoldu.tistory.com/412">https://jojoldu.tistory.com/412</a></p>
+</blockquote>
+
+<p><br /></p>
+
+<h2 id="exam1-구독자-목록을-포함한-magazinejava-newspaperjava">exam1. 구독자 목록을 포함한 Magazine.java, Newspaper.java</h2>
+
+<h3 id="일반적으로-다음과-같이-모델링한다">일반적으로 다음과 같이 모델링한다.</h3>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>// Magazine.java
+class Magazine {
+    private List&lt;Subcriber&gt; subscribers;
+    
+    public void addSub(Subscriber subscriber) {
+        subscribers.add(subscriber);
+    }
+    
+    public List&lt;Subcriber&gt; primeSubscribers() {
+        . . .
+    }
+}
+
+// Newspaper.java   
+class Newspaper {
+    private DateTime date; 
+    private List&lt;Subcriber&gt; subscribers; 
+    
+    public void addSub(Subscriber subscriber) {
+        subscribers.add(subscriber);
+    }
+    
+    public List&lt;Subcriber&gt; primeSubscribers() {
+        . . .
+    }
+}
+</code></pre></div></div>
+
+<p>구독자 목록 관련된 작업이 두 클래스에서 모두 중복된다.      <br />
+구독자 목록인 <code class="language-plaintext highlighter-rouge">List&lt;Subcriber&gt; subscribers</code>을     <br />
+필드로 갖고 있는 다른 클래스를 만들면 이를 해결할 수 있다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class Subcribers {
+    private List&lt;Subcriber&gt; subscribers; 
+}
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h3 id="list와-subscribers을-별도의-클래스로-분리">List와 Subscribers을 별도의 클래스로 분리</h3>
+
+<p>custom arrayList에서 동작하게 하려면 List를 재정의해야 한다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>interface ListMixin&lt;T&gt; extends List&lt;T&gt; {
+    List&lt;T&gt; getRecords();
+    
+    default int size() {
+        return getRecords().size();
+    }
+    
+    . . .
+    
+}
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p>Subscribers에서 ListMixin 인터페이스를 구현하고    <br />
+<code class="language-plaintext highlighter-rouge">getRecords()</code> 메서드를 재정의하여 구독자 목록을 반환함으로써     <br />
+이 클래스를 List처럼 사용할 수 있다.    <br />
+구독자 리스트에 관련된 작업이 전부 이 클래스에 들어간다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class Subcribers implements ListMixin&lt;Subcriber&gt; {
+    private List&lt;Subcriber&gt; subcribers = new ArrayList&lt;&gt;();
+    
+    @Override 
+    public List&lt;Subcriber&gt; getRecords() {
+        return subcribers;
+    }
+    
+    public void addSub(Subscriber subscriber) {
+        subscribers.add(subscriber);
+    }
+    
+    . . .
+    
+}
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p>이제 <code class="language-plaintext highlighter-rouge">Magazine.java</code>, <code class="language-plaintext highlighter-rouge">Newspaper.java</code>에서   <br />
+구독자 명단을 반환하는 로직을 다루지 않아도 된다.</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>class Magazine {
+
+    private Subcribers Subcribers;
+    
+    . . .
+    
+}
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h2 id="exam2-mixin-exam-code">exam2. mixin exam code</h2>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>interface TimeStamped {
+	long getStamp();
+}
+
+
+class TimeStampedImp implements TimeStamped {
+	private final long timeStamp;
+
+	public TimeStampedImp() {
+		timeStamp = new Date().getTime();
+	}
+
+	public long getStamp() {
+		return timeStamp;
+	}
+}
+
+
+interface SerialNumbered {
+	long getSerialNumber();
+}
+
+
+class SerialNumberedImp implements SerialNumbered {
+	private static long counter = 1;
+	private final long serialNumber = counter++;
+
+	public long getSerialNumber() {
+		return serialNumber;
+	}
+}
+
+
+class Basic {
+	private String value;
+
+	public void set(String val) {
+		value = val;
+	}
+
+	public String get() {
+		return value;
+	}
+}
+
+
+class Mixin extends Basic implements TimeStamped, SerialNumbered {
+	private TimeStamped timeStamp = new TimeStampedImp();
+	private SerialNumbered serialNumber = new SerialNumberedImp();
+
+	public long getStamp() {
+		return timeStamp.getStamp();
+	}
+
+	public long getSerialNumber() {
+		return serialNumber.getSerialNumber();
+	}
+}
+
+
+public class Mixins {
+	public static void main(String[] args) {
+		Mixin mixin1 = new Mixin();
+		Mixin mixin2 = new Mixin();
+
+		mixin1.set("test string 1");
+		mixin2.set("test string 2");
+
+		System.out.println(mixin1.get() + " " + mixin1.getStamp() + " " + mixin1.getSerialNumber());
+		System.out.println(mixin2.get() + " " + mixin2.getStamp() + " " + mixin2.getSerialNumber());
+	}
+}
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p><img src="https://user-images.githubusercontent.com/33855307/122785098-0867c580-d2ee-11eb-93b7-8d2600f7bcd4.jpeg" alt="KakaoTalk_Photo_2021-06-22-00-08-43" /></p>
+
+<p><br /></p>
+:ET

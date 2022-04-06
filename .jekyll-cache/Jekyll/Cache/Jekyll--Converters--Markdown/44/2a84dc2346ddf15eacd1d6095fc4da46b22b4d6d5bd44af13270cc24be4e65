@@ -1,0 +1,87 @@
+I"� <h2 id="binarysearch">BinarySearch</h2>
+<p>다음은 일반적으로 원하는 값(Key)을 찾을 때 사용하는 binarySearch이다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">static</span> <span class="kt">int</span> <span class="nf">binarySearch</span><span class="o">(</span><span class="kt">int</span><span class="o">[]</span> <span class="n">list</span><span class="o">,</span> <span class="kt">int</span> <span class="n">key</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">left</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="kt">int</span> <span class="n">right</span> <span class="o">=</span> <span class="n">list</span><span class="o">.</span><span class="na">length</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
+    
+    <span class="k">while</span><span class="o">(</span><span class="n">left</span> <span class="o">&lt;=</span> <span class="n">right</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="o">(</span><span class="n">left</span> <span class="o">+</span> <span class="n">right</span><span class="o">)</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+        
+        <span class="k">if</span><span class="o">(</span><span class="n">list</span><span class="o">[</span><span class="n">mid</span><span class="o">]</span> <span class="o">==</span> <span class="n">key</span><span class="o">)</span> <span class="o">{</span>
+            <span class="k">return</span> <span class="n">mid</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="k">if</span><span class="o">(</span><span class="n">list</span><span class="o">[</span><span class="n">mid</span><span class="o">]</span> <span class="o">&lt;</span> <span class="n">key</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">left</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="n">right</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">-</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+	
+    <span class="k">return</span> <span class="o">-</span><span class="mi">1</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>key 값을 찾으면 바로 index를 return 하고 못 찾으면 -1을 return 한다.</p>
+
+<p><br />  <br />
+<br /></p>
+
+<h2 id="lowerbound-upperbound">lowerBound, upperBound</h2>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">lowerBound</span><span class="o">(</span><span class="nc">List</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">data</span><span class="o">,</span> <span class="kt">int</span> <span class="n">target</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">begin</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="kt">int</span> <span class="n">end</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="na">size</span><span class="o">();</span>
+
+    <span class="k">while</span><span class="o">(</span><span class="n">begin</span> <span class="o">&lt;</span> <span class="n">end</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="o">(</span><span class="n">begin</span> <span class="o">+</span> <span class="n">end</span><span class="o">)</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+
+        <span class="k">if</span><span class="o">(</span><span class="n">data</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">mid</span><span class="o">)</span> <span class="o">&gt;=</span> <span class="n">target</span><span class="o">)</span> <span class="o">{</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="n">mid</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="n">begin</span> <span class="o">=</span> <span class="n">mid</span> <span class="o">+</span> <span class="mi">1</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">end</span><span class="o">;</span>
+<span class="o">}</span>
+
+<span class="kd">private</span> <span class="kd">static</span> <span class="kt">int</span> <span class="nf">upperBound</span><span class="o">(</span><span class="nc">List</span><span class="o">&lt;</span><span class="nc">Integer</span><span class="o">&gt;</span> <span class="n">data</span><span class="o">,</span> <span class="kt">int</span> <span class="n">target</span><span class="o">)</span> <span class="o">{</span>
+    <span class="kt">int</span> <span class="n">begin</span> <span class="o">=</span> <span class="mi">0</span><span class="o">;</span>
+    <span class="kt">int</span> <span class="n">end</span> <span class="o">=</span> <span class="n">data</span><span class="o">.</span><span class="na">size</span><span class="o">();</span>
+
+    <span class="k">while</span><span class="o">(</span><span class="n">begin</span> <span class="o">&lt;</span> <span class="n">end</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">int</span> <span class="n">mid</span> <span class="o">=</span> <span class="o">(</span><span class="n">begin</span> <span class="o">+</span> <span class="n">end</span><span class="o">)</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+
+        <span class="k">if</span><span class="o">(</span><span class="n">data</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">mid</span><span class="o">)</span> <span class="o">&lt;=</span> <span class="n">target</span><span class="o">){</span>
+            <span class="n">begin</span><span class="o">=</span><span class="n">mid</span><span class="o">+</span><span class="mi">1</span><span class="o">;</span>
+        <span class="o">}</span> <span class="k">else</span> <span class="o">{</span>
+            <span class="n">end</span> <span class="o">=</span> <span class="n">mid</span><span class="o">;</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+    <span class="k">return</span> <span class="n">end</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h4 id="lowerbound">lowerBound</h4>
+<p>범위 [begin, end] 안의 원소들 중, 특정 key보다 크거나 같은 첫번째 원소의 인덱스를 리턴한다.      <br />
+만약 그런 원소가 없다면 end 인덱스를 리턴한다.</p>
+
+<h4 id="upperbound">upperBound</h4>
+<p>범위 [begin, end] 안의 원소들 중, 특정 key보다 큰 첫번째 원소의 인덱스를 리턴한다.     <br />
+만약 그런 원소가 없다면 end 인덱스를 리턴한다.</p>
+
+<p><br />   <br />
+<br /></p>
+
+<h3 id="관련-문제">관련 문제</h3>
+<ul>
+  <li>문제 <a href="https://www.acmicpc.net/problem/10816">https://www.acmicpc.net/problem/10816</a></li>
+  <li>풀이 코드 <a href="https://github.com/hyerin6/Algorithm/blob/master/Baekjoon/src/training/B10816.java">https://github.com/hyerin6/Algorithm/blob/master/Baekjoon/src/training/B10816.java</a></li>
+</ul>
+
+<p>upperbound에서 key보다 큰 인덱스값을 뽑아내는 이유는    <br />
+<code class="language-plaintext highlighter-rouge">upperBound - lowerBound</code>를 통해서 중복값의 개수를 구하기 위해서이다.</p>
+
+<p><br /></p>
+:ET

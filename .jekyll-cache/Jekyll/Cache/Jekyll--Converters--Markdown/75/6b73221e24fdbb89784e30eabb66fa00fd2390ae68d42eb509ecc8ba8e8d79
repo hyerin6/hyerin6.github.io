@@ -1,0 +1,85 @@
+I"�<p><br /></p>
+
+<h2 id="분할정복법이란">분할정복법이란?</h2>
+<p>주어진 문제를 작은 사례로 나누고(divide) 각각의 작은 문제들을 해결하여 정복(conquer)하는 방법이다.</p>
+
+<p>작은 사례의 해답을 바로 얻을 수 있으면 해를 구하고 아니면 더 작은 사례로 나눈다.</p>
+
+<p>해를 구할 수 있을 만큼 충분히 작은 사례로 나눠서 해결하는 방법이다.</p>
+
+<div class="language-text highlighter-rouge"><div class="highlight"><pre class="highlight"><code>1. 문제 사례를 하나 이상의 작은 사례로 분할 
+2. 작은 사례들을 각각 정복한다. (재귀)
+3. 필요하다면, 작은 사례에 대한 해답을 통합하여 원하는 해답을 구한다. 
+</code></pre></div></div>
+
+<p><br />
+<br /></p>
+
+<h2 id="장단점">장단점</h2>
+
+<h4 id="장점">장점</h4>
+
+<p>문제를 나눔으로써 어려운 문제를 해결한다.</p>
+
+<p>문제를 나누어 해결한다는 특징상 병렬적으로 문제를 해결하느 데 큰 강점이 있다.</p>
+
+<p><br /></p>
+
+<h4 id="단점">단점</h4>
+
+<p>함수를 재귀적으로 호출한다는 점에서 함수 호출로 인한 오버헤드가 발생하며,</p>
+
+<p>스택에 다영한 데이터를 보관하고 있어야 하므로 스택오버플로우가 발생하거나 과도한 메모리를 사용하게 된다.</p>
+
+<p><br />
+<br /></p>
+
+<h2 id="문제-종이의-개수">문제: <a href="https://www.acmicpc.net/problem/1780">종이의 개수</a></h2>
+
+<p>N(1 ≤ N ≤ 37, N은 3k 꼴)의 범위가 문제를 나누는 기준이 된다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">newSize</span> <span class="o">=</span> <span class="n">size</span> <span class="o">/</span> <span class="mi">3</span><span class="o">;</span>
+
+<span class="n">partition</span><span class="o">(</span><span class="n">row</span><span class="o">,</span> <span class="n">col</span><span class="o">,</span> <span class="n">newSize</span><span class="o">);</span>
+<span class="n">partition</span><span class="o">(</span><span class="n">row</span><span class="o">,</span> <span class="n">col</span> <span class="o">+</span> <span class="n">newSize</span><span class="o">,</span> <span class="n">newSize</span><span class="o">);</span>
+<span class="n">partition</span><span class="o">(</span><span class="n">row</span><span class="o">,</span> <span class="n">col</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">newSize</span><span class="o">,</span> <span class="n">newSize</span><span class="o">);</span>
+
+<span class="n">partition</span><span class="o">(</span><span class="n">row</span> <span class="o">+</span> <span class="n">newSize</span><span class="o">,</span> <span class="n">col</span><span class="o">,</span> <span class="n">newSize</span><span class="o">);</span>
+<span class="n">partition</span><span class="o">(</span><span class="n">row</span> <span class="o">+</span> <span class="n">newSize</span><span class="o">,</span> <span class="n">col</span> <span class="o">+</span> <span class="n">newSize</span><span class="o">,</span> <span class="n">newSize</span><span class="o">);</span>
+<span class="n">partition</span><span class="o">(</span><span class="n">row</span> <span class="o">+</span> <span class="n">newSize</span><span class="o">,</span> <span class="n">col</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">newSize</span><span class="o">,</span> <span class="n">newSize</span><span class="o">);</span>
+
+<span class="n">partition</span><span class="o">(</span><span class="n">row</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">newSize</span><span class="o">,</span> <span class="n">col</span><span class="o">,</span> <span class="n">newSize</span><span class="o">);</span>
+<span class="n">partition</span><span class="o">(</span><span class="n">row</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">newSize</span><span class="o">,</span> <span class="n">col</span> <span class="o">+</span> <span class="n">newSize</span><span class="o">,</span> <span class="n">newSize</span><span class="o">);</span>
+<span class="n">partition</span><span class="o">(</span><span class="n">row</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">newSize</span><span class="o">,</span> <span class="n">col</span> <span class="o">+</span> <span class="mi">2</span> <span class="o">*</span> <span class="n">newSize</span><span class="o">,</span> <span class="n">newSize</span><span class="o">);</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h2 id="문제-하노이-탑-이동-순서">문제: <a href="https://www.acmicpc.net/problem/11729">하노이 탑 이동 순서</a></h2>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="c1">// N-1 개의 원판을 목적지가 아닌 곳으로 옮긴다.</span>
+<span class="n">move</span><span class="o">(</span><span class="no">N</span> <span class="o">-</span> <span class="mi">1</span><span class="o">,</span> <span class="n">start</span><span class="o">,</span> <span class="n">sub</span><span class="o">,</span> <span class="n">end</span><span class="o">);</span>
+<span class="c1">// 제일 큰 원판을 목표 타워로 옮긴다.</span>
+<span class="n">move</span><span class="o">(</span><span class="mi">1</span><span class="o">,</span> <span class="n">start</span><span class="o">,</span> <span class="n">end</span><span class="o">,</span> <span class="n">sub</span><span class="o">);</span>
+<span class="c1">// 서브 타워로 옮겨놨던 원판을 목적지로 옮긴다.</span>
+<span class="n">move</span><span class="o">(</span><span class="no">N</span> <span class="o">-</span> <span class="mi">1</span><span class="o">,</span> <span class="n">sub</span><span class="o">,</span> <span class="n">end</span><span class="o">,</span> <span class="n">start</span><span class="o">);</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h2 id="문제-쿼드트리">문제: <a href="https://www.acmicpc.net/problem/1992">쿼드트리</a></h2>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kt">int</span> <span class="n">newSize</span> <span class="o">=</span> <span class="n">size</span> <span class="o">/</span> <span class="mi">2</span><span class="o">;</span>
+
+<span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="s">"("</span><span class="o">);</span>
+<span class="c1">// 왼쪽 위, 오른쪽 위, 왼쪽 아래, 오른쪽 아래 순서가 정해져있음</span>
+<span class="n">partition</span><span class="o">(</span><span class="n">newSize</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span><span class="o">);</span>
+<span class="n">partition</span><span class="o">(</span><span class="n">newSize</span><span class="o">,</span> <span class="n">x</span><span class="o">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">newSize</span><span class="o">);</span>
+<span class="n">partition</span><span class="o">(</span><span class="n">newSize</span><span class="o">,</span> <span class="n">x</span> <span class="o">+</span> <span class="n">newSize</span><span class="o">,</span> <span class="n">y</span><span class="o">);</span>
+<span class="n">partition</span><span class="o">(</span><span class="n">newSize</span><span class="o">,</span> <span class="n">x</span> <span class="o">+</span> <span class="n">newSize</span><span class="o">,</span> <span class="n">y</span> <span class="o">+</span> <span class="n">newSize</span><span class="o">);</span>
+<span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">(</span><span class="sc">')'</span><span class="o">);</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+:ET

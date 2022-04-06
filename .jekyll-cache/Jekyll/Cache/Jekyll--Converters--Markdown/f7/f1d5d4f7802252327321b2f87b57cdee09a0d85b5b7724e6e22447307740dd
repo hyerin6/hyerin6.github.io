@@ -1,0 +1,98 @@
+I"�<p><br /></p>
+
+<p><img src="https://user-images.githubusercontent.com/33855307/127602165-ac0ce9e1-fa18-46c0-8345-68e63865ef9e.png" alt="git-flow" /></p>
+
+<p><br /></p>
+
+<p>많은 사람들이 프로젝트에서 git flow를 사용했다고 소개한다.    <br />
+정확히 어떤 것인지 알고 사용해보자.</p>
+
+<p><br />   <br />
+<br /></p>
+
+<h1 id="git-flow-란">Git-flow 란?</h1>
+<p>Git으로 개발할 때 사용되는 방법론으로 완벽하게 따라할 필요는 없고   <br />
+각자 개발 환경에 따라 변형해서 사용하면 된다.</p>
+
+<p>5가지의 브랜치를 사용한다.</p>
+<ul>
+  <li>master : 기준이 되는 브랜치로 제품을 배포</li>
+  <li>develop : 개발 브랜치로 개발자들이 이 브랜치를 기준으로 각자 작업한 기능들을 합칩니다. (Merge)</li>
+  <li>feature : 단위 기능을 개발하는 브랜치 (develop으로 merge)</li>
+  <li>release : 배포를 위해 master 브랜치로 보내기 전에 먼저 QA(품질검사)</li>
+  <li>hotfix : master 브랜치로 배포 후 버그가 생겼을 때 수정</li>
+</ul>
+
+<p><br />       <br />
+<br /></p>
+
+<h1 id="intellij-에서-git-flow">IntelliJ 에서 Git-flow</h1>
+
+<h3 id="1-git-flow-설치">1. git-flow 설치</h3>
+
+<p>brew로 git flow avh를 설치했다.</p>
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>brew install git-flow-avh
+</code></pre></div></div>
+
+<p><br /></p>
+
+<p>처음에 <code class="language-plaintext highlighter-rouge">brew install git-flow</code>로 git-flow를 설치하니 버전이 0.4.1이라 안된다는 메시지가 떴다.   <br />
+찾아보니 git-flow-avh를 설치하라는 가이드가 나오는데 설치하고보니 다음과 같은 차이가 있었다.</p>
+
+<ul>
+  <li>
+    <p>git flow   <br />
+hotfix를 dev와 master에 각각 merge를 한다.   <br />
+(즉, 가지가 hotfix하나에서 dev와 master branch로 두갈래 나뉘어진다.)   <br />
+<br /></p>
+  </li>
+  <li>
+    <p>git flow avh  <br />
+hotfix가 dev branch로 merge되고, hotfix가 merge된 dev branch를 master branch에 머지한다.    <br />
+즉, <code class="language-plaintext highlighter-rouge">hotfix &gt; dev &gt; master</code> 순이다.</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="2-git-flow-init-에러-해결">2. git flow init 에러 해결</h3>
+
+<p>현재 git flow avh를 설치하니 git flow 버전은 <code class="language-plaintext highlighter-rouge">1.12.3</code> 이다.     <br />
+git flow init 시에 에러가 발생했는데, <code class="language-plaintext highlighter-rouge">~/.gitflow_export</code> 에 <code class="language-plaintext highlighter-rouge">FLAGS_GET_OPT_CMD</code> 환경 변수가 있는 것이 원인이었다.     <br />
+삭제 후에 정상적으로 작동한다.</p>
+
+<ul>
+  <li>issue: <a href="https://github.com/fork-dev/Tracker/issues/418">https://github.com/fork-dev/Tracker/issues/418</a></li>
+  <li>Post installation setup: <a href="https://github.com/petervanderdoes/gitflow-avh/wiki/Installing-on-Mac-OS-X#post-installation-setup">https://github.com/petervanderdoes/gitflow-avh/wiki/Installing-on-Mac-OS-X#post-installation-setup</a></li>
+</ul>
+
+<p><br />    <br />
+<br /></p>
+
+<h3 id="3-intellij-플러그인-사용하기">3. IntelliJ 플러그인 사용하기</h3>
+
+<p><a href="https://plugins.jetbrains.com/plugin/7315-git-flow-integration">git-flow-integration</a> 플러그인을 사용하자.  <br />
+플러그인 설치 후, 오른쪽 하단에 Gitflow가 생긴다.</p>
+
+<p><br /></p>
+
+<p><code class="language-plaintext highlighter-rouge">Init Repo</code> 클릭 후, 설정하면 된다.    <br />
+기본 옵션은 Git Flow 규칙을 따르기 때문에 기본 규칙을 따른다면 <code class="language-plaintext highlighter-rouge">OK</code>를 클릭하면 된다.</p>
+
+<p><img src="https://user-images.githubusercontent.com/33855307/127607349-377ccec5-b666-42fd-a674-688a77e2fbc6.png" alt="스크린샷 2021-07-30 오후 2 27 11" /></p>
+
+<p><br /></p>
+
+<p><img width="316" alt="스크린샷 2021-08-01 오후 2 20 18" src="https://user-images.githubusercontent.com/33855307/127760133-f96e1642-07af-4794-a302-30d306c6f4b7.png" /></p>
+
+<p>develop을 확인할 수 있다.</p>
+
+<p><br /></p>
+
+<p><img width="163" alt="스크린샷 2021-08-01 오후 3 42 58" src="https://user-images.githubusercontent.com/33855307/127761924-12982227-a618-4d18-b458-e95f9169be94.png" /></p>
+
+<p>앞에서 봤던 feature, release 등을 확인할 수 있다.</p>
+
+<p><br /></p>
+
+:ET

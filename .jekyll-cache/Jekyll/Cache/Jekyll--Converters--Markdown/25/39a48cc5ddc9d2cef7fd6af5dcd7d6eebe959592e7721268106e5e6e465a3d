@@ -1,0 +1,158 @@
+I"�<p><br /></p>
+
+<h1 id="static-pages">Static Pages</h1>
+
+<p><img src="https://user-images.githubusercontent.com/33855307/126870006-00b0a463-1db2-414e-8d91-0408ad12ceb5.jpeg" alt="KakaoTalk_Photo_2021-07-24-22-32-06 001" /></p>
+
+<p>1️⃣   GET <code class="language-plaintext highlighter-rouge">/path/index.html</code>      <br />
+2️⃣   READ(DB에서 읽기) <code class="language-plaintext highlighter-rouge">/path/index.html</code>     <br />
+3️⃣   {file contents}  <br />
+4️⃣   STATUS(응답) {file contents}</p>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p>web server는 파일 경로 이름을 받아 경로와 일치하는 file contents를 반환한다.</p>
+  </li>
+  <li>
+    <p>항상 동일한 페이지를 반환한다.</p>
+  </li>
+  <li>
+    <p>image, html, css, javascript</p>
+  </li>
+</ul>
+
+<p><br />          <br />
+<br /></p>
+
+<h1 id="dynamic-pages">Dynamic Pages</h1>
+
+<p><img src="https://user-images.githubusercontent.com/33855307/126870005-c825dcaa-d39b-46e5-8b8a-b75837d344c2.jpeg" alt="KakaoTalk_Photo_2021-07-24-22-32-07 002" /></p>
+
+<p>1️⃣   GET <code class="language-plaintext highlighter-rouge">/src/servlet?uid=Alice</code> STATUS Response <strong>Alice</strong>    <br />
+2️⃣   GET <code class="language-plaintext highlighter-rouge">/src/servlet?uid=Bob</code> STATUS Response <strong>Bob</strong></p>
+
+<p><br /></p>
+
+<ul>
+  <li>
+    <p>인자의 내용에 맞게 동적인 contetns를 반환한다.</p>
+  </li>
+  <li>
+    <p>웹 서버에 의해서 실행되는 프로그램을 통해서 만들어진 결과물   <br />
+Servlet: WAS 위에서 돌아가는 Java Program</p>
+  </li>
+  <li>
+    <p>개발자는 Servlet에 <code class="language-plaintext highlighter-rouge">get()</code>을 구현한다.</p>
+  </li>
+</ul>
+
+<p><br /><br />
+<br /></p>
+
+<h1 id="web-server와-was-차이">Web Server와 WAS 차이</h1>
+
+<p><img src="https://user-images.githubusercontent.com/33855307/126870004-f24254b3-ff05-4437-8ae8-44ac28f0028b.jpeg" alt="KakaoTalk_Photo_2021-07-24-22-32-07 003" /></p>
+
+<p><br /></p>
+
+<h3 id="web-server">Web Server</h3>
+<ul>
+  <li>소프트웨어와 하드웨어로 구분된다.</li>
+  <li>HTTP 프로토콜을 기반으로 하여 클라이언트의 요청을 서비스 하는 기능을 담당한다.  <br />
+요청에 따라 두 가지 기능 중 적절하게 선택하여 수행
+    <ul>
+      <li>정적인 컨텐츠 제공, WAS를 거치지 않고 바로 자원을 제공</li>
+      <li>동적인 컨텐츠 제공, 클라이언트의 요청을 WAS에 보내고 WAS에서 처리한 결과를 클라이언트에게 전달</li>
+    </ul>
+  </li>
+  <li>예) Apache Server, Nginx</li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="wasweb-application-server">WAS(Web Application Server)</h3>
+<ul>
+  <li>DB 조회나 다양한 로직 처리를 요구하는 동적인 컨텐츠를 제공하기 위해 만들어진 Application Server</li>
+  <li>HTTP를 통해 컴퓨터나 장치에 애플리케이션을 수행해주는 미들워에(소프트웨어 엔진)이다.</li>
+  <li>웹 컨테이너 혹은 서블릿 컨테이너 라고도 부른다.</li>
+  <li>컨테이너란 JSP, Servlet을 실행시킬 수 있는 소프트웨어를 말한다.</li>
+  <li>WAS는 JSP, Servlet 구동 환경을 제공한다.  <code class="language-plaintext highlighter-rouge">WAS = Web Server + Web Container</code></li>
+  <li>프로그램 실행 환경, DB 접속 기능 제공, 트랜잭션 관리 기능, 비즈니스 로직 수행</li>
+  <li>예) Tomcat, Jeus</li>
+</ul>
+
+<p><br />  <br />
+<br /></p>
+
+<h1 id="web-server와-was를-구분하는-이유">Web Server와 WAS를 구분하는 이유</h1>
+
+<ul>
+  <li>
+    <p>Web Server를 통해 정적인 파일들을 Application Server까지 가지 않고 앞단에서 빠르게 보내줄 수 있다.<br />
+Web Server에서는 정적 컨텐츠만 처리하도록 기능을 분배하여 서버의 부담을 줄일 수 있다.<br />
+<br /></p>
+  </li>
+  <li>
+    <p>Web Server만을 이용한다면 사용자가 원하는 요청에 대한 결과값을 모두 미리 만들어 놓고 서비스를 해야 한다.<br />
+하지만 이렇게 수행하기에는 자원이 절대적으로 부족하다.<br />
+따라서 WAS를 통해 요청에 맞는 데이터를 DB에서 가져와서 비즈니스 로직에 맞게 <br />
+그때 그때 결과를 만들어서 제공함으로써 자원을 효율적으로 사용할 수 있다.</p>
+  </li>
+</ul>
+
+<p><br /> <br />
+<br /></p>
+
+<h1 id="was만-사용하지-않는-이유는">WAS만 사용하지 않는 이유는?</h1>
+<p>자원 이용의 효율성 및 장애 극복, 배포 및 유지보수의 편의성을 위해 Web Server와 WAS를 분리한다.<br />
+Web Server를 WAS 앞에 두고 필요한 WAS들을 Web Server에 플러그인 형태로 설정하면 더욱 효율적인 분산 처리가 가능하다.<br />
+자세한 이점은 다음과 같다.   <br />
+<br /></p>
+
+<h3 id="기능을-분리하여-서버-부하-방지">기능을 분리하여 서버 부하 방지</h3>
+<ul>
+  <li>WAS는 DB 조회나 다양한 로직을 처리하느라 바쁘기 때문에   <br />
+단순한 정적 컨텐츠는 WS에서 빠르게 클라이언트에게 제공하는 것이 좋다.</li>
+  <li>WAS는 기본적으로 동적인 컨텐츠를 제공하기 위해 존재하는 서버다.</li>
+  <li>정적 컨텐츠 요청까지 WAS가 처리한다면 정적 데이터 처리로 인해 부하가 커지고,   <br />
+동적 컨텐츠 처리가 지연됨에 따라 수행 속도가 느려진다.</li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="물리적으로-분리하여-보안-강화">물리적으로 분리하여 보안 강화</h3>
+<p>SSL에 대한 암복호화 처리에 WS를 사용</p>
+
+<p><br /></p>
+
+<h3 id="여러-대의-was를-연결-가능">여러 대의 WAS를 연결 가능</h3>
+<ul>
+  <li>Load Balancing을 위해서 WS 사용</li>
+  <li>fail over (장애 극복), fail back 처리에 유리</li>
+  <li>대용량 웹 애플리케이션의 경우(여러 서버 사용) WS와 WAS를 분리하여  <br />
+무중단 운영을 위한 장애 극복에 쉽게 대응할 수 있다.</li>
+  <li>예) 앞 단의 WS에서 오류가 발생한 WAS를 이용하지 못하도록 한 후   <br />
+WAS를 재시작함으로써 사용자는 오류를 느끼지 못하고 이용할 수 있다.</li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="여러-웹-애플리케이션-서비스">여러 웹 애플리케이션 서비스</h3>
+<ul>
+  <li>하나의 서버에 PHP Application과 Java Application 함께 사용 가능</li>
+  <li>접근 허용 IP 관리</li>
+  <li>2대 이상의 서버에서의 세션 관리도 WS에서 처리하면 효율적이다.</li>
+</ul>
+
+<p><br />  <br />
+<br /></p>
+
+<h2 id="참고">참고</h2>
+<ul>
+  <li><a href="https://gmlwjd9405.github.io/2018/10/27/webserver-vs-was.html">https://gmlwjd9405.github.io/2018/10/27/webserver-vs-was.html</a></li>
+  <li><a href="https://gmlwjd9405.github.io/2018/10/29/web-application-structure.html">https://gmlwjd9405.github.io/2018/10/29/web-application-structure.html</a></li>
+  <li><a href="https://gmlwjd9405.github.io/2018/10/28/servlet.html">https://gmlwjd9405.github.io/2018/10/28/servlet.html</a></li>
+</ul>
+:ET

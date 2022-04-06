@@ -1,0 +1,55 @@
+I"�<p><br /></p>
+
+<p>테스트 코드를 작성하다가 <code class="language-plaintext highlighter-rouge">No serializer found for class ... </code> 에러를 만났다.</p>
+
+<p>JPA 사용하면서 자주하는 실수이기 때문에 정리해보기로 했다.</p>
+
+<p><br /></p>
+
+<h2 id="원인">원인</h2>
+<ul>
+  <li><a href="https://programmer.group/solution-of-spring-boot-jpa-entity-jackson-serialization-triggering-lazy-load.html">Solution of Spring Boot JPA Entity Jackson Serialization Triggering Lazy Load</a></li>
+</ul>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@Entity</span>
+<span class="kd">public</span> <span class="kd">class</span> <span class="nc">OrderItem</span> <span class="o">{</span>
+
+	<span class="nd">@Id</span>
+	<span class="nd">@GeneratedValue</span><span class="o">(</span><span class="n">strategy</span> <span class="o">=</span> <span class="nc">GenerationType</span><span class="o">.</span><span class="na">IDENTITY</span><span class="o">)</span>
+	<span class="kd">private</span> <span class="nc">Long</span> <span class="n">id</span><span class="o">;</span>
+
+	<span class="nd">@ManyToOne</span><span class="o">(</span><span class="n">fetch</span> <span class="o">=</span> <span class="nc">FetchType</span><span class="o">.</span><span class="na">LAZY</span><span class="o">)</span>
+	<span class="nd">@JoinColumn</span><span class="o">(</span><span class="n">name</span> <span class="o">=</span> <span class="s">"item_id"</span><span class="o">)</span>
+	<span class="kd">private</span> <span class="nc">Item</span> <span class="n">item</span><span class="o">;</span>
+		
+	<span class="o">.</span> <span class="o">.</span> <span class="o">.</span>
+
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>위 코드처럼 JPA 연관 관계를 Lazy loading으로 설정한 경우 실제 데이터가 아닌 Hibernate Proxy이므로 오류가 발생한다.</p>
+
+<p><br /></p>
+
+<h2 id="해결">해결</h2>
+<p>dto를 만들어 리턴하는게 가장 좋은 방법이지만, <code class="language-plaintext highlighter-rouge">Hibernate5Module</code>을 사용하여 해결할 수 있다.     <br />
+이 모듈은 LazyLoading 설정으로 아직 불러오지 못한 엔티티에 대해서 null 값을 내려주는 모듈이다.</p>
+
+<h4 id="1-의존성-추가">1) 의존성 추가</h4>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">implementation</span> <span class="err">'</span><span class="n">com</span><span class="o">.</span><span class="na">fasterxml</span><span class="o">.</span><span class="na">jackson</span><span class="o">.</span><span class="na">datatype</span><span class="o">:</span><span class="n">jackson</span><span class="o">-</span><span class="n">datatype</span><span class="o">-</span><span class="n">hibernate5</span><span class="err">'</span>
+</code></pre></div></div>
+
+<h4 id="2-코드">2) 코드</h4>
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">println</span><span class="o">(</span><span class="n">jacksonObjectMapper</span><span class="o">().</span><span class="na">registerModule</span><span class="o">(</span><span class="nc">Hibernate5Module</span><span class="o">())</span>
+      <span class="o">.</span><span class="na">writeValueAsString</span><span class="o">(</span><span class="n">items</span><span class="o">))</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h2 id="정리">정리</h2>
+
+<p>dto를 만들어 리턴하는게 가장 좋은 해결책이다.    <br />
+Item 엔티티가 통째로 필요했고 테스트를 빠르게 만들다보니 이런 실수가 발생했다.</p>
+
+<p><br /></p>
+:ET

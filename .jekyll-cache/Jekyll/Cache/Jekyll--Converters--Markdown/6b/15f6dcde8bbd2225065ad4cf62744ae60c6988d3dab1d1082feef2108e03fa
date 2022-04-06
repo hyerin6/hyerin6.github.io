@@ -1,0 +1,394 @@
+I"P�<p>자바 8에서 함수형 인터페이스, 람다, 메서드 참조라는 개념이 추가되어 함수 객체를 더 쉽게 만들 수 있게 되었다.</p>
+
+<hr />
+
+<p><br /></p>
+
+<h2 id="42-익명-클래스보다는-람다를-사용하자">42. 익명 클래스보다는 람다를 사용하자.</h2>
+<p>자바에서 함수 타입을 표현     <br />
+<code class="language-plaintext highlighter-rouge">추상 메서드를 하나만 담은 인터페이스</code> → <code class="language-plaintext highlighter-rouge">익명 클래스</code> → <code class="language-plaintext highlighter-rouge">람다식</code></p>
+
+<ul>
+  <li>익명 클래스의 인스턴스를 함수 객체로 사용</li>
+</ul>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Collections</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">words</span><span class="o">,</span> <span class="k">new</span> <span class="nc">Comparator</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;()</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kt">int</span> <span class="nf">compare</span><span class="o">(</span><span class="nc">String</span> <span class="n">s1</span><span class="o">,</span> <span class="nc">String</span> <span class="n">s2</span><span class="o">)</span> <span class="o">{</span>
+        <span class="k">return</span> <span class="nc">Integer</span><span class="o">.</span><span class="na">compare</span><span class="o">(</span><span class="n">s1</span><span class="o">.</span><span class="na">length</span><span class="o">(),</span> <span class="n">s2</span><span class="o">.</span><span class="na">length</span><span class="o">());</span>
+    <span class="o">}</span>
+<span class="o">});</span>
+</code></pre></div></div>
+
+<p>익명 클래스는 코드가 너무 길어 자바는 함수형 프로그래밍에 적합하지 않았다. <br />
+자바8에서 람다식을 사용하게 되면서 특별 대우를 받게 되었다.</p>
+
+<ul>
+  <li>람다식을 함수 객체로 사용</li>
+</ul>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Collections</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">words</span><span class="o">,</span>
+    <span class="o">(</span><span class="n">s1</span><span class="o">,</span> <span class="n">s2</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="nc">Integer</span><span class="o">.</span><span class="na">compare</span><span class="o">(</span><span class="n">s1</span><span class="o">.</span><span class="na">length</span><span class="o">(),</span> <span class="n">s2</span><span class="o">.</span><span class="na">length</span><span class="o">()));</span>
+</code></pre></div></div>
+
+<p>매개변수, 반환값 타입을 컴파일러가 문맥을 살펴 추론해준다.</p>
+
+<p><br /></p>
+
+<p>람다식이 많이 쓰이면서 익명 클래스가 잘 쓰이지 않았지만, 람다로 대체할 수 없는 곳이 있다.</p>
+
+<ul>
+  <li>
+    <p>추상 클래스의 인스턴스를 만들 때 람다를 쓸 수 없으니 익명 클래스를 써야 한다.</p>
+  </li>
+  <li>
+    <p>람다는 자신을 참조할 수 없다. 람다에서 <code class="language-plaintext highlighter-rouge">this</code> 키워드는 바깥 인스턴스를 가리킨다. 
+따라서 함수 객체가 자신을 참조해야 한다면 반드시 익명 클래스를 써야 한다.</p>
+  </li>
+  <li>
+    <p>람다도 익명 클래스처럼 직렬화 형태가 구현별로 다를 수 있다. <br />
+따라서 람다를 직렬화하는 일은 삼가해야 한다.   <br />
+직렬화해야 한다면 private 정적 중첩 클래스의 인스턴스를 사용해야 한다.</p>
+  </li>
+</ul>
+
+<p><br /><br />
+<br /></p>
+
+<h2 id="43-람다보다는-메서드-참조를-사용하자">43. 람다보다는 메서드 참조를 사용하자.</h2>
+<p>람다가 익명 클래스보다 나은 점 중 가장 큰 특징은 간결함이다.  <br />
+람다보다 더 간결하게 만드는 방법이 있는데, <strong>메서드 참조</strong>이다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">map</span><span class="o">.</span><span class="na">merge</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="o">(</span><span class="n">count</span><span class="o">,</span> <span class="n">incr</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">count</span> <span class="o">+</span> <span class="n">incr</span><span class="o">);</span>
+</code></pre></div></div>
+
+<p>깔끔해 보이지만 위 코드에 count, incr 매개변수는 크게 하는 일 없이 공간을 꽤 차지한다.</p>
+
+<p>자바 8이 되면서 Integer 클래스(와 모든 기본 타입의 박싱 타입)는 <br />
+이 람다와 기능이 같은 정적 메서드 sum을 제공하기 시작했다.</p>
+
+<p>람다 대신 이 메서드의 참조를 전달하면 똑같은 결과를 더 간결하게 표현할 수 있다.</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="n">map</span><span class="o">.</span><span class="na">merge</span><span class="o">(</span><span class="n">key</span><span class="o">,</span> <span class="mi">1</span><span class="o">,</span> <span class="nl">Integer:</span><span class="o">:</span><span class="n">sum</span><span class="o">);</span>
+</code></pre></div></div>
+
+<p>람다로 할 수 없는 일은 메서드 참조로도 할 수 없다. (예외가 있긴함)</p>
+
+<p><br /></p>
+
+<h4 id="5가지-메서드-참조">5가지 메서드 참조</h4>
+
+<table>
+  <thead>
+    <tr>
+      <th style="text-align: left">메서드 참조 유형</th>
+      <th style="text-align: left">예</th>
+      <th style="text-align: left">같은 기능을 하는 람다</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td style="text-align: left">정적</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">Integer::parseInt</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">str -&gt; Integer.parseInt(str)</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">한정적(인스턴스)</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">Instant.now()::isAfter</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">Instant then = Instant.now();</code> <br /> <code class="language-plaintext highlighter-rouge">t -&gt; then.isAfter(t)</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">비한정적(인스턴스)</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">String::toLowerCase</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">str -&gt; str.toLowerCase()</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">클래스 생성자</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">TreeMap&lt;K, V&gt;::new</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">() -&gt; new TreeMap&lt;K, V&gt;()</code></td>
+    </tr>
+    <tr>
+      <td style="text-align: left">배열 생성자</td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">int[]::new</code></td>
+      <td style="text-align: left"><code class="language-plaintext highlighter-rouge">len -&gt; new int[len]</code></td>
+    </tr>
+  </tbody>
+</table>
+
+<p><br /><br />
+<br /></p>
+
+<h2 id="44-표준-함수형-인터페이스를-사용하자">44. 표준 함수형 인터페이스를 사용하자.</h2>
+<p>자바가 람다를 지원하면서 상위 클래스의 기본 메서드를 재정의해 원하는 동작을 구현하는 템플릿 메서드 패턴의 매력이 크게 줄었다. <br />
+이를 대체하는 해법은 같은 효과의 함수 객체를 받는 정적 팩토리나 생성자를 제공하는 것이다. <br />
+즉 함수 객체를 매개변수로 받는 생성자와 메서드를 더 많이 만들어야 한다. <br />
+이때 함수형 매개변수 타입을 올바르게 선택해야 한다.</p>
+
+<p><br /></p>
+
+<h4 id="예-linkedhashmap-removeeldesentry-return-값이-true이면-가장-오래된-원소를-제거한다">예) LinkedHashMap <code class="language-plaintext highlighter-rouge">removeEldesEntry()</code>: return 값이 true이면 가장 오래된 원소를 제거한다.</h4>
+
+<ul>
+  <li>메서드 재정의</li>
+</ul>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">protected</span> <span class="kt">boolean</span> <span class="nf">removeEldesEntry</span><span class="o">(</span><span class="nc">Map</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="no">K</span><span class="o">,</span> <span class="no">V</span><span class="o">&gt;</span> <span class="n">eldet</span><span class="o">)</span> <span class="o">{</span>
+    <span class="k">return</span> <span class="nf">size</span><span class="o">()</span> <span class="o">&gt;</span> <span class="mi">100</span><span class="o">;</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>위 코드도 잘 동작하지만, LinkedHashMap을 다시 구현한다면 함수 객체를 받는 정적 팩토리나 생성자를 제공했을 것이다.  <br />
+removeEldestEntry는 <code class="language-plaintext highlighter-rouge">size()</code>를 호출해 맵 안의 원소 수를 알아내는데 <br />
+removeEldestEntry가 인스턴스 메서드라서 가능한 방식이다.</p>
+
+<p>하지만 생성자에 넘기는 함수 객체는 이 맵의 인스턴스 메서드가 아니다.  <br />
+팩토리나 생성자를 호출할 때는 맵의 인스턴스가 존재하지 않기 때문이다. <br />
+따라서 맵은 자기 자신도 함수 객체에 건네줘야 한다. <br />
+이를 반영한 함수형 인터페이스는 다음과 같이 선언할 수 있다.    <br />
+<br /></p>
+
+<ul>
+  <li>함수형 인터페이스</li>
+</ul>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nd">@FunctionalInterface</span> <span class="kd">interface</span> <span class="nc">EldesEntryRemovalFunction</span><span class="o">&lt;</span><span class="no">K</span><span class="o">,</span> <span class="no">V</span><span class="o">&gt;</span> <span class="o">{</span>
+    <span class="kt">boolean</span> <span class="nf">remove</span><span class="o">(</span><span class="nc">Map</span><span class="o">&lt;</span><span class="no">K</span><span class="o">,</span> <span class="no">V</span><span class="o">&gt;</span> <span class="n">map</span><span class="o">,</span> <span class="nc">Map</span><span class="o">.</span><span class="na">Entry</span><span class="o">&lt;</span><span class="no">K</span><span class="o">,</span> <span class="no">V</span><span class="o">&gt;</span> <span class="n">eldest</span><span class="o">);</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>이 인터페이스도 잘 동작하지만, 굳이 사용할 이유는 없다. <br />
+자바 표준 라이브러리에 이미 같은 인터페이스가 있다. <br />
+<code class="language-plaintext highlighter-rouge">java.util.function</code> 패키지를 보면 다양한 표 준 함수형 인터페이스가 있다.<br />
+필요한 용도에 맞는게 있다면, 직접 구현하지 않고 표준 함수형 인터페이스를 활용하면 된다.</p>
+
+<p>이 예제의 LinkedHashMap에서 직접 만든 메서드가 아닌  <br />
+표준 인터페이스인 <code class="language-plaintext highlighter-rouge">BiPredicate&lt;Map&lt;K, V&gt;, Map.Entry&lt;K, V&gt;&gt;</code>를 사용할 수 있다.</p>
+
+<p><br /></p>
+
+<h4 id="표준-함수형-인터페이스--직접-구현한-함수형-인터페이스">표준 함수형 인터페이스 / 직접 구현한 함수형 인터페이스</h4>
+<ul>
+  <li>
+    <p>표준 함수형 인터페이스 대부분은 기본 타입만 지원한다. 
+그렇다고 기본함수형 인터페이스에 박싱된 기본 타입을 넣어 사용하지 말자. 성능이 느려질 수 있다.</p>
+  </li>
+  <li>다음 하나 이상을 만족해야 한다면 전용 함수형 인터페이스 구현을 고민해야 한다.
+    <ul>
+      <li>자주 쓰이며, 이름 자체가 용도를 명확히 설명해준다.</li>
+      <li>반드시 따라야 하는 규약이 있다.</li>
+      <li>유용한 디폴트 메서드를 제공할 수 있다.</li>
+    </ul>
+  </li>
+  <li>
+    <p>직접 만든 함수형 인터페이스에는 항상 <code class="language-plaintext highlighter-rouge">@FunctionalInterface</code> 어노테이션을 사용하자.</p>
+  </li>
+  <li>서로 다른 함수형 인터페이스를 같은 위치의 인수로 받는 메서드들을 다중 정의하면 안된다.</li>
+</ul>
+
+<p><br /><br />
+<br /></p>
+
+<h2 id="45-스트림을-주의해서-사용하자">45. 스트림을 주의해서 사용하자.</h2>
+<p>스트림 API는 다량의 데이터 처리 작업을 돕고자 자바8에 추가되었다.</p>
+
+<p>이 API가 제공하는 추상 개념 중 핵심은 다음과 같다.</p>
+<ul>
+  <li>스트림(stream): 데이터 원소의 유한 혹은 무한 시퀀스</li>
+  <li>스트림 파이프라인(stream pipeline): 원소들로 수행하는 연산 단계를 표현하는 개념</li>
+</ul>
+
+<p><br /></p>
+
+<p>사전 파일에서 단어를 읽어 애너그램 그룹을 출력하는 프로그램을 만들어보자.     <br />
+예) “staple” → “aelpst”, “petals”, …</p>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">IterativeAnagrams</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">IOException</span> <span class="o">{</span>
+        <span class="nc">File</span> <span class="n">dictionary</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">File</span><span class="o">(</span><span class="n">args</span><span class="o">[</span><span class="mi">0</span><span class="o">]);</span>
+        <span class="kt">int</span> <span class="n">minGroupSize</span> <span class="o">=</span> <span class="nc">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">args</span><span class="o">[</span><span class="mi">1</span><span class="o">]);</span>
+
+        <span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">Set</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;&gt;</span> <span class="n">groups</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">HashMap</span><span class="o">&lt;&gt;();</span>
+        <span class="k">try</span> <span class="o">(</span><span class="nc">Scanner</span> <span class="n">s</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Scanner</span><span class="o">(</span><span class="n">dictionary</span><span class="o">))</span> <span class="o">{</span>
+            <span class="k">while</span> <span class="o">(</span><span class="n">s</span><span class="o">.</span><span class="na">hasNext</span><span class="o">())</span> <span class="o">{</span>
+                <span class="nc">String</span> <span class="n">word</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="na">next</span><span class="o">();</span>
+                <span class="c1">// 맵에 각 단어를 추가하는데, 자바 8에 추가된 computeIfAbsent 사용 </span>
+                <span class="n">groups</span><span class="o">.</span><span class="na">computeIfAbsent</span><span class="o">(</span><span class="n">alphabetize</span><span class="o">(</span><span class="n">word</span><span class="o">),</span>
+                        <span class="o">(</span><span class="n">unused</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="k">new</span> <span class="nc">TreeSet</span><span class="o">&lt;&gt;()).</span><span class="na">add</span><span class="o">(</span><span class="n">word</span><span class="o">);</span>
+            <span class="o">}</span>
+        <span class="o">}</span>
+
+        <span class="k">for</span> <span class="o">(</span><span class="nc">Set</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">group</span> <span class="o">:</span> <span class="n">groups</span><span class="o">.</span><span class="na">values</span><span class="o">())</span>
+            <span class="k">if</span> <span class="o">(</span><span class="n">group</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">&gt;=</span> <span class="n">minGroupSize</span><span class="o">)</span>
+                <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">group</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">+</span> <span class="s">": "</span> <span class="o">+</span> <span class="n">group</span><span class="o">);</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="nc">String</span> <span class="nf">alphabetize</span><span class="o">(</span><span class="nc">String</span> <span class="n">s</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">char</span><span class="o">[]</span> <span class="n">a</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="na">toCharArray</span><span class="o">();</span>
+        <span class="nc">Arrays</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">a</span><span class="o">);</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">String</span><span class="o">(</span><span class="n">a</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<ul>
+  <li>스트림을 과하게 사용한 예시</li>
+</ul>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">StreamAnagrams</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">IOException</span> <span class="o">{</span>
+        <span class="nc">Path</span> <span class="n">dictionary</span> <span class="o">=</span> <span class="nc">Paths</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">args</span><span class="o">[</span><span class="mi">0</span><span class="o">]);</span>
+        <span class="kt">int</span> <span class="n">minGroupSize</span> <span class="o">=</span> <span class="nc">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">args</span><span class="o">[</span><span class="mi">1</span><span class="o">]);</span>
+
+        <span class="k">try</span> <span class="o">(</span><span class="nc">Stream</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">words</span> <span class="o">=</span> <span class="nc">Files</span><span class="o">.</span><span class="na">lines</span><span class="o">(</span><span class="n">dictionary</span><span class="o">))</span> <span class="o">{</span>
+            <span class="n">words</span><span class="o">.</span><span class="na">collect</span><span class="o">(</span>
+                    <span class="n">groupingBy</span><span class="o">(</span><span class="n">word</span> <span class="o">-&gt;</span> <span class="n">word</span><span class="o">.</span><span class="na">chars</span><span class="o">().</span><span class="na">sorted</span><span class="o">()</span>
+                            <span class="o">.</span><span class="na">collect</span><span class="o">(</span><span class="nl">StringBuilder:</span><span class="o">:</span><span class="k">new</span><span class="o">,</span>
+                                    <span class="o">(</span><span class="n">sb</span><span class="o">,</span> <span class="n">c</span><span class="o">)</span> <span class="o">-&gt;</span> <span class="n">sb</span><span class="o">.</span><span class="na">append</span><span class="o">((</span><span class="kt">char</span><span class="o">)</span> <span class="n">c</span><span class="o">),</span>
+                                    <span class="nl">StringBuilder:</span><span class="o">:</span><span class="n">append</span><span class="o">).</span><span class="na">toString</span><span class="o">()))</span>
+                    <span class="o">.</span><span class="na">values</span><span class="o">().</span><span class="na">stream</span><span class="o">()</span>
+                    <span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="n">group</span> <span class="o">-&gt;</span> <span class="n">group</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">&gt;=</span> <span class="n">minGroupSize</span><span class="o">)</span>
+                    <span class="o">.</span><span class="na">map</span><span class="o">(</span><span class="n">group</span> <span class="o">-&gt;</span> <span class="n">group</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">+</span> <span class="s">": "</span> <span class="o">+</span> <span class="n">group</span><span class="o">)</span>
+                    <span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">::</span><span class="n">println</span><span class="o">);</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>스트림을 과용하면 프로그램을 읽어나 유지보수하기 어려워진다.</p>
+
+<ul>
+  <li>스트림을 적절하게 사용한 예시</li>
+</ul>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="kd">public</span> <span class="kd">class</span> <span class="nc">HybridAnagrams</span> <span class="o">{</span>
+    <span class="kd">public</span> <span class="kd">static</span> <span class="kt">void</span> <span class="nf">main</span><span class="o">(</span><span class="nc">String</span><span class="o">[]</span> <span class="n">args</span><span class="o">)</span> <span class="kd">throws</span> <span class="nc">IOException</span> <span class="o">{</span>
+        <span class="nc">Path</span> <span class="n">dictionary</span> <span class="o">=</span> <span class="nc">Paths</span><span class="o">.</span><span class="na">get</span><span class="o">(</span><span class="n">args</span><span class="o">[</span><span class="mi">0</span><span class="o">]);</span>
+        <span class="kt">int</span> <span class="n">minGroupSize</span> <span class="o">=</span> <span class="nc">Integer</span><span class="o">.</span><span class="na">parseInt</span><span class="o">(</span><span class="n">args</span><span class="o">[</span><span class="mi">1</span><span class="o">]);</span>
+
+        <span class="k">try</span> <span class="o">(</span><span class="nc">Stream</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">words</span> <span class="o">=</span> <span class="nc">Files</span><span class="o">.</span><span class="na">lines</span><span class="o">(</span><span class="n">dictionary</span><span class="o">))</span> <span class="o">{</span>
+            <span class="n">words</span><span class="o">.</span><span class="na">collect</span><span class="o">(</span><span class="n">groupingBy</span><span class="o">(</span><span class="n">word</span> <span class="o">-&gt;</span> <span class="n">alphabetize</span><span class="o">(</span><span class="n">word</span><span class="o">)))</span>
+                    <span class="o">.</span><span class="na">values</span><span class="o">().</span><span class="na">stream</span><span class="o">()</span>
+                    <span class="o">.</span><span class="na">filter</span><span class="o">(</span><span class="n">group</span> <span class="o">-&gt;</span> <span class="n">group</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">&gt;=</span> <span class="n">minGroupSize</span><span class="o">)</span>
+                    <span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">g</span> <span class="o">-&gt;</span> <span class="nc">System</span><span class="o">.</span><span class="na">out</span><span class="o">.</span><span class="na">println</span><span class="o">(</span><span class="n">g</span><span class="o">.</span><span class="na">size</span><span class="o">()</span> <span class="o">+</span> <span class="s">": "</span> <span class="o">+</span> <span class="n">g</span><span class="o">));</span>
+        <span class="o">}</span>
+    <span class="o">}</span>
+
+    <span class="kd">private</span> <span class="kd">static</span> <span class="nc">String</span> <span class="nf">alphabetize</span><span class="o">(</span><span class="nc">String</span> <span class="n">s</span><span class="o">)</span> <span class="o">{</span>
+        <span class="kt">char</span><span class="o">[]</span> <span class="n">a</span> <span class="o">=</span> <span class="n">s</span><span class="o">.</span><span class="na">toCharArray</span><span class="o">();</span>
+        <span class="nc">Arrays</span><span class="o">.</span><span class="na">sort</span><span class="o">(</span><span class="n">a</span><span class="o">);</span>
+        <span class="k">return</span> <span class="k">new</span> <span class="nf">String</span><span class="o">(</span><span class="n">a</span><span class="o">);</span>
+    <span class="o">}</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p><br /></p>
+
+<h4 id="스트림-주의사항">스트림 주의사항</h4>
+<ul>
+  <li>char 값들을 처리할 때는 스트림을 삼가는 편이 낫다.</li>
+  <li>기존 코드는 스트림을 사용하도록 리팩토링하되, 새 코드가 더 나아 보일 때만 반영해야 한다.</li>
+</ul>
+
+<p><br /></p>
+
+<h4 id="함수-객체로-할-수-없지만-코드-블록에서는-할-수-있는-것">함수 객체로 할 수 없지만 코드 블록에서는 할 수 있는 것</h4>
+<ul>
+  <li>코드 블록에서는 범위 안의 지역변수를 읽고 수정할 수 있다. 
+ 하지만 람다에서 final, 사실상 final인 변수만 읽을 수 있고, 지역변수 수정이 불가능하다.</li>
+  <li>코드 블록에서 return 문을 사용하여 메서드 빠져나가기, break나 continue 사용이 가능하고 
+ 메서드 선언에 명시된 검사 예외를 던질 수 있다. 그러나 람다는 이 중 어떤 것도 할 수 없다.</li>
+</ul>
+
+<p><br /></p>
+
+<h4 id="스트림이-잘-맞는-로직">스트림이 잘 맞는 로직</h4>
+<ul>
+  <li>원소들의 시퀀스를 일관되게 변환</li>
+  <li>원소들의 시퀀스를 필터링</li>
+  <li>원소들의 시퀀스를 하나의 연산을 사용해 결합 (더하기, 연결, 최솟값 구하기 등)</li>
+  <li>원소들의 시퀀스를 컬렉션에 모으기</li>
+  <li>원소들의 시퀀스에서 특정 조건을 만족하는 원소 찾기</li>
+</ul>
+
+<p><br />
+<br /></p>
+
+<h2 id="46-스트림에서는-부작용-없는-함수를-사용하자">46. 스트림에서는 부작용 없는 함수를 사용하자.</h2>
+<p>스트림 패러다임의 핵심은 계산을 일련의 변환으로 재구성하는 부분이다.  <br />
+스트림 연산에 건네는 함수 객체는 모두 부작용이 없어야 한다. 
+<br /></p>
+
+<h4 id="예-텍스트-파일에서-단어별-수를-세어-빈도표-만들기">예) 텍스트 파일에서 단어별 수를 세어 빈도표 만들기</h4>
+
+<ul>
+  <li>스트림 패러다임을 이해하지 못한 경우</li>
+</ul>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">Long</span><span class="o">&gt;</span> <span class="n">freq</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">HashMap</span><span class="o">&lt;&gt;();</span>
+<span class="k">try</span> <span class="o">(</span><span class="nc">Stream</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">words</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Scanner</span><span class="o">(</span><span class="n">file</span><span class="o">).</span><span class="na">tokens</span><span class="o">())</span> <span class="o">{</span>
+  <span class="n">words</span><span class="o">.</span><span class="na">forEach</span><span class="o">(</span><span class="n">word</span> <span class="o">-&gt;</span> <span class="o">{</span>
+    <span class="n">freq</span><span class="o">.</span><span class="na">merge</span><span class="o">(</span><span class="n">word</span><span class="o">.</span><span class="na">toLowerCase</span><span class="o">(),</span> <span class="mi">1L</span><span class="o">,</span> <span class="nl">Long:</span><span class="o">:</span><span class="n">sum</span><span class="o">);</span>
+  <span class="o">});</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p>스트림, 람다, 메서드 참조를 사용했고 결과도 원하는대로 나온다.  <br />
+그러나 스트림 코드라고 할 수 없다. 스트림 API의 이점을 살리지 못한 반복적 코드다.</p>
+
+<p>forEach 연산은 종단 연산 중 기능이 가장 적고 가장 ‘덜’ 스트림답다.  <br />
+대놓고 반복적이라 병렬화할 수도 없다.   <br />
+forEach 연산은 스트림 계산 결과를 보고할 때만 사용하고, 계산하는 데는 쓰지 않는게 좋다.</p>
+
+<ul>
+  <li>스트림을 제대로 활용한 경우</li>
+</ul>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code><span class="nc">Map</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">,</span> <span class="nc">Long</span><span class="o">&gt;</span> <span class="n">freq</span><span class="o">;</span>
+<span class="k">try</span> <span class="o">(</span><span class="nc">Stream</span><span class="o">&lt;</span><span class="nc">String</span><span class="o">&gt;</span> <span class="n">words</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">Scanner</span><span class="o">(</span><span class="n">file</span><span class="o">).</span><span class="na">tokens</span><span class="o">())</span> <span class="o">{</span>
+  <span class="n">freq</span> <span class="o">=</span> <span class="n">words</span>
+    <span class="o">.</span><span class="na">collect</span><span class="o">(</span><span class="n">groupingBy</span><span class="o">(</span><span class="nl">String:</span><span class="o">:</span><span class="n">toLowerCase</span><span class="o">,</span> <span class="n">counting</span><span class="o">()));</span>
+<span class="o">}</span>
+</code></pre></div></div>
+
+<p><br />
+<br /></p>
+
+<h2 id="47-반환-타입으로는-스트림보다-컬렉션이-낫다">47. 반환 타입으로는 스트림보다 컬렉션이 낫다.</h2>
+<p>Array형태의 Linear한 자료구조를 반환하는 메서드는 수없이 많다.   <br />
+이런 메서드의 반환타입으로 아래와 같은 타입을 사용했다.</p>
+
+<ul>
+  <li>Collection<E>, Set<E>, List<E>와 같은 컬렉션 인터페이스</E></E></E></li>
+  <li>E[]와 같은 배열</li>
+  <li>Iterable<E> 인터페이스</E></li>
+</ul>
+
+<p>기본은 Collection<E> 타입이다.  
+for-each 문에서만 쓰이거나, (contain(Object) 같은) 일부 Collection 메서드를 구현 할 수 없을 때는 Iterable 인터페이스를 사용한다.  
+성능에 민감한 상황이면, E[] 형태의 배열을 주로 사용해 왔다.</E></p>
+
+<p>자바 8이 스트림이라는 개념을 들고오면서 선택이 더욱 복잡해지게 되었다.<br />
+<br /></p>
+
+<ul>
+  <li>
+    <p><strong>Stream은 반복(loop)을 지원하지 않는다.</strong></p>
+  </li>
+  <li>
+    <p><strong>Stream을 Iterable로 변환하는 과정에서는 어댑터 메서드가 필요하다 (반대 경우에도)<br />
+어댑터 메서드는 클라이언트 코드를 어수선하게 만들고 더 느리다 (책 기준 2.3배)</strong></p>
+  </li>
+  <li>
+    <p><strong>메서드가 Stream 범위 내에서만 쓰인다면 → Stream을 반환해도 된다.</strong></p>
+  </li>
+  <li>
+    <p><strong>반환된 객체들이 반복문에서만 쓰인다면 → Iterable을 반환해도 된다.</strong></p>
+  </li>
+  <li>
+    <p><strong>가능한 Collection을 사용하는 것이 좋다. Stream, Iterator를 모두 지원할 수 있기 때문이다.</strong></p>
+  </li>
+  <li>
+    <p><strong>원소의 개수가 많아진다면 전용 컬렉션을 고려해보자.</strong></p>
+  </li>
+</ul>
+
+:ET

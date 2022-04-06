@@ -1,0 +1,105 @@
+I"�<h3 id="1-jenkins-자동-배포-마무리">1. jenkins 자동 배포 마무리</h3>
+<p>젠킨스를 도커로 설치해서 젠킨스 서버에서 프로젝트를 배포하고 싶은 서버로   <br />
+ssh 명령어로 배포하려고 한다.</p>
+
+<p>비밀번호 없이 ssh 명령어를 사용하기 위해     <br />
+SSH Key를 생성하고 등록해야 한다.</p>
+
+<ul>
+  <li>SSH key 생성    <br />
+우선 클라이언트 서버(젠킨스 서버)에서 아래 명령어로 SSH key를 생성한다.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh-keygen         
+</code></pre></div></div>
+
+<p>키 페어를 만들려면 OpenSSH에 포함되어 있는 ssh-keygen 유틸리티를 사용한다.   <br />
+디폴트로 2048-bit RSA 키 페어를 만들게 되어 있다.</p>
+
+<p>위 명령어를 입력하면 키 생성 위치와 비밀번호를 물어보는데  <br />
+따로 설정하지 않아도되서 Enter 누르고 넘어갔다.</p>
+
+<p>모두 완료하면 private 키와 public 키 쌍이 생성된다.</p>
+
+<p><br /></p>
+
+<ul>
+  <li>서버에 key copy     <br />
+public키를 서버에 넣어줘야 SSH key를 인증에 사용할 수 있다.</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh-copy-id USER@HOST
+</code></pre></div></div>
+
+<p>위 명령어를 사용해 키를 복사할 수 있다.</p>
+
+<p>이제 젠킨스에서 ssh로 프로젝트 서버에 접속할 수 있다.</p>
+
+<p><br /></p>
+
+<ul>
+  <li>Shell Script 작성</li>
+</ul>
+
+<p><img width="1426" alt="스크린샷 2020-04-25 오전 12 59 57" src="https://user-images.githubusercontent.com/33855307/80232609-24db8400-8690-11ea-8876-3114a6e2b158.png" /></p>
+
+<p><code class="language-plaintext highlighter-rouge">application.yml</code> 파일을 git에 올릴 수 없어서   <br />
+서버에 올려두고 cp 명령어로 복사해줬다..</p>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>ssh litebook@20.41.76.24 "sudo docker build -t litebook:latest /home/jenkins_home/build"
+ssh litebook@20.41.76.24 "sudo docker stop litebook"
+ssh litebook@20.41.76.24 "sudo docker rm litebook"
+ssh litebook@20.41.76.24 "sudo docker run -d -p 8080:8080 --name litebook litebook:latest"
+</code></pre></div></div>
+
+<p><img width="762" alt="스크린샷 2020-04-25 오전 1 05 50" src="https://user-images.githubusercontent.com/33855307/80233127-f611dd80-8690-11ea-990b-0cd46446d881.png" /></p>
+
+<p>ssh 접속으로 Docker image를 만들고 container 실행까지 완료했다.</p>
+
+<h3 id="2-redis-password-설정">2. Redis password 설정</h3>
+<p>redis 접속 password를 설정하고 싶으면 <code class="language-plaintext highlighter-rouge">redis.conf</code> 파일을 생성해야 한다.</p>
+
+<ul>
+  <li>redis.conf</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>requirepass PASSWORD  
+</code></pre></div></div>
+
+<p><br /></p>
+
+<ul>
+  <li>Docker로 설치 &amp; 설정</li>
+</ul>
+
+<div class="language-plaintext highlighter-rouge"><div class="highlight"><pre class="highlight"><code>sudo docker run -v /home/litebook:/var/litebook/redis --name redis -d -p 6379:6379 redis redis-server /var/litebook/redis/redis.conf      
+</code></pre></div></div>
+<p>docker로 위 처럼 레디스 설정파일을 지정해줄 수 있다.</p>
+
+<p><br /></p>
+
+<ul>
+  <li>RedisConfig.java</li>
+</ul>
+
+<div class="language-java highlighter-rouge"><div class="highlight"><pre class="highlight"><code>    <span class="kd">private</span> <span class="nc">RedisProperties</span> <span class="n">redisProperties</span><span class="o">;</span>
+
+    <span class="nd">@Autowired</span>
+    <span class="kd">public</span> <span class="nf">RedisConfig</span><span class="o">(</span><span class="nc">RedisProperties</span> <span class="n">redisProperties</span><span class="o">){</span>
+        <span class="k">this</span><span class="o">.</span><span class="na">redisProperties</span> <span class="o">=</span> <span class="n">redisProperties</span><span class="o">;</span>
+    <span class="o">}</span>
+
+    <span class="nd">@Bean</span>
+    <span class="kd">public</span> <span class="nc">RedisConnectionFactory</span> <span class="nf">redisConnectionFactory</span><span class="o">()</span> <span class="o">{</span>
+        <span class="nc">RedisStandaloneConfiguration</span> <span class="n">redisStandaloneConfiguration</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">RedisStandaloneConfiguration</span><span class="o">();</span>
+        <span class="n">redisStandaloneConfiguration</span><span class="o">.</span><span class="na">setPassword</span><span class="o">(</span><span class="n">redisProperties</span><span class="o">.</span><span class="na">getRedisPassword</span><span class="o">());</span>
+        <span class="n">redisStandaloneConfiguration</span><span class="o">.</span><span class="na">setHostName</span><span class="o">(</span><span class="n">redisProperties</span><span class="o">.</span><span class="na">getRedisHost</span><span class="o">());</span>
+        <span class="n">redisStandaloneConfiguration</span><span class="o">.</span><span class="na">setPort</span><span class="o">(</span><span class="n">redisProperties</span><span class="o">.</span><span class="na">getRedisPort</span><span class="o">());</span>
+        <span class="nc">LettuceConnectionFactory</span> <span class="n">lettuceConnectionFactory</span> <span class="o">=</span> <span class="k">new</span> <span class="nc">LettuceConnectionFactory</span><span class="o">(</span><span class="n">redisStandaloneConfiguration</span><span class="o">);</span>
+        <span class="k">return</span> <span class="n">lettuceConnectionFactory</span><span class="o">;</span>
+    <span class="o">}</span>
+</code></pre></div></div>
+
+<p>RedisConnectionFactory도 수정해줬다.</p>
+
+:ET

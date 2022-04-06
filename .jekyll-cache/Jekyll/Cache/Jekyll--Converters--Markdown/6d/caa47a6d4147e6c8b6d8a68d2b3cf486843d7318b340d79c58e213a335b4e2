@@ -1,0 +1,142 @@
+I"�<p><br /></p>
+
+<p>SNS 글 작성 요청을 누락시키지 않기 위해 RabbitMQ를 사용했었다.</p>
+
+<p>➡️ <a href="https://hyerin6.github.io/2021-11-08/rabbitmq/">Message Queue(RabbitMQ) 포스팅 보러가기</a></p>
+
+<p>많은 기업에서 Kafka를 사용하고, RabbitMQ 보단 카프카가 빠르다는 이야기를 많이 들었는데</p>
+
+<p>왜 Kafka를 선호하는지 자세히 알아보자.</p>
+
+<p><br /></p>
+
+<h2 id="메시지큐">메시지큐</h2>
+<p>Kafka는 메시지큐이다. 메시지큐는 이전 포스팅에서 자세히 알아봤었는데 요청을 한곳에 모으고 필요한 주체가 가져가 처리하는 것으로 이해할 수 있다. <br />
+RabbitMQ, Kafka, Memcache 등 다수의 제품들의 기본 기능이다.</p>
+
+<p><br /></p>
+
+<h4 id="메시지-큐의-장점">메시지 큐의 장점</h4>
+<ul>
+  <li>
+    <p>비동기(Asynchronous): Queue에 넣기 때문에 나중에 처리할 수 있다.</p>
+  </li>
+  <li>
+    <p>비동조(Decoupling): 애플리케이션과 분리할 수 있다.</p>
+  </li>
+  <li>
+    <p>탄력성(Resilience): 일부가 실패 시 전체에 영향을 받지 않는다.</p>
+  </li>
+  <li>
+    <p>과잉(Redundancy): 실패할 경우 재실행 가능하다.</p>
+  </li>
+  <li>
+    <p>보증(Guarantees): 작업이 처리된걸 확인할 수 있다.</p>
+  </li>
+  <li>
+    <p>확장성(Scalable): 다수의 프로세스들이 큐에 메시지를 보낼 수 있다.</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h4 id="메시지-큐-사용">메시지 큐 사용</h4>
+<ul>
+  <li>
+    <p>다른 곳의 API로 부터 데이터 송수신이 가능하다.</p>
+  </li>
+  <li>
+    <p>다양한 애플리케이션에서 비동기 통신을 할 수 있다.</p>
+  </li>
+  <li>
+    <p>이메일 발송 및 문서 업로드가 가능하다.</p>
+  </li>
+  <li>
+    <p>많은 양의 프로세스들을 처리할 수 있다.</p>
+  </li>
+</ul>
+
+<p><br />
+<br /></p>
+
+<h2 id="kafka-vs-rabbitmq">Kafka vs RabbitMQ</h2>
+<p>다양한 메시지큐가 있는데 용도와 환경에 따라 선택할 수 있어야 한다.</p>
+
+<h3 id="rabbitmq">RabbitMQ</h3>
+
+<ul>
+  <li>
+    <p>구성이 쉽다.</p>
+  </li>
+  <li>
+    <p>유연한 라우팅이 가능하면 관리 UI 가 편리하다.</p>
+  </li>
+  <li>
+    <p>제품 성숙도가 높다.</p>
+  </li>
+  <li>
+    <p>개방형 프로토콜을 위한 AMQP 를 구현 위해 개발</p>
+  </li>
+  <li>
+    <p>필요에 따라 동기/비동기식이 가능함</p>
+  </li>
+  <li>
+    <p>소비자중심의 설계</p>
+  </li>
+  <li>
+    <p>20k/sec 처리를 보장</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<h3 id="apache-kafka">Apache Kafka</h3>
+
+<ul>
+  <li>
+    <p>구독방식의 비동기식 구성</p>
+  </li>
+  <li>
+    <p>고성능 고가용성</p>
+  </li>
+  <li>
+    <p>분산처리에 효과적으로 설계 됨.</p>
+  </li>
+  <li>
+    <p>생산자 중심의 설계</p>
+  </li>
+  <li>
+    <p>범용 메세징 시스템에서 제공되는 다양한 기능은 제공되지 않음.</p>
+  </li>
+  <li>
+    <p>100k/sec 처리를 보장</p>
+  </li>
+</ul>
+
+<p><br /></p>
+
+<p><img src="https://user-images.githubusercontent.com/33855307/143554810-dc1f74fe-9066-496b-9f90-0d6a2b721e93.png" alt="스크린샷 2021-11-26 오후 6 01 22" /></p>
+
+<p><br />
+<br /></p>
+
+<h2 id="결론">결론</h2>
+
+<p>Kafka와 RabbitMQ은 다른 점이 꽤 있다.</p>
+
+<p>내가 개발 중인 SNS 프로젝트에서는 실제로 운영되는 대용량 트래픽을 받는 게 아니라 학습이 목적이었기 때문에<br />
+내가 설정한 스트레스 테스트 시나리오의 수준을 감당하면 된다.<br />
+RabbitMQ 사용이 적절했던 것 같다.</p>
+
+<p><br />
+<br /></p>
+
+<h2 id="참고">참고</h2>
+<ul>
+  <li>카프카 기본 개념: <a href="https://ellune.tistory.com/22?category=769027">https://ellune.tistory.com/22?category=769027</a></li>
+  <li>카프카 사용법: <a href="https://ellune.tistory.com/48?category=769027">https://ellune.tistory.com/48?category=769027</a></li>
+</ul>
+
+<p><br /></p>
+
+:ET
