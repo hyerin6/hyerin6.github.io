@@ -14,3 +14,4 @@ _site/
 Gemfile
 Gemfile.lock
 .jekyll-cache
+/.jekyll-cache/
