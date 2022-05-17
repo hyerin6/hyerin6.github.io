@@ -234,7 +234,7 @@ java -jar <jar 이름>
 <br />  
 
 **코틀린 빌드 과정**  
-![kotlin](../../images/kotlin.jpeg)  
+![kotlin](../../../images/kotlin.jpeg)  
 
 <br />    
 
