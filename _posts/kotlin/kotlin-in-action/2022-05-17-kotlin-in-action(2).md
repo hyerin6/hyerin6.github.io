@@ -421,40 +421,290 @@ fun mix(c1: Color, c2: Color) =
 함수가 받을 산술식에서는 오직 두 수를 더하는 연산만 가능하다.   
 우선 식을 인코딩하는 방법을 생각해야 한다.   
 
+```kotlin
+interface Expr 
+class Num(val value: Int) : Expr // (1)
+clas Sum(val left: Expr, val right: Expr) : Expr // (2)
+```
+
+(1) value라는 프로퍼티만 존재하는 단순한 클래스로 Expr 인터페이스를 구현한다.     
+
+(2) Expr 타입의 객체라면 어떤 것이나 Sum 연산자의 인자가 될 수 있다.  
+따라서 Num이나 다른 Sum이 인자로 올 수 있다.   
+
+<br />  
+
+Sum은 Expr의 왼쪽과 오른쪽 인자에 대한 참조를 left와 right 프로퍼티로 저장한다.   
+이 예제에서 left와 right는 각각 Num이나 Sum일 수 있다.      
+`(1 + 2) + 4` 라는 식을 저장하면 `Sum(Sum(Num(1), Num(2), Num(4)))` 라는 구조의 객체가 생긴다.    
+<br />  
+
+Expr 인터페이스에는 두 가지 구현 클래스가 존재한다.     
+따라서 식을 평가하려면 두 가지 경우를 고려해야 한다.   
+
+* 어떤 식이 수라면 그 값을 반환한다.  
+* 어떤 식이 합계라면 좌항과 우항의 값을 계산한 다음에 그 두 값을 합한 값을 반환한다.   
+
+<br />  
+
+코틀린에서는 `is`를 사용해 변수 타입을 검사한다.   
+`is` 검사는 자바의 `instanceof`와 비슷하다.     
 
 
+자바에서는     
+어떤 변수 타입을 `instanceof`로 확인 
+→ 그 타입에 속한 멤버에 접근하기 위해 명시적 변수 타입을 캐스팅   
+→ 이런 멤버 접근을 여러 번 수행해야 한다면 변수에 따로 캐스팅한 결과를 저장한 후 사용  
+
+코틀린에서는 개발자 대신 컴파일러가 캐스팅을 해준다.      
+어떤 변수가 원하는 타입인지 일단 `is`로 검사       
+→ 이후 컴파일러가 캐스팅을 수행한다. 이를 스마트 캐스트라고 부른다.   
+
+```kotlin
+if (e is sum) {
+  return eval(e.right) + eval(e.left)
+}
+```
+
+> IDE에서 배경색으로 스마트 캐스트를 표시해준다.   
+
+스마트 캐스트는 `is`로 변수에 든 값의 타입을 검사한 다음에 그 값이 바뀔 수 없는 경우에만 작동한다.
+
+원하는 타입으로 명시적으로 타입 캐스팅하려면 `as` 키워드를 사용한다.   
+
+```kotlin
+val n = e as Num
+```
+
+<br /> 
+<br /> 
+
+#### (6) 리팩토링: if를 when으로 변경   
+코틀린의 `if (a > b) a else b`는 자바의 `a > b ? a : b` 처럼 작동한다.   
+코틀린에서는 if가 값을 만들어내기 때문에 자바와 달리 3항 연산자가 따로 없다.   
+이런 특성을 사용하면 eval 함수에서 return 문과 중괄호를 없애고 if 식을 본문으로 사용해 더 간단하게 만들 수 있다.   
 
 
+```kotlin
+fun eval(e: Expr): Int =  
+  if(e is Num) {
+    e.value
+  } else if (e is Sum) {
+    eval(e.right) + eval(e.left)
+  } else {
+    throw IllegalArgumentException("Unknown expression")
+  }
+```
+
+if 분기에 블록을 사용하는 경우 그 블록의 마지막 식이 그 분기의 결과 값이다.   
+
+위 코드는 when을 사용해 다듬어 볼 수 있다.  
 
 
+```kotlin
+fun eval(e: Expr): Int =  
+  when (e) {
+    is Num ->
+      e.value 
+    is Sum ->
+      eval(e.right) + eval(e.left)
+    else ->
+      throw IllegalArgumentException("Unknown expression")
+  }
+```
+
+when 식을 값 동등성 검사가 아닌 다른 기능에도 쓸 수 있다.   
+if 예제와 마찬가지로 타입을 검사하고 나면 스마트 캐스트가 이뤄진다.   
+따라서 Num이나 Sum의 멤버에 접근할 때 변수를 강제로 캐스팅할 필요가 없다. 
+
+<br />
+<br />
+
+#### (7) if와 when의 분기에서 블록 사용 
+if나 when 모두 분기에 블록을 사용할 수 있다.   
+이 경우 블록의 마지막 문장이 블록 전체의 결과가 된다.   
+
+```kotlin
+fun evalWithLogging(e: Expr): Int = 
+  when (e) {
+    is Num -> {
+      println("num: ${e.value}")
+      e.value
+    }
+    
+    . . .
+    
+  }
+```
+
+`is Num` 블록의 마지막이 `e.value` 식이므로 e의 타입이 Num이며 `e.value`가 반환된다.   
+
+블록의 마지막 식이 블록의 결과라는 규칙은 블록이 값을 만들어내야 하는 경우 항상 성립하는데    
+이 규칙은 함수에 대해서는 성립하지 않는다.   
+
+식이 본문인 함수는 블록을 본문으로 가질 수 없고 블록이 본문인 함수는 내부에 return문이 반드시 있어야 한다.    
+
+<br />
+<br />
+
+### 대상을 이터레이션: while과 for 루프   
+코틀린 특성 중 자바와 가장 비슷한 것이 이터레이션이다.   
+코틀린 while 루프는 자바와 동일하고, for는 자바의 for-each 루프에 해당하는 형태만 존재한다.   
+<br />
+
+#### (1) 범위와 수열   
+
+```kotlin
+for (i in 1..100) {
+  println(i) 
+} 
+```
+
+<br />
+
+#### (2) 리스트, 맵에 대한 이터레이션 
+
+* List
+
+```kotlin
+val list = arrayListOf("10", "11", "1001")
+for ((idx, ele) in list.withIndex()) {
+    println("$idx: $ele")
+}
+```
 
 
+* Map 
+
+```kotlin
+val binbaryReps = TreeMap<Char, String>()
+
+. . .
+
+for ( (key, value) in binbaryReps) { // 맵에 대한 이터레이션
+    println("$key = $value")
+}
+```
+
+<br />
+
+#### (3) in으로 컬렉션이나 범위의 원소 검사 
+
+`in` 연산자를 사용해 어떤 값이 범위에 속하는지 검사할 수 있다.  
+반대로 `!in`을 사용하면 어떤 값이 범위에 속하지 않는지 검사할 수 있다.  
 
 
+```kotlin
+// 'a' <= c && c <= 'z'로 변환된다.  
+fun isLetter(c: Char) = c in 'a'..'z' || c in 'A'..'Z'
+
+fun isNotDigit(c: Char) = c !in '0'..'9'
+
+fun recognize(c: Char) = when(c) {
+  in '0'..'9' ‐> "It's digit!"
+  in 'a'..'z', in 'A'..'Z' ‐> "It's a letter" // 여러 범위 조건을 함께 사용해도 된다.    
+  else ‐> "I don't know."
+}
+println("Kotlin" in "Java".."Scala") // Comparable 구현 클래스
+```
 
 
+```kotlin
+println("Kotlin" in setOf("Java", "Scaka", "Kotlin"))
+```
+
+<br />
+<br />
+
+### 코틀린 예외 처리 
+코틀린 예외처리는 자바나 다른 언어의 예외 처리와 비슷하다.    
+
+함수에서 오류가 발생하면 예외를 던질 수 있고 함수를 호출하는 쪽에서 그 예외를 잡아 처리할 수 있다.   
+발생한 예외를 함수 호출 단에서 처리하지 않으면 함수 호출 스택을 거슬러 올라가면서 예외를 처리하는 부분이 나올 때까지 예외를 다시 던진다.   
+
+```kotlin
+if(percentage !in 0..100) {
+  throw IllegalArgumentException(
+    "A percentage value must be between 0 and 100: $percentage")
+}
+```
+
+예외 인스턴스를 만들 때도 `new`를 붙일 필요가 없다.    
+자바와 달리 코틀린의 throw는 식이므로 다른 식에 포함될 수도 있다.   
 
 
+```kotlin
+val percentage = 
+  if(number in 0..100)
+    number
+  else 
+    throw IllegalArgumentException( // throw는 식이다.   
+      "A percentage value must be between 0 and 100: $percentage")
+```
+
+<br />
+<br />
+
+#### (1) try, catch, finally  
+자바와 마찬가지로 예외를 처리하려면 try, catch, finally 절을 함께 사용한다. 
+
+```kotlin
+ fun readNumber(reader: BufferedReader): Int? {
+     try {
+         val line = reader.readLine()
+         return Integer.parseInt(line)
+     } catch (e: NumberFormatException) {
+         return null
+     } finally {
+       reader.close()
+     }
+}
+```
+
+* 함수가 던질 수 있는 예외를 명시할 필요가 없다.   
+* 예외 타입을 `:`의 오른쪽에 쓴다.   
+* finally는 자바와 똑같이 작동한다. 
 
 
+자바 코드와 큰 차이점은 `throws` 절이 코드에 없다는 점이다.     
+자바에서 함수를 작성할 때 함수 선언 뒤에 `IOException throws`를 붙여야 한다.     
+그 이유는 IOException은 체크 예외이고 자바에서 체크 예외를 명시적으로 처리해야 하기 때문이다.   
+
+다른 최신 JVM 언어와 마찬가지로 코틀린도 체크 예외와 언체크 예외를 구별하지 않는다.   
+코틀린에서는 함수가 던지는 예외를 지정하지 않고 발생한 예외를 잡아내도 되고 잡아내지 않아도 된다.   
+
+<br />
+<br />
+
+#### (2) try를 식으로 사용 
+자바와 코틀린의 중요한 차이가 하나 더 있다.  
+
+```kotlin
+fun readNumber(reader: BufferedReader) {
+  val number = try {
+     Integer.parseInt(reader.readLine()) // 이 식의 값이 try 식의 값이 된다. 
+  } catch (e: NumberFormatException) {
+     return 
+  }
+  println(number)
+}
+```
+
+코틀린의 `try` 키워드는 `if`나 `when`과 마찬가지로 식이다.   
+따라서 try 값을 변수에 대입할 수 있다.   
+
+> if와 달리 try의 본문은 반드시 중괄호(`{}`)로 둘러싸야 한다.   
+> 다른 문장과 마찬가지로 try의 본문도 내부에 여러 문장이 있으면 마지막 식의 값이 전체 결과 값이다.   
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+```kotlin
+fun readNumber(reader: BufferedReader) {
+  val number = try {
+     Integer.parseInt(reader.readLine()) // 예외가 발생하지 않으면 이 값을 사용 
+  } catch (e: NumberFormatException) {
+     null // 예외가 발생하면 null 값을 사용한다. 
+  }
+  println(number)
+}
+```
 
