@@ -189,15 +189,64 @@ const val UNIX_LINE_SEPARATOR = "\n" // JoinKt.UNIX_LINE_SEPARATOR
 <br />
 
 ### 메서드를 다른 클래스에 추가: 확장 함수와 확장 프로퍼티   
+기존 자바 API를 재작성하지 않고도 코틀린이 제공하는 여러 편리한 기능을 사용할 수 있다.   
+확장 함수가 그런 역할을 해준다.   
+
+개념적으로 확장 함수는 어떤 클래스의 멤버 메서드인 것처럼 호출할 수 있지만 그 클래스의 밖에서 선언된 함수다.   
+
+```kotlin
+fun String.lastChar(): Char = this.get(this.length ‐ 1) 
+    ^수신객체타입                ^수신객체
+println("Kotlin".lastChar())
+```
+
+* 클래스 이름: 수신 객체 타입(`String`, receiver type)  
+* 확장 함수가 호출되는 대상 값(객체): 수신 객체(`this`, receiver object)  
 
 
+일반 메서드의 본문에서 this를 사용할 때와 마찬가지로 확장 함수 본문에서도 this를 쓸 수 있다.   
+또한 일반 메서드와 마찬가지로 this를 생략할 수 있다.   
+
+```kotlin
+package strings 
+
+fun String.lastChar(): Char = get(length - 1) // 수신 객체 멤버에 this 없이 접근할 수 있음 
+```
 
 
+확장 함수 안에서 수신 객체의 메서드나 프로퍼티 사용 가능하나             
+확장 함수가 캡슐화를 깨지는 않는다.           
+➡️ private 멤버나 protected 멤버만 접근 불가   
+
+확장 함수보다 멤버 함수가 우선한다.    
+
+<br />
+<br />
+
+#### (1) import와 확장 함수 
+
+* 확장 함수를 사용하려면 임포트해야 한다.  
+
+```kotlin
+import strings.lastchar
+val c = "Kotlin".lastChar()
+```
 
 
+* `as`로 확장 함수를 다른 이름으로 임포트 가능﴾이름이 충돌할 경우 주로 사용﴿  
+
+```kotlin
+import strings.lastChar as last
+val c = "Kotlin".last()
+```
 
 
+<br />
+<br />
 
+#### (2) 자바에서 확장 함수 호출    
+내부적으로 확장 함수는 수신 객체를 첫 번째 인자로 받는 정적 메서드다.      
+그래서 확장 함수를 호출해도 다른 어댑터 객체나 실행 시점 부가 비용이 들지 않는다.    
 
 
 
