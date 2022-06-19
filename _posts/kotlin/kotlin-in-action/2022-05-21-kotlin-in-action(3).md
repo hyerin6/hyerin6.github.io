@@ -246,27 +246,94 @@ val c = "Kotlin".last()
 
 #### (2) 자바에서 확장 함수 호출    
 내부적으로 확장 함수는 수신 객체를 첫 번째 인자로 받는 정적 메서드다.      
-그래서 확장 함수를 호출해도 다른 어댑터 객체나 실행 시점 부가 비용이 들지 않는다.    
+그래서 확장 함수를 호출해도 다른 어댑터 객체나 실행 시점 부가 비용이 들지 않는다.      
+
+이런 설계로 자바에서 확장 함수를 사용하기도 편하다.
+
+```kotlin
+// strings.kt
+fun Collecion<String>.join(separator: String, prefix: String, postfix: String)
+listOf("1", "2", "3").join(",", "#", "")
+ 
+List<String> strs = ...
+StringsKt.join(strs, ",", "#", ""); // 수신 객체가 첫 번째 인자 
+```
 
 
+<br />
+<br />
+
+#### (3) 확장 프로퍼티
+확장 프로퍼티를 사용하면 기존 클래스 객체에 대한 프로퍼티 형식의 구문으로 사용할 수 있는 API를 추가할 수 있다.    
+
+```kotlin
+val String.first: Char
+     get() = get(0)
+var StringBuilder.lastChar: Char
+    get() = get(length ‐ 1)
+    set(ch: Char) {
+        this.setCharAt(length ‐ 1, ch)
+    }
+```
 
 
+* 상태를 저장할 방법이 없지만, 프로퍼티 문법으로 더 짧게 코드를 작성할 수 있는 편리함    
+* 지원 필드가 없으므로   
+    - 최소한 Getter는 정의﴾기본 게터 구현 제공 불가﴿  
+    - 초기화 코드 쓸 수 없음  
 
 
+<br />
+<br />
 
 
+### 코드 다듬기: 로컬 함수와 확장   
+메서드 추출 리팩토링을 적용해서 긴 메서드를 부분부분 나눠서 각 부분을 재활용할 수 있다.    
+그러나 클래스 안에 작은 메서드가 많아지고 각 메서드 사이의 관계를 파악하기 힘들어 코드를 이해하기 더 어려워질 수도 있다.    
+별도의 내부 클래스 안에 넣으면 깔끔해 보이긴 하지만, 그에 따른 불필요한 준비 코드가 늘어난다.   
+
+코틀린에서는 함수에서 추출한 함수를 원 함수 내부에 중첩시킬 수 있다.   
+(= 코드 중복을 로컬 함수를 통해 제거하자!)    
+
+```kotlin
+fun saveUser(user: User) {
+  if(user.name.isEmpty()) {
+      . . .
+  }
+  
+  if(user.address.isEmpty()) {
+      . . .
+  }
+}
+```
+
+이런 경우 검증 코드를 로컬 함수로 분리하면 중복을 없애고 코드 구조를 깔끔하게 유지할 수 있다.   
+
+```kotlin
+fun saveUser(user: User) {
+  fun validate(value: String, fieldName: String) {
+    if(value.isEmpty()) {
+      throw IllegalArgumentException(
+        "Can't save user ${user.id}: empty $filedName" // 바깥 함수의 파라미터에 직접 접근할 수 있다. 
+      )
+    }
+  }
+}
+```
 
 
+위 예제 코드를 더 개선하고 싶다면 검증 로직을 User 클래스를 확장한 함수로 만들 수도 있다.   
 
+```kotlin
+fun User.validateBeforeSave() {
+  fun validate(value: String, fieldName: String) {
+      . . .
+  }
+}
 
-
-
-
-
-
-
-
-
-
+fun saveUser(user: User) {
+  user.validateBeforeSave() // 확장 함수  호출 
+}
+```
 
 
