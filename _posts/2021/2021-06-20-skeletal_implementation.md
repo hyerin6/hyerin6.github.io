@@ -7,7 +7,8 @@ tags: [effective-java, java]
 categories: [Effective Java, Java]
 comments: true    
 share: true
---- 
+---
+<br />
 
 # 추상 골격 구현 클래스란?    
 인터페이스의 장점과 추상 클래스의 장점을 결합   

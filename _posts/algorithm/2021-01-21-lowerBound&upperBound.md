@@ -8,6 +8,8 @@ categories: [Algorithm]
 comments: true
 share: true
 ---
+<br />
+
 
 ## BinarySearch      
 다음은 일반적으로 원하는 값(Key)을 찾을 때 사용하는 binarySearch이다.     

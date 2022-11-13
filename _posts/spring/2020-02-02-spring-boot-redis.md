@@ -8,6 +8,7 @@ categories: [Spring, Redis]
 comments: true
 share: true
 ---
+<br />
 
 #### 1. Redis란?         
 in-memory 기반의 data structure 저장 기술로 데이터베이스 서버, 데이터 캐싱 등이 가능한 시스템이다.   

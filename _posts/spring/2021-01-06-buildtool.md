@@ -10,6 +10,7 @@ share: true
 published: true 
 ---
 
+ 
 <br />    
 
 예전에 안드로이드 실습과 디프만 워밍업 프로젝트에서 gradle을 사용해봤는데      

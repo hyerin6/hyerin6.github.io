@@ -3,11 +3,12 @@ layout: post
 title: "[Kotlin] Backing Fields"    
 description: "Backing Fields"  
 date: 2022-09-11   
-tags: [kotlin]    
+tags: [kotlin]
+categories: [kotlin]
 comments: true   
 share: true 
 ---    
-
+<br />
 
 ## `field` 키워드 
 프로퍼티에 재정의된 Setter를 보면 field 키워드를 볼 수 있다. 

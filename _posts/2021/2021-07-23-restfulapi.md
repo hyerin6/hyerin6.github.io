@@ -8,10 +8,6 @@ comments: true
 share: true
 --- 
 
-API, REST, REST API, RESTful API, HTTP, URL, URI, URN...      
-개발하면서 많은 키워드들을 보게 되는데 정확히 어떤 의미인지 정리해보자.     
-
-___
 
 
 <br />  

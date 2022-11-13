@@ -9,15 +9,16 @@ comments: true
 share: true
 ---
 
+<br />   
+
 Session 인증 방식은 공부해보기 전에도 많이 들었고 많이 사용하기 때문에 익숙하다.       
 그런데 왜 Token 방식이 생겼을까? 어떤 차이가 있는지 알아보기로 했다.      
 
 session, cookie, token을 학습하며 자주 마주치는  
 CORS, XSS, CSRF도 간단하게 알아보자.   
 
----
 
-<br />   
+<br /> 
 
 # Stateless한 HTTP     
 HTTP는 stateless한 특성을 가지고 있어 각 통신의 상태는 저장되지 않는다.     
