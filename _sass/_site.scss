@@ -325,39 +325,52 @@ body {
   }
 }
 
-/*--------------
-  Archive
-  -------------- */
+///*--------------
+//  Archive
+//  -------------- */
+//.archive {
+//  &-list {
+//    &-post {
+//      padding: 0.1rem;
+//
+//      &:hover {
+//          background-color: $background-over-color;
+//          border-color: transparent;
+//      }
+//
+//      a {
+//        color: $base-color;
+//
+//        &:hover,
+//        &:focus {
+//          text-decoration: none;
+//        }
+//      }
+//
+//      &-title {
+//        font-size : 1.2rem;
+//        font-weight: 400;
+//      }
+//
+//      &-date {
+//        color: $base-lighten-color;
+//        font-size: .75rem;
+//        text-transform: uppercase;
+//      }
+//    }
+//  }
+//}
+
+// Archive
 .archive {
-  &-list {
-    &-post {
-      padding: 0.1rem;
-
-      &:hover {
-          background-color: $background-over-color;
-          border-color: transparent;
-      }
-
-      a {
-        color: $base-color;
-
-        &:hover,
-        &:focus {
-          text-decoration: none;
-        }
-      }
-
-      &-title {
-        font-size : 1.2rem;
-        font-weight: 400;
-      }
-
-      &-date {
-        color: $base-lighten-color;
-        font-size: .75rem;
-        text-transform: uppercase;
-      }
-    }
+  a {
+    color: $base-color;
+  }
+  time {
+    color: $base-lighten-color;
+    font-size: $small-font-size;
+    font-weight: 300;
+    margin-left: 3px;
   }
 }
 
