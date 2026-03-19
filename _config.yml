@@ -9,7 +9,6 @@ author:
   youtubeChannel:   UC89RoThrDVk5YLVGRNmFkWQ
   twitter:          dev_hyerin
   github:           hyerin6
-  instagram:        photobyhyerin
   email:            dev.hyerin@gmail
 
 copyright:
@@ -20,7 +19,7 @@ copyright:
 analytics:
   provider               : "google-gtag"
   google:
-    tracking_id          : "G-8RJ9ZZ1LSQ"
+    tracking_id          : "G-21FCM6X50M"
     anonymize_ip         : # true, false (default)
 
 # Disqus
